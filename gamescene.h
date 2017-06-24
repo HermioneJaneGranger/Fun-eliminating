@@ -20,14 +20,15 @@ public:
 
     void setBlock(const QList<Block *> &block);
 
-    QList<Block *> blocks() const;
+    Q_INVOKABLE Block *blocks(int number) const;
 
+    QList<Block *> m_block;
 signals:
     void blockChanged();
 
 
-private:
-    QList<Block *> m_block;
+//private:
+//    QList<Block *> m_block;
 };
 
 #endif // GAMSCENE_H

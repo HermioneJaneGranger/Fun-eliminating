@@ -11,9 +11,9 @@ class Block: public QObject
     Q_PROPERTY(int column READ column WRITE setColumn NOTIFY columnChanged)
     Q_PROPERTY(int type READ type  WRITE setType NOTIFY typeChanged)
 public:
-    explicit Block(QObject *parent = 0):QObject(parent){}
-    explicit Block(int row,int column,int type):m_row(row),m_column(column),m_type(type)
-    {}
+    explicit Block(int row,int column,int type):m_row(row),m_column(column),m_type(type){}
+    Block(QObject *parent = 0):QObject(parent){}
+
     int row() const;
     void setRow(int row);
 
@@ -22,7 +22,7 @@ public:
 
     int type() const;
 
-    void setType(int type);
+    Q_INVOKABLE void setType(int type);
 signals:
     void rowChanged();
     void columnChanged();

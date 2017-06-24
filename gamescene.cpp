@@ -21,9 +21,9 @@ void GameScene::setBlock(const QList<Block *> &block)
     m_block = block;
 }
 
-QList<Block *> GameScene::blocks() const
+Block *GameScene::blocks(int number) const
 {
-    return m_block;
+    return m_block[number];
 }
 
 GameScene::GameScene(int i)/*:QObject(parent)*/

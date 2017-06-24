@@ -40,46 +40,36 @@ SceneBase {
         color: "white"
         height: 384
         width:256
-//        GameSceneMessage{
-//            id:message
-//            init: 5
-//            property int number: 0
-//        }
-//        GameSceneMessage{
-//            id:message
-//        }
-
         Grid
         {
             id:grid
             anchors.fill: parent
-            columns: 8
-            property int number: 0
+            rows: 12
             Repeater {
                 id: square
-                model: 96
+                model:96
                 Image {
+                    id:image
+                    property GameSceneBlock block: gameSceneMessage.blocks(index)
+
+                    property int type: image.block.type
                     source: {
-                        if(gameSceneMessage.block.type) {
-                            grid.number++;
+                        if(type === 0) {
                             return "../../assets/1.png"
                         }
-                        else if(gameSceneMessage.block[grid.number].type() === 1) {
-                            grid.number++;
+                        else if(type === 1) {
                             return "../../assets/2.png"
                         }
-                        else if(gameSceneMessage.block[grid.number].type() === 2) {
-                            grid.number++;
+                        else if(type === 2) {
                             return "../../assets/3.png"
                         }
-                        else if(gameSceneMessage.block[grid.number].type() === 3) {
-                            grid.number++;
+                        else if(type === 3) {
                             return "../../assets/4.png"
                         }
-                        else if(gameSceneMessage.scene.block[grid.number].type() === 4) {
-                            grid.number++;
+                        else if(type === 4) {
                             return "../../assets/5.png"
                         }
+
                     }
                 }
             }
