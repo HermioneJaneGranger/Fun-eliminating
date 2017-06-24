@@ -1,19 +1,25 @@
-#include <QApplication>
+#include <QGuiApplication>
 #include <VPApplication>
-
+#include <QQmlContext>
 #include <QQmlApplicationEngine>
+#include <iostream>
+
+#include "gamescene.h"
 
 
 int main(int argc, char *argv[])
 {
-
-    QApplication app(argc, argv);
-
+    QGuiApplication app(argc, argv);
+    qmlRegisterType<Block>("gameSceneMessage",1,0,"GameSceneBlock");
+    qmlRegisterType<GameScene>("gameSceneMessage",1,0,"GameSceneMessage");
     VPApplication vplay;
 
     // QQmlApplicationEngine is the preferred way to start qml projects since Qt 5.2
     // if you have older projects using Qt App wizards from previous QtCreator versions than 3.1, please change them to QQmlApplicationEngine
     QQmlApplicationEngine engine;
+    GameScene gameScene(5);
+    std::cout << gameScene.blocks()[0]->type() << std::endl;
+    engine.rootContext()->setContextProperty("gameSceneMessage",&gameScene);
     vplay.initialize(&engine);
 
     // use this during development
@@ -26,7 +32,12 @@ int main(int argc, char *argv[])
     // also see the .pro file for more details
     //  vplay.setMainQmlFileName(QStringLiteral("qrc:/qml/Main.qml"));
 
+
+
     engine.load(QUrl(vplay.mainQmlFileName()));
 
     return app.exec();
+
+
+    return 0;
 }

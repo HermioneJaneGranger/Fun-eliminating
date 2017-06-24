@@ -5,9 +5,10 @@ import "scenes"
 GameWindow {
     id: gameWindow
 
-    EntityManager{
-        id: entityManager
-    }
+//    EntityManager{
+//        id: entityManager
+//        entityContainer: gameScene
+//    }
 
     // You get free licenseKeys from https://v-play.net/licenseKey
     // With a licenseKey you can:
