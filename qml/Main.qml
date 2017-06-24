@@ -1,10 +1,11 @@
 import VPlay 2.0
 import QtQuick 2.0
 import "scenes"
+
 GameWindow {
     id: gameWindow
 
-    EntityManager{
+    EntityManager {
         id: entityManager
     }
 
@@ -15,7 +16,7 @@ GameWindow {
     //  * Add plugins to monetize, analyze & improve your apps (available with the Pro Licenses)
     //licenseKey: "<generate one from https://v-play.net/licenseKey>"
 
-//    activeScene: scene
+    //    activeScene: scene
 
     // the size of the Window can be changed at runtime by pressing Ctrl (or Cmd on Mac) + the number keys 1-8
     // the content of the logical scene size (480x320 for landscape mode by default) gets scaled to the window size based on the scaleMode
@@ -24,10 +25,12 @@ GameWindow {
     screenWidth: 960
     screenHeight: 640
 
-    SelectLevelScene{
-        id: selectLevelScene
+    //    SelectLevelScene{
+    //        id: selectLevelScene
+    //        opacity: 1
+    //    }
+    Gamepass {
+        id: gamepass
         opacity: 1
     }
 }
-
-
