@@ -49,4 +49,5 @@ HEADERS += \
     block.h \
     gamescene.h
 
-DISTFILES +=
+DISTFILES += \
+    qml/scenes/Gamepass.qml
