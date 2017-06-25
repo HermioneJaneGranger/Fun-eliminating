@@ -44,4 +44,8 @@ macx {
 }
 
 DISTFILES += \
-    qml/scenes/Gamepass.qml
+    qml/scenes/Gamepass.qml \
+    qml/scenes/GameLose.qml \
+    qml/scenes/Gamestart.qml \
+    qml/scenes/Settings.qml \
+    qml/scenes/Gamestore.qml

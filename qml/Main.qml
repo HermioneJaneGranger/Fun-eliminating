@@ -28,9 +28,29 @@ GameWindow {
     //    SelectLevelScene{
     //        id: selectLevelScene
     //        opacity: 1
+    //    //    }
+    //    Gamepass {
+    //        id: gamepass
+    //        opacity: 1
     //    }
-    Gamepass {
-        id: gamepass
+    //        GameLose {
+    //            id: gamelose
+    //            opacity: 1
+    //        }
+    //    PauseMenuScene {
+    //        id: pausemenuscene
+    //        opacity: 1
+    //    }
+    //    Gamestart {
+    //        id: gamestart
+    //        opacity: 1
+    //    }
+    //    Settings {
+    //        id: settings
+    //        opacity: 1
+    //    }
+    Gamestore {
+        id: gamestore
         opacity: 1
     }
 }
