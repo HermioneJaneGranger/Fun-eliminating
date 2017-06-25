@@ -11,7 +11,6 @@ Scene {
     enabled:  visible
 
 
-
     Behavior on opacity {
         NumberAnimation{
             property: "opacity"

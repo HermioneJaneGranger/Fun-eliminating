@@ -16,24 +16,24 @@ void GameScene::appendBlock(QQmlListProperty<Block> *list, Block *msg)
     }
 }
 
-void GameScene::setBlock(const QList<Block *> &block)
-{
-    m_block = block;
-}
+//void GameScene::setBlock(const QList<Block *> &block)
+//{
+//    m_block = block;
+//}
 
 Block *GameScene::blocks(int number) const
 {
     return m_block[number];
 }
 
-GameScene::GameScene(int i)/*:QObject(parent)*/
+GameScene::GameScene(int i)
 {
     srand((unsigned)time(NULL));
-    for(int x = 0;x != 8;x++) {
-        for(int y = 0;y != 12;y++) {
+    for(int y = 0;y != 12;y++) {
+        for(int x = 0;x != 8;x++) {
             int type = rand() % i;
-            Block b(x,y,type);
-            m_block.push_back(&b);
+            Block *b = new Block(x,y,type);
+            m_block.push_back(b);
         }
     }
 }

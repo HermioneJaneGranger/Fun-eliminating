@@ -13,22 +13,20 @@ class GameScene: public QObject
     Q_CLASSINFO("DefaultProperty", "block")
 public:
     GameScene(QObject *parent = 0):QObject(parent){}
-    GameScene(/*QObject *parent = 0*/int i);
+    GameScene(int i);
 
     QQmlListProperty<Block> block();
     static void appendBlock(QQmlListProperty<Block> *list, Block *msg);
 
-    void setBlock(const QList<Block *> &block);
+//    void setBlock(const QList<Block *> &block);
 
     Q_INVOKABLE Block *blocks(int number) const;
 
     QList<Block *> m_block;
+
 signals:
     void blockChanged();
 
-
-//private:
-//    QList<Block *> m_block;
 };
 
 #endif // GAMSCENE_H

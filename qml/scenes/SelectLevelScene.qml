@@ -5,6 +5,14 @@ import "../common"
 SceneBase {
     id: selectLevelScene
     anchors.centerIn: parent.Center
+
+    signal levelsClicked
+    property int levelChoose: 1
+    signal achivementSceneClicked
+    signal shopSceneClicked
+    signal moreSceneClicked
+    signal bagSceneClicked
+
     Image {
         id: selectLevelSceneImage1
         source: "../../assets/selectLevel/scene1.png"
@@ -32,6 +40,14 @@ SceneBase {
                 width: 58
                 height: 47
                 source: "../../assets/selectLevel/level.png"
+                MouseArea{
+                    anchors.fill: parent
+                    onClicked:
+                    {
+                        levelChoose = 1
+                        levelsClicked()
+                    }
+                }
             }
             Image {
                 id: levels1
@@ -40,6 +56,14 @@ SceneBase {
                 y: 1553
                 width: 58
                 height: 47
+                MouseArea{
+                    anchors.fill: parent
+                    onClicked:
+                    {
+                        levelChoose = 2
+                        levelsClicked()
+                    }
+                }
             }
 
             Image {
@@ -49,6 +73,14 @@ SceneBase {
                 width: 58
                 height: 47
                 source: "../../assets/selectLevel/level.png"
+                MouseArea{
+                    anchors.fill: parent
+                    onClicked:
+                    {
+                        levelChoose = 3
+                        levelsClicked()
+                    }
+                }
             }
             Image {
                 id: levels3
@@ -57,6 +89,14 @@ SceneBase {
                 width: 58
                 height: 47
                 source: "../../assets/selectLevel/level.png"
+                MouseArea{
+                    anchors.fill: parent
+                    onClicked:
+                    {
+                        levelChoose = 4
+                        levelsClicked()
+                    }
+                }
             }
             Image {
                 id: levels4
@@ -65,6 +105,14 @@ SceneBase {
                 width: 58
                 height: 47
                 source: "../../assets/selectLevel/level.png"
+                MouseArea{
+                    anchors.fill: parent
+                    onClicked:
+                    {
+                        levelChoose = 5
+                        levelsClicked()
+                    }
+                }
             }
 
             Image {
@@ -74,6 +122,14 @@ SceneBase {
                 width: 58
                 height: 47
                 source: "../../assets/selectLevel/level.png"
+                MouseArea{
+                    anchors.fill: parent
+                    onClicked:
+                    {
+                        levelChoose = 6
+                        levelsClicked()
+                    }
+                }
             }
 
             Image {
@@ -83,6 +139,14 @@ SceneBase {
                 width: 58
                 height: 47
                 source: "../../assets/selectLevel/level.png"
+                MouseArea{
+                    anchors.fill: parent
+                    onClicked:
+                    {
+                        levelChoose = 7
+                        levelsClicked()
+                    }
+                }
             }
 
             Image {
@@ -92,6 +156,14 @@ SceneBase {
                 width: 58
                 height: 47
                 source: "../../assets/selectLevel/level.png"
+                MouseArea{
+                    anchors.fill: parent
+                    onClicked:
+                    {
+                        levelChoose = 8
+                        levelsClicked()
+                    }
+                }
             }
 
             Image {
@@ -101,6 +173,14 @@ SceneBase {
                 width: 58
                 height: 47
                 source: "../../assets/selectLevel/level.png"
+                MouseArea{
+                    anchors.fill: parent
+                    onClicked:
+                    {
+                        levelChoose = 9
+                        levelsClicked()
+                    }
+                }
             }
 
             Image {
@@ -110,6 +190,17 @@ SceneBase {
                 width: 58
                 height: 47
                 source: "../../assets/selectLevel/level.png"
+                MouseArea{
+                    anchors.fill: parent
+                    onClicked:
+                    {
+                        levelChoose = 10
+                        levelsClicked()
+                    }
+                }
+            }
+            Repeater{
+
             }
         }
     }
@@ -117,22 +208,25 @@ SceneBase {
         x: 435
         y: 484
         anchors.rightMargin: 15
-        anchors.bottomMargin: -34
+        anchors.bottomMargin: 0
         anchors.bottom: parent.bottom
         anchors.right: parent.right
-        //        rows: 4
         spacing: 10
         Selectbutton {
-            text: "成就"
+            imageSource: "../../assets/selectLevel/jiangbei.png"
+            onSelectButtonClicked: achivementSceneClicked()
         }
         Selectbutton {
-            text: "商店"
+imageSource: "../../assets/selectLevel/shop.png"
+onSelectButtonClicked: shopSceneClicked()
         }
         Selectbutton {
-            text: "精灵球"
+//imageSource: "../../assets/selectLevel/bag.png"
+            onSelectButtonClicked: bagSceneClicked()
         }
         Selectbutton {
-            text: "更多"
+imageSource: "../../assets/selectLevel/more.png"
+onSelectButtonClicked: moreSceneClicked()
         }
     }
     Grid {
@@ -144,15 +238,15 @@ SceneBase {
 
         rows: 3
         spacing: 8
-        Selectbutton {
-            text: "活动"
-        }
-        Selectbutton {
-            text: "抽奖"
-        }
-        Selectbutton {
-            text: "礼包"
-        }
+//        Selectbutton {
+//            text: "活动"
+//        }
+//        Selectbutton {
+//            text: "抽奖"
+//        }
+//        Selectbutton {
+//            text: "礼包"
+//        }
     }
     Grid {
         anchors.leftMargin: 8
@@ -162,12 +256,12 @@ SceneBase {
 
         rows: 2
         spacing: 8
-        Selectbutton {
-            text: "体力"
-        }
-        Selectbutton {
-            text: "金币"
-        }
+//        Selectbutton {
+//            text: "体力"
+//        }
+//        Selectbutton {
+//            text: "金币"
+//        }
     }
     Column{
         spacing: 10

@@ -23,8 +23,8 @@ SceneBase{
             fillMode: Image.Stretch
             source: "../../assets/commonWindow/window-close.png"
             anchors.right: parent.right
-            anchors.rightMargin: 3
-            anchors.topMargin: 3
+            anchors.rightMargin: 10
+            anchors.topMargin: 10
             anchors.top: parent.top
             MouseArea{
                 anchors.fill: parent
@@ -97,6 +97,7 @@ SceneBase{
             }
         }
         RowLayout{
+            id:rowLayout
             anchors.top: exitButton.bottom
             anchors.topMargin: 5
             anchors.left: parent.left
@@ -104,14 +105,14 @@ SceneBase{
             spacing: parent.width/12
             Image {
                 id: bgvolumnButton
-                source: !playerNotMUted ? "../../assets/commonWindow/audio-volume-muted.png" : "../../assets/commonWindow/audio-volume-medium.png"
+                source: !playerNotMUted ? "../../assets/pauseMenu/audio-volume-muted.png" : "../../assets/pauseMenu/audio-volume-medium.png"
                 MouseArea{
                     id: volumnMouseArea
                     anchors.fill: parent
                     onClicked:
                     {
                         playerNotMUted = !playerNotMUted
-                        parent.source= !playerNotMUted ? "../../assets/commonWindow/audio-volume-muted.png" : "../../assets/commonWindow/audio-volume-medium.png"
+                        parent.source= !playerNotMUted ? "../../assets/pauseMenu/audio-volume-muted.png" : "../../assets/pauseMenu/audio-volume-medium.png"
                         if(playerNotMUted)
                             volumnSlider.value = volumn
                         else
@@ -131,16 +132,29 @@ SceneBase{
                 {
                     if(value!=0.0)
                     {
-                        bgvolumnButton.source="../../assets/commonWindow/audio-volume-medium.png"
+                        bgvolumnButton.source="../../assets/pauseMenu/audio-volume-medium.png"
                         volumn = value
                         playerNotMUted = true
                     }
                     else
                     {
-                        bgvolumnButton.source="../../assets/commonWindow/audio-volume-muted.png"
+                        bgvolumnButton.source="../../assets/pauseMenu/audio-volume-muted.png"
                         playerNotMUted = false
                     }
                 }
+            }
+        }
+        Image{
+            id: goHomeIcon
+            width: parent.width/5
+            height: width
+            anchors.top: rowLayout.bottom
+            anchors.topMargin: 5
+            source: "../../assets/pauseMenu/go-home.png"
+            anchors.horizontalCenter: parent.horizontalCenter
+            MouseArea{
+                anchors.fill: parent
+                onClicked: goHomeClicked()
             }
         }
     }

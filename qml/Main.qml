@@ -25,15 +25,21 @@ GameWindow {
 
     PauseMenuScene{
         id: pauseMenuScene
-        opacity: 1
+        opacity: 0
         onExitClicked: openMessageBoxWithQuitQuestion()
         onGoHomeClicked: {
             opacity = 0
             gameScene.opacity = 0
+            gameScene.mouseEnable = false
+            selectLevelScene.opacity = 1
+            achievementScene.opacity = 0
         }
         onContinueClicked: {
             opacity = 0
             gameScene.opacity = 1
+            gameScene.mouseEnable = true
+            selectLevelScene.opacity = 0
+            achievementScene.opacity = 0
         }
     }
     Connections {
@@ -53,14 +59,50 @@ GameWindow {
     }
     SelectLevelScene{
         id: selectLevelScene
+        opacity: 1
+        onLevelsClicked: {
+            gameScene.opacity = 1
+            gameScene.mouseEnable = true
+            selectLevelScene.opacity = 0
+            activeScene = gameScene
+            achievementScene.opacity = 0
+        }
+        onAchivementSceneClicked: {
+            achievementScene.opacity = 1
+            gameScene.opacity = 0
+            selectLevelScene.opacity = 0
+            pauseMenuScene.opacity = 0
+        }
+        onShopSceneClicked: {
+        }
+        onBagSceneClicked: {
+
+        }
+        onMoreSceneClicked: {
+        }
+    }
+    AchievementScene{
+        id: achievementScene
+//        AchievementView
         opacity: 0
     }
-    Gamepass {
+
+    GamePass {
         id: gamepass
         opacity:0
     }
     GameScene{
         id: gameScene
         opacity: 0
+        mouseEnable: true
+        onPauseClicked: {
+            opacity = 0.1
+            selectLevelScene.opacity = 0
+            pauseMenuScene.opacity = 1
+            pauseMenuScene.z = 1
+            mouseEnable = false
+            activeScene: pauseMenuScene
+            achievementScene.opacity = 0
+        }
     }
 }
