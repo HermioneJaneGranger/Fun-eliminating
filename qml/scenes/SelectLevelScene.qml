@@ -20,4 +20,31 @@ SceneBase {
             drag.minimumY: -1050
         }
     }
+    Column{
+        spacing: 10
+        anchors.left: parent.left
+        anchors.leftMargin: 10
+        x: 0
+        Rectangle{
+            id: physicalStrengthRect
+            radius: 25
+            width: 90
+            height: 30
+            color: "#ffffff"
+        }
+        Rectangle{
+            id: diamond
+            radius: 25
+            width: 90
+            height: 30
+            color: "#ffffff"
+        }
+        Rectangle{
+            id: money
+            radius: 25
+            width: 90
+            height: 30
+            color: "#ffffff"
+        }
+    }
 }

@@ -7,8 +7,10 @@ Scene {
     width:  320
     height: 480
     opacity: 0
-    visible: opacity > 0
+    visible: opacity === 0 ? false : true
     enabled:  visible
+
+
 
     Behavior on opacity {
         NumberAnimation{
