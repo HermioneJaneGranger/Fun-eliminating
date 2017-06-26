@@ -19,8 +19,7 @@ public:
 
     Q_INVOKABLE void refresh(int number);
 
-    Q_INVOKABLE Block *blocks(int number)
-    const;
+    Q_INVOKABLE Block *blocks(int number) const;
 
 
 signals:
