@@ -5,7 +5,6 @@ Item{
     property string imageSource
     width: 30
     height: width
-//    property alias text: buttonText.text
     signal selectButtonClicked
 
     Image {
@@ -14,10 +13,7 @@ Item{
         anchors.fill: parent
         MouseArea {
           anchors.fill: parent
-//          hoverEnabled: true
           onClicked: selectButtonClicked()
-//          onPressed: button.opacity = 0.5
-//          onReleased: button.opacity = 1
         }
     }
 }

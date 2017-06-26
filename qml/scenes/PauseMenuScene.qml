@@ -1,6 +1,7 @@
 //PauseMenuScene
 import QtQuick 2.0
 import VPlay 2.0
+
 import QtQuick.Controls 2.1
 import QtQuick.Layouts 1.1
 import "../common"
@@ -16,6 +17,7 @@ SceneBase{
         id: windowBg
         anchors.centerIn: parent
         source: "../../assets/commonWindow/bj.png"
+
         width: parent.width/4*3
         height: width
         Image {
@@ -49,6 +51,7 @@ SceneBase{
                 horizontalAlignment: Text.AlignHCenter
                 anchors.centerIn: parent
             }
+
             MouseArea{
                 anchors.fill: parent
                 onClicked: continueClicked()
@@ -91,6 +94,7 @@ SceneBase{
                 horizontalAlignment: Text.AlignHCenter
                 anchors.centerIn: parent
             }
+
             MouseArea{
                 anchors.fill: parent
                 onClicked: exitClicked()

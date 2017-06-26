@@ -50,5 +50,13 @@ HEADERS += \
     gamescene.h
 
 DISTFILES += \
+    qml/scenes/AchievementScene.qml \
+    qml/scenes/GameInitScene.qml \
+    qml/scenes/GameLose.qml \
     qml/scenes/GamePass.qml \
-    qml/common/singleBlock.qml
+    qml/scenes/GameScene.qml \
+    qml/scenes/GameStore.qml \
+    qml/scenes/PauseMenuScene.qml \
+    qml/scenes/SelectLevelScene.qml \
+    qml/scenes/Settings.qml \
+    qml/scenes/GameStart.qml

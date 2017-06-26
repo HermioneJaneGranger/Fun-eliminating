@@ -40,10 +40,9 @@ SceneBase {
                 width: 58
                 height: 47
                 source: "../../assets/selectLevel/level.png"
-                MouseArea{
+                MouseArea {
                     anchors.fill: parent
-                    onClicked:
-                    {
+                    onClicked: {
                         levelChoose = 1
                         levelsClicked()
                     }
@@ -56,10 +55,9 @@ SceneBase {
                 y: 1553
                 width: 58
                 height: 47
-                MouseArea{
+                MouseArea {
                     anchors.fill: parent
-                    onClicked:
-                    {
+                    onClicked: {
                         levelChoose = 2
                         levelsClicked()
                     }
@@ -73,10 +71,9 @@ SceneBase {
                 width: 58
                 height: 47
                 source: "../../assets/selectLevel/level.png"
-                MouseArea{
+                MouseArea {
                     anchors.fill: parent
-                    onClicked:
-                    {
+                    onClicked: {
                         levelChoose = 3
                         levelsClicked()
                     }
@@ -89,10 +86,9 @@ SceneBase {
                 width: 58
                 height: 47
                 source: "../../assets/selectLevel/level.png"
-                MouseArea{
+                MouseArea {
                     anchors.fill: parent
-                    onClicked:
-                    {
+                    onClicked: {
                         levelChoose = 4
                         levelsClicked()
                     }
@@ -105,10 +101,9 @@ SceneBase {
                 width: 58
                 height: 47
                 source: "../../assets/selectLevel/level.png"
-                MouseArea{
+                MouseArea {
                     anchors.fill: parent
-                    onClicked:
-                    {
+                    onClicked: {
                         levelChoose = 5
                         levelsClicked()
                     }
@@ -122,10 +117,9 @@ SceneBase {
                 width: 58
                 height: 47
                 source: "../../assets/selectLevel/level.png"
-                MouseArea{
+                MouseArea {
                     anchors.fill: parent
-                    onClicked:
-                    {
+                    onClicked: {
                         levelChoose = 6
                         levelsClicked()
                     }
@@ -139,10 +133,9 @@ SceneBase {
                 width: 58
                 height: 47
                 source: "../../assets/selectLevel/level.png"
-                MouseArea{
+                MouseArea {
                     anchors.fill: parent
-                    onClicked:
-                    {
+                    onClicked: {
                         levelChoose = 7
                         levelsClicked()
                     }
@@ -156,10 +149,9 @@ SceneBase {
                 width: 58
                 height: 47
                 source: "../../assets/selectLevel/level.png"
-                MouseArea{
+                MouseArea {
                     anchors.fill: parent
-                    onClicked:
-                    {
+                    onClicked: {
                         levelChoose = 8
                         levelsClicked()
                     }
@@ -173,10 +165,9 @@ SceneBase {
                 width: 58
                 height: 47
                 source: "../../assets/selectLevel/level.png"
-                MouseArea{
+                MouseArea {
                     anchors.fill: parent
-                    onClicked:
-                    {
+                    onClicked: {
                         levelChoose = 9
                         levelsClicked()
                     }
@@ -190,17 +181,15 @@ SceneBase {
                 width: 58
                 height: 47
                 source: "../../assets/selectLevel/level.png"
-                MouseArea{
+                MouseArea {
                     anchors.fill: parent
-                    onClicked:
-                    {
+                    onClicked: {
                         levelChoose = 10
                         levelsClicked()
                     }
                 }
             }
-            Repeater{
-
+            Repeater {
             }
         }
     }
@@ -217,77 +206,69 @@ SceneBase {
             onSelectButtonClicked: achivementSceneClicked()
         }
         Selectbutton {
-imageSource: "../../assets/selectLevel/shop.png"
-onSelectButtonClicked: shopSceneClicked()
+            imageSource: "../../assets/selectLevel/shop.png"
+            onSelectButtonClicked: shopSceneClicked()
         }
         Selectbutton {
-//imageSource: "../../assets/selectLevel/bag.png"
+            //imageSource: "../../assets/selectLevel/bag.png"
             onSelectButtonClicked: bagSceneClicked()
         }
         Selectbutton {
-imageSource: "../../assets/selectLevel/more.png"
-onSelectButtonClicked: moreSceneClicked()
+            imageSource: "../../assets/selectLevel/more.png"
+            onSelectButtonClicked: moreSceneClicked()
         }
     }
-    Grid {
-        x: 592
-        anchors.rightMargin: 8
-        anchors.topMargin: -29
-        anchors.top: parent.top
-        anchors.right: parent.right
-
-        rows: 3
-        spacing: 8
-//        Selectbutton {
-//            text: "活动"
-//        }
-//        Selectbutton {
-//            text: "抽奖"
-//        }
-//        Selectbutton {
-//            text: "礼包"
-//        }
-    }
-    Grid {
-        anchors.leftMargin: 8
-        anchors.topMargin: -29
-        anchors.top: parent.top
-        anchors.left: parent.left
-
-        rows: 2
-        spacing: 8
-//        Selectbutton {
-//            text: "体力"
-//        }
-//        Selectbutton {
-//            text: "金币"
-//        }
-    }
-    Column{
+    Column {
         spacing: 10
         anchors.left: parent.left
         anchors.leftMargin: 10
+        anchors.top: parent.top
+        anchors.topMargin: 30
         x: 0
-        Rectangle{
-            id: physicalStrengthRect
-            radius: 25
-            width: 90
+        Rectangle {
+            x: -2
+            opacity: 0.9
+            color: "white"
+            width: 36
             height: 30
-            color: "#ffffff"
+            radius: 25
         }
-        Rectangle{
-            id: diamond
-            radius: 25
-            width: 90
+        Rectangle {
+            x: -2
+            opacity: 0.9
+            color: "white"
+            width: 36
             height: 30
-            color: "#ffffff"
+            radius: 25
         }
-        Rectangle{
-            id: money
-            radius: 25
-            width: 90
+        Rectangle {
+            x: -2
+            opacity: 0.9
+            color: "white"
+            width: 36
             height: 30
-            color: "#ffffff"
+            radius: 25
+        }
+    }
+
+    Column {
+        spacing: 10
+        anchors.left: parent.left
+        anchors.leftMargin: 10
+        anchors.top: parent.top
+        anchors.topMargin: 30
+        x: 0
+        Selectbutton {
+            imageSource: "../../assets/amazing/tx.png"
+            onSelectButtonClicked: shopSceneClicked()
+        }
+        Selectbutton {
+            imageSource: "../../assets/amazing/coin.png"
+            onSelectButtonClicked: shopSceneClicked()
+        }
+        Selectbutton {
+            imageSource: "../../assets/amazing/zs.png"
+            onSelectButtonClicked: shopSceneClicked()
         }
     }
 }
