@@ -1,17 +1,17 @@
 //GameScene
 import QtQuick 2.0
 import "../common"
-import gameSceneMessage 1.0
+
 
 SceneBase {
-    property int pressX
-    property int releaseX
-    property int pressY
-    property int releaseY
+    id:gameScene
+
     property bool mouseEnable
     signal pauseClicked
-    id:gameScene
+    property int levelNumber
+
     anchors.centerIn: parent.Center
+
     Image {
         id: background
         source: "../../assets/gaming/background.png"
@@ -50,64 +50,37 @@ SceneBase {
 
         }
     }
-    Rectangle {
+
+
+    Item {
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 40
         anchors.horizontalCenter: parent.horizontalCenter
-        border.color: "black"
-        border.width: 1
-        color: "white"
         height: 384
         width:256
-        opacity: 1
-        Grid
-        {
-            id:grid
+        Rectangle{
             anchors.fill: parent
-            rows:12
-            Repeater {
-                id: square
-                model:96
-                Image {
-                    id:image
-                    property GameSceneBlock block: gameSceneMessage.blocks(index)
+            border.color: "black"
+            border.width: 1
+            color: "white"
+            opacity: 0.5
+        }
+        Loader{id:loader}
 
-                    property int type: image.block.type
-
-                    source: {
-                        if(type === 0) {
-                            return "../../assets/gaming/1.png"
-                        }
-                        else if(type === 1) {
-                            return "../../assets/gaming/2.png"
-                        }
-                        else if(type === 2) {
-                            return "../../assets/gaming/3.png"
-                        }
-                        else if(type === 3) {
-                            return "../../assets/gaming/4.png"
-                        }
-                        else if(type === 4) {
-                            return "../../assets/gaming/5.png"
-                        }
-                    }
-                    MouseArea{
-                        anchors.fill: parent
-                        enabled: mouseEnable
-                        drag.target: parent
-                        property var start
-                        property  var distance
-                        onPressed:{
-                            pressX= image.block.row
-                            pressY = image.block.column
-                            start = { x: mouse.x, y: mouse.y }
-                        }
-                        onReleased: {
-                            distance = {x:mouse.x-start.x, y:mouse.y-start.y}
-                        }
-                    }
-                }
+        Connections{
+            target: selectLevelScene
+            onLevelsClicked:{
+                loader.sourceComponent = null
+                loader.sourceComponent = com
             }
         }
+
+        Component {
+            id: com
+            LevelBase{
+                mouseEnabled: mouseEnable
+            }
+        }
+
     }
 }

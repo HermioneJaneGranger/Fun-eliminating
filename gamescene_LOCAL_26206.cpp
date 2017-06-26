@@ -1,10 +1,11 @@
 #include "gamescene.h"
+
 #include <time.h>
 #include <iostream>
 
-QQmlListProperty<Block> GameScene::blockArray()
+QQmlListProperty<Block> GameScene::block()
 {
-    return QQmlListProperty<Block>(this,nullptr,GameScene::appendBlock,GameScene::countBlock,GameScene::atBlock,GameScene::clearBlock);
+    return QQmlListProperty<Block>(this,nullptr,&GameScene::appendBlock,0,0,0);
 }
 
 void GameScene::appendBlock(QQmlListProperty<Block> *list, Block *msg)
@@ -12,54 +13,19 @@ void GameScene::appendBlock(QQmlListProperty<Block> *list, Block *msg)
     GameScene *game = qobject_cast<GameScene *>(list->object);
     if(msg) {
         msg->setParent(game);
-        game->m_blocks.append(msg);
-    }
-    emit game->blockChanged();
-}
-
-int GameScene::countBlock(QQmlListProperty<Block> *list)
-{
-    GameScene *g = qobject_cast<GameScene *>(list->object);
-    if(g)
-        return g->m_blocks.count();
-    return 0;
-}
-
-Block *GameScene::atBlock(QQmlListProperty<Block> *list, int i)
-{
-    GameScene *g = qobject_cast<GameScene *>(list->object);
-    if(g)
-        return g->m_blocks.at(i);
-    return nullptr;
-}
-
-void GameScene::clearBlock(QQmlListProperty<Block>  *list)
-{
-    GameScene *g = qobject_cast<GameScene *>(list->object);
-    if(g)
-    {
-        g->m_blocks.clear();
-        emit g->blockChanged();
+        game->m_block.append(msg);
     }
 }
 
-void GameScene::refresh(int number)
-{
-    srand((unsigned)time(NULL));
-    for(int i = 0;i != 12;i++) {
-        for(int y = 0;y != 8;y++) {
-            int type = rand() % number;
-            m_blocks[i * 8 + y]->setType(type);
-        }
-    }
-}
-
+//void GameScene::setBlock(const QList<Block *> &block)
+//{
+//    m_block = block;
+//}
 
 Block *GameScene::blocks(int number) const
 {
-    return m_blocks[number];
+    return m_block[number];
 }
-
 
 GameScene::GameScene(int i)
 {
@@ -68,8 +34,8 @@ GameScene::GameScene(int i)
         for(int y = 0;y != 8;y++) {
             int type = rand() % i;
             Block *b = new Block(x,y,type);
+            m_block.push_back(b);
             std::cout << type << " ";
-            m_blocks.push_back(b);
         }
         std::cout << std::endl;
     }
@@ -78,10 +44,10 @@ GameScene::GameScene(int i)
 
 void GameScene::swap(int start_x, int start_y, int end_x, int end_y)
 {
-    int type_1 = m_blocks[start_x * 8 + start_y]->type();
-    int type_2 = m_blocks[end_x * 8 + end_y]->type();
-    m_blocks[start_x * 8 + start_y]->setType(type_2);
-    m_blocks[end_x * 8 + end_y]->setType(type_1);
+    int type_1 = m_block[start_x * 8 + start_y]->type();
+    int type_2 = m_block[end_x * 8 + end_y]->type();
+    m_block[start_x * 8 + start_y]->setType(type_2);
+    m_block[end_x * 8 + end_y]->setType(type_1);
 }
 
 
@@ -89,7 +55,7 @@ void GameScene::control(int begin_x, int begin_y)
 {
     QList<int> block;
     for(int i = 0;i != 96;i++) {
-        block.push_back(m_blocks[i]->type());
+        block.push_back(m_block[i]->type());
     }
     QList<int> b[2];
     b[0] = b[1] = block;
@@ -113,7 +79,7 @@ void GameScene::control(int begin_x, int begin_y)
             }
             block.clear();
             for(int i = 0;i != 96;i++) {
-                block.push_back(m_blocks[i]->type());
+                block.push_back(m_block[i]->type());
             }
             b[0] = b[1] = block;
         }
@@ -121,7 +87,7 @@ void GameScene::control(int begin_x, int begin_y)
 
     for(int x = 0;x != 12;x++){
         for(int y = 0;y != 8;y++){
-            std::cout << m_blocks[x * 8 + y]->type() << "  ";
+            std::cout << m_block[x * 8 + y]->type() << "  ";
         }
         std::cout << std::endl;
     }
@@ -154,11 +120,11 @@ void GameScene::clearBlocks(QList<int> &block)
 {
     for(int i = 0; i < 96; i++) {
         if(block[i] == -1) {
-            auto blocks = m_blocks[i];
+            auto blocks = m_block[i];
             if(blocks->type() != -1) {
 //                std::cout << i % 8 << "  " << i / 8 << std::endl;
 //                std::cout << "null" << std::endl;
-                m_blocks[i]->setType(-1);
+                m_block[i]->setType(-1);
             }
         }
     }

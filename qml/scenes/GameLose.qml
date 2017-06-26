@@ -17,13 +17,6 @@ SceneBase {
         anchors.topMargin: 70
     }
 
-    //        Row{
-    //            id:stars
-    //            spacing: 10
-    //            anchors.right: parent
-    //            anchors.rightMargin: 40
-    //            anchors.top: parent.top
-    //            anchors.topMargin: 80
     Text {
         id: lose
         text: "You  Lose"
@@ -89,12 +82,4 @@ SceneBase {
             anchors.bottomMargin: 14.5
         }
     }
-    //        function bool ifthreestars(scores)
-    //        {
-    //            if (scores != 0 &&2000 >scores > 1200 )
-    //                name1.visible = true;
-    //            if(scores >= 2000)
-    //                name2.visible= true;
-
-    //        }
 }
