@@ -1,8 +1,0 @@
-
-
-QQmlListProperty<Block> GamScene::block() const
-{
-    return QQmlListProperty<Block>(this,nullptr,&GamScene::appendBlock,0,0,0);
-}
-
-#include "gamscene.h"

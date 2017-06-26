@@ -14,32 +14,25 @@ int main(int argc, char *argv[])
     qmlRegisterType<GameScene>("gameSceneMessage",1,0,"GameSceneMessage");
     VPApplication vplay;
 
+
+//    app.setOrganizationDomain("net.vplay.demos.FunEliminating")
+//        app.setApplicationVersion("1.1");
+
+
     // QQmlApplicationEngine is the preferred way to start qml projects since Qt 5.2
     // if you have older projects using Qt App wizards from previous QtCreator versions than 3.1, please change them to QQmlApplicationEngine
     QQmlApplicationEngine engine;
-    QList<Block *> block;
-    srand((unsigned)time(NULL));
-    for(int x = 0;x != 8;x++) {
-        for(int y = 0;y != 12;y++) {
-            int type = rand() % 5;
-            std::cout << type;
-            Block *b = new Block(x,y,type);
-            block.push_back(b);
-        }
-    }
+
     GameScene gameScene(5);
-    gameScene.setBlock(block);
-    std::cout << gameScene.blocks(0)->type() << std::endl;
-    std::cout << gameScene.blocks(1)->type() << std::endl;
-    std::cout << gameScene.blocks(2)->type() << std::endl;
-    std::cout << gameScene.blocks(3)->type() << std::endl;
-    std::cout << gameScene.blocks(4)->type() << std::endl;
+
     engine.rootContext()->setContextProperty("gameSceneMessage",&gameScene);
+
     vplay.initialize(&engine);
 
     // use this during development
     // for PUBLISHING, use the entry point below
     vplay.setMainQmlFileName(QStringLiteral("qml/Main.qml"));
+//  engine.
 
     // use this instead of the above call to avoid deployment of the qml files and compile them into the binary with qt's resource system qrc
     // this is the preferred deployment option for publishing games to the app stores, because then your qml files and js files are protected

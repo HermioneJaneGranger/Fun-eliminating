@@ -7,9 +7,9 @@ SceneBase {
 
     Image {
         id: background
-        source: "../../assets/gamepass/bj.png"
+        source: "../../assets/commonWindow/bj.png"
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.left: parent.left
-        anchors.right: parent.right
+//        anchors.left: parent.left
+//        anchors.right: parent.right
     }
 }

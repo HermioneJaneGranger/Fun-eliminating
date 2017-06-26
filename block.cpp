@@ -30,6 +30,5 @@ int Block::type() const
 
 void Block::setType(int type)
 {
-    srand((unsigned)time(NULL));
-    m_type = rand() % type;
+    m_type = type;
 }

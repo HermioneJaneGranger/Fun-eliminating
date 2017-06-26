@@ -9,7 +9,7 @@ Rectangle {
     border.width: 1
     border.color: "black"
 
-    signal clicked
+    signal commonButtonClicked
 
     MouseArea {
         anchors.fill: parent

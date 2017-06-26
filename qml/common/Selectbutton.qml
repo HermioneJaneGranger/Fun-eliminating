@@ -1,28 +1,23 @@
 import QtQuick 2.0
 
-Rectangle {
-    id:button
-    radius: 10
-    color:"white"
+Item{
+    id:functionButton
+    property string imageSource
+    width: 30
+    height: width
+//    property alias text: buttonText.text
+    signal selectButtonClicked
 
-    width: 40
-    height: 30
-    property alias text: buttonText.text
-    signal clicked
-
-    Text {
-      id: buttonText
-      anchors.centerIn: parent
-      font.pixelSize: 18
-      color: "black"
-    }
-
-    MouseArea {
-      id: mouseArea
-      anchors.fill: parent
-      hoverEnabled: true
-      onClicked: button.clicked()
-      onPressed: button.opacity = 0.5
-      onReleased: button.opacity = 1
+    Image {
+        id: name
+        source: imageSource
+        anchors.fill: parent
+        MouseArea {
+          anchors.fill: parent
+//          hoverEnabled: true
+          onClicked: selectButtonClicked()
+//          onPressed: button.opacity = 0.5
+//          onReleased: button.opacity = 1
+        }
     }
 }

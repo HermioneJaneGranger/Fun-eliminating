@@ -1,16 +1,32 @@
 //GameScene
 import QtQuick 2.0
 import "../common"
-import gameSceneMessage 1.0
+
 
 SceneBase {
     id:gameScene
+    property bool mouseEnable
+    property int levelNumber
+    signal pauseClicked
     anchors.centerIn: parent.Center
     Image {
         id: background
-        source: "../../assets/background.png"
-        anchors.fill: parent.fill
+        source: "../../assets/gaming/background.png"
+        anchors.fill: parent
+        Image {
+            id: pauseButton
+            source: "../../assets/gaming/pause.png"
+            anchors.top: parent.top
+            anchors.right: parent.right
+            anchors.topMargin: 3
+            anchors.rightMargin: 3
+            MouseArea{
+                anchors.fill: parent
+                onClicked: pauseClicked()
+            }
+        }
     }
+
     Row {
         anchors.bottom: parent.bottom
         anchors.right: parent.right
@@ -31,48 +47,37 @@ SceneBase {
 
         }
     }
-    Rectangle {
+
+
+    Item {
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 40
         anchors.horizontalCenter: parent.horizontalCenter
-        border.color: "black"
-        border.width: 1
-        color: "white"
         height: 384
         width:256
-        Grid
-        {
-            id:grid
+        Rectangle{
             anchors.fill: parent
-            rows: 12
-            Repeater {
-                id: square
-                model:96
-                Image {
-                    id:image
-                    property GameSceneBlock block: gameSceneMessage.blocks(index)
+            border.color: "black"
+            border.width: 1
+            color: "white"
+            opacity: 0.5
+        }
+        Loader{id:loader}
 
-                    property int type: image.block.type
-                    source: {
-                        if(type === 0) {
-                            return "../../assets/1.png"
-                        }
-                        else if(type === 1) {
-                            return "../../assets/2.png"
-                        }
-                        else if(type === 2) {
-                            return "../../assets/3.png"
-                        }
-                        else if(type === 3) {
-                            return "../../assets/4.png"
-                        }
-                        else if(type === 4) {
-                            return "../../assets/5.png"
-                        }
-
-                    }
-                }
+        Connections{
+            target: selectLevelScene
+            onLevelsClicked:{
+                loader.sourceComponent = null
+                loader.sourceComponent = com
             }
         }
+
+        Component {
+            id: com
+            LevelBase {
+                mouseEnabled: mouseEnable
+            }
+        }
+
     }
 }

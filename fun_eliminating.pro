@@ -50,4 +50,5 @@ HEADERS += \
     gamescene.h
 
 DISTFILES += \
-    qml/scenes/Gamepass.qml
+    qml/scenes/GamePass.qml \
+    qml/scenes/GameLoading.qml
