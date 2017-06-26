@@ -97,13 +97,31 @@ SceneBase {
                         drag.target: parent
                         property var start
                         property  var distance
+                        property var posChangeFlag
                         onPressed:{
-                            pressX= image.block.row
-                            pressY = image.block.column
+//                            pressX= image.block.row+1
+//                            pressY = image.block.column+1
+//                            console.log(pressX +"    "+ pressY)
                             start = { x: mouse.x, y: mouse.y }
+                            console.log("xxx:  "+start.x)
                         }
                         onReleased: {
                             distance = {x:mouse.x-start.x, y:mouse.y-start.y}
+                            console.log("i "+image.implicitWidth)
+                            console.log("x "+distance.x)
+//                            releaseX = (Math.abs(distance.x)>image.width/2.0) ? (distance.x<0 ? pressX-1 : pressX+1) : pressX
+//                            releaseY= (Math.abs(distance.Y)>image.height/2.0) ? (distance.x<0 ? pressY-1 : pressY+1) : pressY
+//                            console.log("88888   "+releaseX+"   "+releaseY)
+                        }
+                        onClicked: {
+                            console.log("x "+mouseX +"  "+mouse.x)
+                            console.log("y "+mouseY +"  "+ mouse.y)
+
+                        }
+//                        drag.hotSpot:
+                        onPositionChanged: {
+//                            console.log("sdsds")
+                            posChangeFlag = 1
                         }
                     }
                 }
