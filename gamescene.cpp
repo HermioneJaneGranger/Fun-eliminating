@@ -1,5 +1,4 @@
 #include "gamescene.h"
-
 #include <time.h>
 #include <iostream>
 
@@ -51,27 +50,16 @@ void GameScene::refresh(int number)
         for(int y = 0;y != 8;y++) {
             int type = rand() % number;
             m_blocks[i * 8 + y]->setType(type);
-            std::cout << type << "  ";
         }
-        std::cout << std::endl;
     }
-    //    std::cout << m_blocks[0]->type() << std::endl;
 }
+
 
 Block *GameScene::blocks(int number) const
 {
     return m_blocks[number];
 }
 
-//void GameScene::setBlock(const QList<Block *> &block)
-//{
-//    m_blocks = block;
-//}
-
-//QList<Block *> GameScene::block() const
-//{
-//    return m_blocks;
-//}
 
 GameScene::GameScene(int i)
 {
@@ -81,9 +69,6 @@ GameScene::GameScene(int i)
             int type = rand() % i;
             Block *b = new Block(x,y,type);
             m_blocks.push_back(b);
-            std::cout << type << "  ";
         }
-        std::cout << std::endl;
     }
-    std::cout << std::endl;
 }

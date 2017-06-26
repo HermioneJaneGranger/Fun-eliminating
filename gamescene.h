@@ -21,17 +21,11 @@ public:
 
     Q_INVOKABLE Block *blocks(int number)
     const;
-//    Q_INVOKABLE QQmlListProperty<Block *>blockArray() const
-//    {
-//        return m_blocks;
-//    }
 
-        void setBlock(const QList<Block *> &block);
-
-//        QList<Block *> block() const;
 
 signals:
     void blockChanged();
+
 private:
     QList<Block *> m_blocks;
     static void appendBlock(QQmlListProperty<Block> *list, Block *msg);

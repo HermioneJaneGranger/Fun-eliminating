@@ -1,6 +1,6 @@
 import VPlay 2.0
 import QtQuick 2.0
-import "scenes"
+import "./scenes"
 import gameSceneMessage 1.0
 
 GameWindow {
@@ -75,10 +75,6 @@ GameWindow {
         opacity: 0
     }
 
-    GamePass {
-        id: gamepass
-        opacity:0
-    }
     GameScene {
         id: gameScene
         opacity: 0
@@ -93,6 +89,6 @@ GameWindow {
             activeScene: pauseMenuScene
             achievementScene.opacity = 0
         }
-    }
+        }
 
 }

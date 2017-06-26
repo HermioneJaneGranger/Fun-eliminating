@@ -5,10 +5,13 @@ import "../common"
 
 SceneBase {
     id:gameScene
+
     property bool mouseEnable
-    property int levelNumber
     signal pauseClicked
+    property int levelNumber
+
     anchors.centerIn: parent.Center
+
     Image {
         id: background
         source: "../../assets/gaming/background.png"
@@ -74,7 +77,7 @@ SceneBase {
 
         Component {
             id: com
-            LevelBase {
+            LevelBase{
                 mouseEnabled: mouseEnable
             }
         }

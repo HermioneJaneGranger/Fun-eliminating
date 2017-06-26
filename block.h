@@ -21,8 +21,8 @@ public:
     void setColumn(int column);
 
     int type() const;
-
     Q_INVOKABLE void setType(int type);
+
 signals:
     void rowChanged();
     void columnChanged();

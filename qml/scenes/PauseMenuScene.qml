@@ -12,10 +12,12 @@ SceneBase{
     signal goHomeClicked
     signal exitClicked
 
+
     Image {
         id: windowBg
         anchors.centerIn: parent
         source: "../../assets/commonWindow/bj.png"
+
         width: parent.width/4*3
         height: width
         Image {
@@ -49,6 +51,7 @@ SceneBase{
                 horizontalAlignment: Text.AlignHCenter
                 anchors.centerIn: parent
             }
+
             MouseArea{
                 anchors.fill: parent
                 onClicked: continueClicked()
@@ -91,6 +94,7 @@ SceneBase{
                 horizontalAlignment: Text.AlignHCenter
                 anchors.centerIn: parent
             }
+
             MouseArea{
                 anchors.fill: parent
                 onClicked: exitClicked()

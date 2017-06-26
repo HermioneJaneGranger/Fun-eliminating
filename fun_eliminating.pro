@@ -50,5 +50,19 @@ HEADERS += \
     gamescene.h
 
 DISTFILES += \
+    qml/Main.qml \
+    qml/scenes/Settings.qml \
+    qml/scenes/SelectLevelScene.qml \
+    qml/scenes/PauseMenuScene.qml \
+    qml/scenes/GameStore.qml \
+    qml/scenes/GameStart.qml \
+    qml/scenes/GameScene.qml \
     qml/scenes/GamePass.qml \
+    qml/scenes/GameLose.qml \
+    qml/scenes/GameInitScene.qml \
+    qml/scenes/AchievementScene.qml \
+    qml/common/Selectbutton.qml \
+    qml/common/SceneBase.qml \
+    qml/common/MenuButton.qml \
+    qml/common/LevelBase.qml
     qml/scenes/GameLoading.qml
