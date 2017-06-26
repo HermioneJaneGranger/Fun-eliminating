@@ -1,7 +1,6 @@
 //PauseMenuScene
 import QtQuick 2.0
 import VPlay 2.0
-
 import QtQuick.Controls 2.1
 import QtQuick.Layouts 1.1
 import "../common"
@@ -12,6 +11,7 @@ SceneBase{
     signal continueClicked
     signal goHomeClicked
     signal exitClicked
+
 
     Image {
         id: windowBg

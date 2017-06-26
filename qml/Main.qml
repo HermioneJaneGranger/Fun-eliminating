@@ -1,10 +1,10 @@
 import VPlay 2.0
 import QtQuick 2.0
-import "scenes"
+import "./scenes"
+import gameSceneMessage 1.0
 
 GameWindow {
     id: gameWindow
-
 
     // You get free licenseKeys from https://v-play.net/licenseKey
     // With a licenseKey you can:
@@ -68,7 +68,7 @@ GameWindow {
             gameScene.opacity = 0
             gamestore.opacity = 0
             pauseMenuScene.opacity = 0
-           opacity =0
+            opacity =0
             settings.opacity = 0
         }
         onMoreSceneClicked: {
@@ -114,6 +114,8 @@ GameWindow {
             settings.opacity = 0
         }
     }
+
+
     Connections {
         target: nativeUtils
         onMessageBoxFinished: {
@@ -126,6 +128,7 @@ GameWindow {
     //           text: "Open V-Play Website"
     //           onClicked: nativeUtils.openUrl("https://v-play.net")
     //         }
+
     function openMessageBoxWithQuitQuestion() {
         nativeUtils.displayMessageBox(qsTr("Really quit the game?"), "", 2);
     }
@@ -135,11 +138,11 @@ GameWindow {
         opacity: 0
     }
 
-
-    GameScene{
+    GameScene {
         id: gameScene
         opacity: 0
         mouseEnable: true
+        levelNumber: selectLevelScene.levelChoose
         onPauseClicked: {
             opacity = 0.1
             pauseMenuScene.opacity = 1
@@ -157,26 +160,6 @@ GameWindow {
     }
 
 
-    GamePass {
-        id: gamepass
-        opacity: 0
-    }
-    GameLose {
-        id: gamelose
-        opacity: 0
-    }
-
-    GameStart {
-        id: gamestart
-        opacity: 0
-    }
-    Settings {
-        id: settings
-        opacity: 0
-    }
-    GameStore {
-        id: gamestore
-        opacity: 0
-    }
 }
+
 

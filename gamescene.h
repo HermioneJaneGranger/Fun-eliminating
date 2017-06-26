@@ -9,23 +9,29 @@
 class GameScene: public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QQmlListProperty<Block> block READ block NOTIFY blockChanged)
+    Q_PROPERTY(QQmlListProperty<Block> blockArray READ blockArray NOTIFY blockChanged)
     Q_CLASSINFO("DefaultProperty", "block")
 public:
     GameScene(QObject *parent = 0):QObject(parent){}
     GameScene(int i);
 
-    QQmlListProperty<Block> block();
-    static void appendBlock(QQmlListProperty<Block> *list, Block *msg);
+    QQmlListProperty<Block> blockArray();
 
-//    void setBlock(const QList<Block *> &block);
+    Q_INVOKABLE void refresh(int number);
 
-    Q_INVOKABLE Block *blocks(int number) const;
+    Q_INVOKABLE Block *blocks(int number)
+    const;
 
-    QList<Block *> m_block;
 
 signals:
     void blockChanged();
+
+private:
+    QList<Block *> m_blocks;
+    static void appendBlock(QQmlListProperty<Block> *list, Block *msg);
+    static int countBlock(QQmlListProperty<Block> *list);
+    static Block *atBlock(QQmlListProperty<Block> *list, int i);
+    static void clearBlock(QQmlListProperty<Block> *list);
 
 };
 
