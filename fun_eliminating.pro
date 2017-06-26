@@ -22,7 +22,9 @@ RESOURCES += #    resources.qrc # uncomment for publishing
 
 
 # The .cpp file which was generated for your project. Feel free to hack it.
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    block.cpp \
+    gamescene.cpp
 
 android {
     ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
@@ -43,9 +45,19 @@ macx {
     ICON = macx/app_icon.icns
 }
 
+HEADERS += \
+    block.h \
+    gamescene.h
+
 DISTFILES += \
+    qml/scenes/AchievementScene.qml \
+    qml/scenes/GameInitScene.qml \
     qml/scenes/GameLose.qml \
-    qml/scenes/Settings.qml \
     qml/scenes/GamePass.qml \
+    qml/scenes/GameScene.qml \
+    qml/scenes/GameStore.qml \
+    qml/scenes/PauseMenuScene.qml \
+    qml/scenes/SelectLevelScene.qml \
+    qml/scenes/Settings.qml \
     qml/scenes/GameStart.qml \
-    qml/scenes/GameStore.qml
+    qml/common/singleBlock.qml
