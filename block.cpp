@@ -2,6 +2,7 @@
 #include <iostream>
 
 #include <time.h>
+#include <vector>
 
 int Block::row() const
 {

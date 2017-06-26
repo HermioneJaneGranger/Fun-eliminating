@@ -5,14 +5,14 @@ import gameSceneMessage 1.0
 
 GameWindow {
     id: gameWindow
+
     screenWidth: 640
     screenHeight: 960
 
-    SelectLevelScene{
+    SelectLevelScene {
         id: selectLevelScene
         opacity: 1
-        onLevelsClicked:
-        {
+        onLevelsClicked: {
             gameScene.mouseEnable = true
             selectLevelScene.opacity = 0
             gameScene.opacity = 1
@@ -27,13 +27,16 @@ GameWindow {
             pauseMenuScene.opacity = 0
         }
         onShopSceneClicked: {
+
         }
         onBagSceneClicked: {
+
         }
         onMoreSceneClicked: {
+
         }
     }
-    PauseMenuScene{
+    PauseMenuScene {
         id: pauseMenuScene
         opacity: 0
         onExitClicked: openMessageBoxWithQuitQuestion()
@@ -53,31 +56,29 @@ GameWindow {
         }
     }
 
-
     Connections {
         target: nativeUtils
         onMessageBoxFinished: {
-            console.debug("the user confirmed the Ok/Cancel dialog with:", accepted)
-            if(accepted)
+            console.debug("the user confirmed the Ok/Cancel dialog with:",
+                          accepted)
+            if (accepted)
                 Qt.quit()
         }
     }
-        //    SimpleButton {
-        //           text: "Open V-Play Website"
-        //           onClicked: nativeUtils.openUrl("https://v-play.net")
-        //         }
+    //    SimpleButton {
+    //           text: "Open V-Play Website"
+    //           onClicked: nativeUtils.openUrl("https://v-play.net")
+    //         }
     function openMessageBoxWithQuitQuestion() {
-        nativeUtils.displayMessageBox(qsTr("Really quit the game?"), "", 2);
+        nativeUtils.displayMessageBox(qsTr("Really quit the game?"), "", 2)
     }
 
-    AchievementScene{
+    AchievementScene {
         id: achievementScene
         opacity: 0
     }
-
     GameScene {
         id: gameScene
-        opacity: 0
         mouseEnable: true
         levelNumber: selectLevelScene.levelChoose
         onPauseClicked: {
@@ -89,6 +90,5 @@ GameWindow {
             activeScene: pauseMenuScene
             achievementScene.opacity = 0
         }
-        }
-
+    }
 }
