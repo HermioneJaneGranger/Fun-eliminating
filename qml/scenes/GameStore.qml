@@ -41,7 +41,15 @@ SceneBase {
             anchors.fill: parent
             hoverEnabled: true
             onClicked: name.clicked()
-            onPressed: name.opacity = 0.5
+            onPressed: {
+                name3.visible = true
+                name4.visible = true
+                name5.visible = false
+                name6.visible = false
+                name7.visible = false
+                name8.visible = false
+                name.opacity = 0.5
+            }
             onReleased: name.opacity = 1
         }
     }
@@ -54,7 +62,22 @@ SceneBase {
         anchors.leftMargin: 139
         anchors.top: parent.top
         anchors.topMargin: 121
-        //        visible: false
+        MouseArea {
+            id: mouseArea1
+            anchors.fill: parent
+            hoverEnabled: true
+            onClicked: name1.clicked()
+            onPressed: {
+                name5.visible = true
+                name6.visible = true
+                name3.visible = false
+                name4.visible = false
+                name7.visible = false
+                name8.visible = false
+                name1.opacity = 0.5
+            }
+            onReleased: name1.opacity = 1
+        }
     }
     Image {
         id: name2
@@ -65,7 +88,22 @@ SceneBase {
         anchors.leftMargin: 214
         anchors.top: parent.top
         anchors.topMargin: 121
-        //        visible: false
+        MouseArea {
+            id: mouseArea2
+            anchors.fill: parent
+            hoverEnabled: true
+            onClicked: name2.clicked()
+            onPressed: {
+                name7.visible = true
+                name8.visible = true
+                name3.visible = false
+                name4.visible = false
+                name5.visible = false
+                name6.visible = false
+                name2.opacity = 0.5
+            }
+            onReleased: name2.opacity = 1
+        }
     }
 
     Image {
@@ -77,6 +115,7 @@ SceneBase {
         anchors.leftMargin: 80
         anchors.top: parent.top
         anchors.topMargin: 190
+        visible: false
     }
     Image {
         id: name4
@@ -87,7 +126,51 @@ SceneBase {
         anchors.leftMargin: 80
         anchors.top: parent.top
         anchors.topMargin: 275
-        //        visible: false
+        visible: false
+    }
+    Image {
+        id: name5
+        source: "../../assets/amazing/jb1.png"
+        width: parent.width / 5
+        height: parent.height / 8
+        anchors.left: parent.left
+        anchors.leftMargin: 80
+        anchors.top: parent.top
+        anchors.topMargin: 190
+        visible: false
+    }
+    Image {
+        id: name6
+        source: "../../assets/amazing/jb2.png"
+        width: parent.width / 5
+        height: parent.height / 8
+        anchors.left: parent.left
+        anchors.leftMargin: 80
+        anchors.top: parent.top
+        anchors.topMargin: 275
+        visible: false
+    }
+    Image {
+        id: name7
+        source: "../../assets/amazing/zs1.png"
+        width: parent.width / 5
+        height: parent.height / 8
+        anchors.left: parent.left
+        anchors.leftMargin: 80
+        anchors.top: parent.top
+        anchors.topMargin: 190
+        visible: false
+    }
+    Image {
+        id: name8
+        source: "../../assets/amazing/zs2.png"
+        width: parent.width / 5
+        height: parent.height / 8
+        anchors.left: parent.left
+        anchors.leftMargin: 80
+        anchors.top: parent.top
+        anchors.topMargin: 275
+        visible: false
     }
     Text {
         id: coinnumber
