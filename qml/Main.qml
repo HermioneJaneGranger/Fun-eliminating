@@ -25,18 +25,18 @@ GameWindow {
     screenWidth: 960
     screenHeight: 640
 
-    //    SelectLevelScene{
-    //        id: selectLevelScene
-    //        opacity: 1
-    //    //    }
+    SelectLevelScene {
+        id: selectLevelScene
+        opacity: 1
+    }
     //    Gamepass {
     //        id: gamepass
     //        opacity: 1
     //    }
-    //        GameLose {
-    //            id: gamelose
-    //            opacity: 1
-    //        }
+    //    GameLose {
+    //        id: gamelose
+    //        opacity: 1
+    //    }
     //    PauseMenuScene {
     //        id: pausemenuscene
     //        opacity: 1
@@ -49,8 +49,8 @@ GameWindow {
     //        id: settings
     //        opacity: 1
     //    }
-    Gamestore {
-        id: gamestore
-        opacity: 1
-    }
+    //    Gamestore {
+    //        id: gamestore
+    //        opacity: 1
+    //    }
 }

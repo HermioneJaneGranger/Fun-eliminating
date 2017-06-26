@@ -35,6 +35,15 @@ SceneBase {
         anchors.leftMargin: 56
         anchors.top: parent.top
         anchors.topMargin: 121
+
+        MouseArea {
+            id: mouseArea
+            anchors.fill: parent
+            hoverEnabled: true
+            onClicked: name.clicked()
+            onPressed: name.opacity = 0.5
+            onReleased: name.opacity = 1
+        }
     }
     Image {
         id: name1
