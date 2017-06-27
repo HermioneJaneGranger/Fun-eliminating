@@ -66,20 +66,25 @@ SceneBase {
             color: "white"
             opacity: 0.5
         }
-        Loader{id:loader}
-
-        Connections{
-            target: selectLevelScene
-            onLevelsClicked:{
-                loader.sourceComponent = null
-                loader.sourceComponent = com
-            }
+        Loader{
+            id:loader
+            sourceComponent: com
         }
+
+//        Connections{
+//            target: selectLevelScene
+//            onLevelsClicked:{
+//                loader.sourceComponent = null
+//                loader.sourceComponent = com
+//            }
+//        }
 
         Component {
             id: com
             LevelBase{
                 mouseEnabled: mouseEnable
+                width: 32*8
+                height: 32*12
             }
         }
 

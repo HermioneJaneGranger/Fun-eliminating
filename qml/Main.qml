@@ -23,135 +23,136 @@ GameWindow {
     screenWidth: 640
     screenHeight: 960
 
-    SelectLevelScene{
-        id: selectLevelScene
-        opacity: 1
-        onLevelsClicked: {
-            gameScene.opacity = 1
-            gameScene.mouseEnable = true
-            activeScene = gameScene
-            //            achievementScene.opacity = 0;
-            //            gamepass.opacity = 0
-            //            gamestart.opacity = 0
-            //            gamelose.opacity = 0
-            //            gamestore.opacity = 0
-            pauseMenuScene.opacity = 0
-            opacity =0
-            //            settings.opacity = 0
-        }
-        onAchivementSceneClicked: {
-            //            achievementScene.opacity = 1;
-            //            gamepass.opacity = 0
-            //            gamestart.opacity = 0
-            //            gamelose.opacity = 0
-            gameScene.opacity = 0
-            //            gamestore.opacity = 0
-            pauseMenuScene.opacity = 0
-            opacity =0
-            //            settings.opacity = 0
-        }
-        onShopSceneClicked: {
-            //            achievementScene.opacity = 0;
-            //            gamepass.opacity = 0
-            //            gamestart.opacity = 0
-            //            gamelose.opacity = 0
-            gameScene.opacity = 0
-            //            gamestore.opacity = 1
-            pauseMenuScene.opacity = 0
-            opacity =0
-            //            settings.opacity = 0
-        }
-        onBagSceneClicked: {
-            //            achievementScene.opacity = 0;
-            //            gamepass.opacity = 0
-            //            gamestart.opacity = 0
-            //            gamelose.opacity = 0
-            gameScene.opacity = 0
-            //            gamestore.opacity = 0
-            pauseMenuScene.opacity = 0
-            opacity =0
-            //            settings.opacity = 0
-        }
-        onMoreSceneClicked: {
-            //            achievementScene.opacity = 0;
-            //            gamepass.opacity = 0
-            //            gamestart.opacity = 0
-            //            gamelose.opacity = 0
-            gameScene.opacity = 0
-            //            gamestore.opacity = 0
-            pauseMenuScene.opacity = 0
-            opacity =0
-            //            settings.opacity = 1
+//    SelectLevelScene{
+//        id: selectLevelScene
+//        opacity: 1
+//        onLevelsClicked: {
+//            gameScene.opacity = 1
+//            gameScene.mouseEnable = true
+//            activeScene = gameScene
+//            //            achievementScene.opacity = 0;
+//            //            gamepass.opacity = 0
+//            //            gamestart.opacity = 0
+//            //            gamelose.opacity = 0
+//            //            gamestore.opacity = 0
+//            pauseMenuScene.opacity = 0
+//            opacity =0
+//            //            settings.opacity = 0
+//        }
+//        onAchivementSceneClicked: {
+//            //            achievementScene.opacity = 1;
+//            //            gamepass.opacity = 0
+//            //            gamestart.opacity = 0
+//            //            gamelose.opacity = 0
+//            gameScene.opacity = 0
+//            //            gamestore.opacity = 0
+//            pauseMenuScene.opacity = 0
+//            opacity =0
+//            //            settings.opacity = 0
+//        }
+//        onShopSceneClicked: {
+//            //            achievementScene.opacity = 0;
+//            //            gamepass.opacity = 0
+//            //            gamestart.opacity = 0
+//            //            gamelose.opacity = 0
+//            gameScene.opacity = 0
+//            //            gamestore.opacity = 1
+//            pauseMenuScene.opacity = 0
+//            opacity =0
+//            //            settings.opacity = 0
+//        }
+//        onBagSceneClicked: {
+//            //            achievementScene.opacity = 0;
+//            //            gamepass.opacity = 0
+//            //            gamestart.opacity = 0
+//            //            gamelose.opacity = 0
+//            gameScene.opacity = 0
+//            //            gamestore.opacity = 0
+//            pauseMenuScene.opacity = 0
+//            opacity =0
+//            //            settings.opacity = 0
+//        }
+//        onMoreSceneClicked: {
+//            //            achievementScene.opacity = 0;
+//            //            gamepass.opacity = 0
+//            //            gamestart.opacity = 0
+//            //            gamelose.opacity = 0
+//            gameScene.opacity = 0
+//            //            gamestore.opacity = 0
+//            pauseMenuScene.opacity = 0
+//            opacity =0
+//            //            settings.opacity = 1
 
-        }
+//        }
 
-    }
-    PauseMenuScene {
-        id: pauseMenuScene
-        opacity: 0
-        onExitClicked: openMessageBoxWithQuitQuestion()
-        onGoHomeClicked: {
-            opacity = 0
-            gameScene.opacity = 0
-            gameScene.mouseEnable = false
-            selectLevelScene.opacity = 1
-            //            achievementScene.opacity = 0
-            //            gamepass.opacity = 0
-            //            gamestart.opacity = 0
-            //            gamelose.opacity = 0
-            //            gamestore.opacity = 0
-            //            settings.opacity = 0
-        }
-        onContinueClicked: {
-            opacity = 0
-            gameScene.opacity = 1
-            gameScene.mouseEnable = true
-            selectLevelScene.opacity = 0
-            //            achievementScene.opacity = 0;
-            //            gamepass.opacity = 0
-            //            gamestart.opacity = 0
-            //            gamelose.opacity = 0
-            //            gamestore.opacity = 0
-            //            settings.opacity = 0
-        }
-    }
+//    }
+//    PauseMenuScene {
+//        id: pauseMenuScene
+//        opacity: 0
+//        onExitClicked: openMessageBoxWithQuitQuestion()
+//        onGoHomeClicked: {
+//            opacity = 0
+//            gameScene.opacity = 0
+//            gameScene.mouseEnable = false
+//            selectLevelScene.opacity = 1
+//            //            achievementScene.opacity = 0
+//            //            gamepass.opacity = 0
+//            //            gamestart.opacity = 0
+//            //            gamelose.opacity = 0
+//            //            gamestore.opacity = 0
+//            //            settings.opacity = 0
+//        }
+//        onContinueClicked: {
+//            opacity = 0
+//            gameScene.opacity = 1
+//            gameScene.mouseEnable = true
+//            selectLevelScene.opacity = 0
+//            //            achievementScene.opacity = 0;
+//            //            gamepass.opacity = 0
+//            //            gamestart.opacity = 0
+//            //            gamelose.opacity = 0
+//            //            gamestore.opacity = 0
+//            //            settings.opacity = 0
+//        }
+//    }
 
-    Connections {
-        target: nativeUtils
-        onMessageBoxFinished: {
-            console.debug("the user confirmed the Ok/Cancel dialog with:",
-                          accepted)
-            if (accepted)
-                Qt.quit()
-        }
-    }
-    //    SimpleButton {
-    //           text: "Open V-Play Website"
-    //           onClicked: nativeUtils.openUrl("https://v-play.net")
-    //         }
+//    Connections {
+//        target: nativeUtils
+//        onMessageBoxFinished: {
+//            console.debug("the user confirmed the Ok/Cancel dialog with:",
+//                          accepted)
+//            if (accepted)
+//                Qt.quit()
+//        }
+//    }
+//    //    SimpleButton {
+//    //           text: "Open V-Play Website"
+//    //           onClicked: nativeUtils.openUrl("https://v-play.net")
+//    //         }
 
-    function openMessageBoxWithQuitQuestion() {
-        nativeUtils.displayMessageBox(qsTr("Really quit the game?"), "", 2)
-    }
+//    function openMessageBoxWithQuitQuestion() {
+//        nativeUtils.displayMessageBox(qsTr("Really quit the game?"), "", 2)
+//    }
 
     GameScene {
         id: gameScene
         mouseEnable: true
-        levelNumber: selectLevelScene.levelChoose
-        onPauseClicked: {
-            opacity = 0.1
-            pauseMenuScene.opacity = 1
-            pauseMenuScene.z = 1
-            mouseEnable = false
-            activeScene: pauseMenuScene
-            selectLevelScene.opacity = 0
-            //            achievementScene.opacity = 0
-            //            gamepass.opacity = 0
-            //            gamestart.opacity = 0
-            //            gamelose.opacity = 0
-            //            gamestore.opacity = 1
-            //            settings.opacity = 0
-        }
+        opacity: 1
+//        levelNumber: selectLevelScene.levelChoose
+//        onPauseClicked: {
+//            opacity = 0.1
+//            pauseMenuScene.opacity = 1
+//            pauseMenuScene.z = 1
+//            mouseEnable = false
+//            activeScene: pauseMenuScene
+//            selectLevelScene.opacity = 0
+//            //            achievementScene.opacity = 0
+//            //            gamepass.opacity = 0
+//            //            gamestart.opacity = 0
+//            //            gamelose.opacity = 0
+//            //            gamestore.opacity = 1
+//            //            settings.opacity = 0
+//        }
     }
 }
 

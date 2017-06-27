@@ -1,5 +1,5 @@
 //LevelBase
-import QtQuick 2.0
+import QtQuick 2.7
 import gameSceneMessage 1.0
 import VPlay 2.0
 
@@ -17,198 +17,169 @@ Item {
         rows:12
         property GameSceneMessage message: {
             gameSceneMessage.refresh(5)
-            console.log("refresh")
+            //            console.log("refresh")
             return gameSceneMessage
 
         }
         Repeater {
             id: square
             model:96
-            MouseArea{
-
-            }
-
-            Image {
-                id:image
-
-                property GameSceneBlock block:/*gameScene*/grid.message.blocks(index)
-
-                property int type: block.type
-                property int pressX
-                property int pressY
-                property int releaseX
-                property int releaseY
-                signal singleBlockChanged
-
-                source: {
-                    if(type === 0) {
-                        return "../../assets/gaming/1.png"
-                    }
-                    else if(type === 1) {
-                        return "../../assets/gaming/2.png"
-                    }
-                    else if(type === 2) {
-                        return "../../assets/gaming/3.png"
-                    }
-                    else if(type === 3) {
-                        return "../../assets/gaming/4.png"
-                    }
-                    else if(type === 4) {
-                        return "../../assets/gaming/5.png"
-                    }
-                }
+            Item{
+                id: sibling
+                width:32
+                height:32
+                property var number:index
+                property var imageEnding: image
                 MouseArea{
-                    property var prePostion
-                    property var distance
-                    id : imageMouse
+                    id:allArea
                     anchors.fill: parent
-                    drag.target: parent
-                    enabled: mouseEnabled && (!wait)
-                    drag.maximumX: pressX==8?(image.width*(pressX-1)):(image.width*(pressX))
-                    drag.maximumY: pressY==8?(image.width*(pressY-1)):(image.width*(pressY))
-                    drag.minimumX: pressX==1?(image.width*(pressX-1)):(image.width*(pressX-2))
-                    drag.minimumY: pressY==1?(image.width*(pressY-1)):
-                                              (image.width*(pressY-2))
+                    //                    containsMouse: true
+                    //                    containsPress: true
+                    property var prePosition
+                    property var distance
+                    property int preX
+                    property int curX
+                    property int preY
+                    property int curY
+                    property var preImage
+                    property var curImage
                     onPressed: {
-                        console.log("---"+square.itemAt(index).x + "  "+square.itemAt(index).y)
-                        prePostion={x:(square.itemAt(index).x), y:(square.itemAt(index).y)}
-                        pressX = image.block.column+1
-                        pressY = image.block.row+1
+                        prePosition={x:mouse.x, y:mouse.y}
+                        console.log(mouse.x+"  dsd")
+                        preY=number/8
+                        preX=index-preY*8
+                    }
+                    onReleased: {
+//                        gameSceneMessage.swap(preX, preY, curX, curY)
+                        distance={x:mouse.x-prePosition.x, y:mouse.y-prePosition.y}
+                        var l = !containsMouse && preX === 0 && distance.x > 0
+                        var l2 = !containsMouse && preX===7&&distance.x<0
+                        var l3 = !containsMouse && preX !== 7 &&preX!==0&&distance.x < 0
+                        var l4 = !containsMouse && preX !== 7 &&preX!==0&&distance.x > 0
+                        curX = l?(preX+1):(l2?(preX-1):(l3?(preX-1):(l4?(preX+1):preX)))
+                        var l5 = !containsMouse && preY === 0 && distance.y > 0
+                        var l6 = !containsMouse && preY===11&&distance.y<0
+                        var l7 = !containsMouse && preY !== 11 &&preY!==0&&distance.y< 0
+                        var l8 = !containsMouse && preY !==11 &&preY!==0&&distance.y > 0
+                        curY= l5?(preY+1):(l6?(preY-1):(l7?(preY-1):(l8?(preY+1):preY)))
+
+                        curX = (Math.abs(distance.x) < Math.abs(distance.y)) ? preX :curX
+                        curY = (Math.abs(distance.x) < Math.abs(distance.y)) ? curY :preY
+                        var tempc = curX
+                        curX = curY
+                        curY = tempc
+                        var tempp = preX
+                        preX = preY
+                        preY = tempp
+                        console.log("prex "+preX+"  "+preY)
+                        console.log("prex "+curX+"  "+curY)
+                        preImage =square.itemAt(number).imageEnding
+                        curImage = square.itemAt(8*curX+curY).imageEnding
+//                        Connections{
+//                            target:
+//                            onTypeChanged
+//                        }
+
+                        gameSceneMessage.swap(preX, preY, curX, curY)
+                        swap( preY, preX,curY, curX, preImage, curImage)
+
+
                     }
 
+                }
+                function swap(targetY, targetX,  preY, preX, tar1, tar2)
+                {
+                    swapAnimation.complete()
 
-                    onReleased:{
-                        console.log(square.itemAt(index).x + "  "+square.itemAt(index).y)
-                        distance={x:(square.itemAt(index).x-prePostion.x),y:(square.itemAt(index).y-prePostion.y)}
-                        console.log("dssdsddd"+distance.x+"  "+distance.y)
-                        releaseX = (Math.abs(distance.x) < image.width/2.0) ? pressX :( distance.x < 0)?pressX-1:pressX+1
-                        console.log(pressX+"===="+pressY)
-                        console.log(releaseX+"----"+releaseY)
-                        blockChanged
-                        wait=true
+                    if(targetX !== preX&&targetY === preY)
+                    {
+                        swapAnimation.target=tar1
+                        swapAnimation.property="y"
+                        swapAnimation.from = tar1.y
+                        swapAnimation.to=tar1.y+(targetX > preX ? -image.height: image.height)
+                        swapAnimation2.target=tar2
+                        swapAnimation2.property="y"
+                        swapAnimation2.from = tar2.y
+                        swapAnimation2.to = tar2.y+(targetX> preX ? image.height: -image.height)
+
+                        //                                        var temp = tar1
+                        //                                        tar1 =tar2
+                        //                                        tar2 = tar1
+
+                    }
+
+                    else if(targetY !== preY && targetX === preX) {
+                        swapAnimation.target=tar1
+                        swapAnimation.property="x"
+                        swapAnimation.from = tar1.x
+                        swapAnimation.to = tar1.x+(targetY > preY ? -image.width: image.width)
+                        swapAnimation2.target=tar2
+                        swapAnimation2.property="x"
+                        swapAnimation2.from = tar2.x
+                        swapAnimation2.to = tar2.x+(targetY> preY ? image.width: -image.width)
+
+                        //                                        var temp1 = tar1
+                        //                                        tar1 =tar2
+                        //                                        tar2 = tar1
+
+                    }
+
+                    else
+                        return
+
+                    swapAnimation.start()
+                    swapAnimation2.start()
+                }
+
+                Image {
+                    id:image
+
+                    property GameSceneBlock block:/*gameScene*/grid.message.blocks(index)
+                    property int type: block.type
+                    property int pressX
+                    property int pressY
+                    property int releaseX
+                    property int releaseY
+                    signal singleBlockChanged
+
+                    source: {
+                        if(type === 0) {
+                            return "../../assets/gaming/1.png"
+                        }
+                        else if(type === 1) {
+                            return "../../assets/gaming/2.png"
+                        }
+                        else if(type === 2) {
+                            return "../../assets/gaming/3.png"
+                        }
+                        else if(type === 3) {
+                            return "../../assets/gaming/4.png"
+                        }
+                        else if(type === 4) {
+                            return "../../assets/gaming/5.png"
+                        }
                     }
                 }
-                //                Item {//消除时候启动，设可见度，逐渐消失动画结束后结束
-                //                    id: particleItem
-                //                    width: parent.width
-                //                    height: parent.height
-                //                    x: parent.width/2
-                //                    y: parent.height/2
-
-                //                    ParticleVPlay {// 消除时候启动
-                //                        id: bingoEffect
-                //                        fileName: "../particles/BingoEffect.json"
-                //                    }
-                //                    opacity: 0
-                //                    visible: opacity > 0
-                //                    enabled: opacity > 0
-                //                }
-                // 消除时候启动
-                //                NumberAnimation {
-                //                    id: fadeOutAnimation
-                //                    target: image
-                //                    property: "opacity"
-                //                    duration: 500
-                //                    from: 1.0
-                //                    to: 0
-                //                    onStopped: {//消除后结束
-                //                        bingoEffect.stop()
-                //                    }
-                //                }
-                //                // 新方块出现时启动
-                //                NumberAnimation {
-                //                    id: fadeInAnimation
-                //                    target: image
-                //                    property: "opacity"
-                //                    duration: 1000
-                //                    from: 0
-                //                    to: 1
-                //                }
-
-                //                // 方块掉落
-                //                NumberAnimation {
-                //                    id: fallDownAnimation
-                //                    target: image
-                //                    property: "y"
-                //                    onStopped: {
-                //                        fallDownFinished(image)
-                //                    }
-                //                }
-
-                //                // timer to wait with fall-down until other blocks fade out
-                //                Timer {//下落动画开始时触发
-                //                    id: fallDownTimer
-                //                    interval: fadeOutAnimation.duration//每列消除的时间段
-                //                    repeat: false
-                //                    running: false
-                //                    onTriggered: {
-                //                        fallDownAnimation.start()
-                //                    }
-                //                }
-
-                //                // timer to wait a bit before signal swap finished
-                //                Timer {
-                //                    id: signalSwapFinished
-                //                    interval: 50
-                //                    onTriggered: swapFinished(block.previousRow, block.previousColumn, block.row, block.column)
-                //                }
-
-                //                // animation to move a block after swipe
-                //                NumberAnimation {
-                //                    id: swapAnimation
-                //                    target: image
-                //                    duration: 150
-                //                    onStopped: {
-                //                        signalSwapFinished.start() // trigger swapFinished
-                //                    }
-                //                }
-
-                //                function remove() {
-                //                    particleItem.opacity = 1
-                //                    sparkleParticle.start()
-                //                    fadeOutAnimation.start()
-                //                }
-
-                // trigger fall down of block
-                //                function fallDown(howMany) {
-                //                    fallDownAnimation.complete()
-
-                //                    fallDownAnimation.duration = 100 * howMany
-                //                    fallDownAnimation.to = block.y + howMany * image.height
-
-                //                    fallDownTimer.start()
-                //                }
-
-                //                // function to move block one step left/right/up or down
-                //                function swap(targetRow, targetCol) {
-                //                    swapAnimation.complete()
-
-                //                    block.previousRow = block.row
-                //                    block.previousColumn = block.column
-
-                //                    if(targetRow !== block.row) {
-                //                        swapAnimation.property = "y"
-                //                        swapAnimation.to = block.y +
-                //                                (targetRow > block.row ? block.height : -block.height)
-                //                        block.row = targetRow
-                //                    }
-                //                    else if(targetCol !== block.column) {
-                //                        swapAnimation.property = "x"
-                //                        swapAnimation.to = block.x +
-                //                                (targetCol > block.column ? block.width : -block.width)
-                //                        block.column = targetCol
-                //                    }
-                //                    else
-                //                        return
-
-                //                    swapAnimation.start()
-                //                }
-
-                ////                function fadeIn() {
-                ////                    fadeInAnimation.start()
-                ////                }
-
-
+                NumberAnimation {//交换动画
+                    id: swapAnimation
+                    duration: 150
+                    onStopped: {
+                        swapFinishedTimer.start() // trigger swapFinished
+                    }
+                }
+                NumberAnimation {//交换动画
+                    id: swapAnimation2
+                    duration: 150
+                    onStopped: {
+                        swapFinishedTimer.start() // trigger swapFinished
+                    }
+                }
+                // timer to wait a bit before signal swap finished
+                Timer {
+                    id: swapFinishedTimer
+                    interval: 50
+                    //                                      onTriggered: swapFinished(pressX,pressY,releaseX, releaseY)
+                }
             }
         }
     }
