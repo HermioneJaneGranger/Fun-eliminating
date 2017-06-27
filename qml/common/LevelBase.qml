@@ -9,6 +9,7 @@ Item {
     property int level
     property bool mouseEnabled
     property bool wait: false
+
     GameSceneMessage{
         id: gameScene
         property GameSceneMessage message: {
@@ -90,7 +91,6 @@ Item {
                         wait=true
                     }
                 }
-
             }
         }
     }
