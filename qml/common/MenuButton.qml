@@ -14,8 +14,8 @@ Rectangle {
     MouseArea {
         anchors.fill: parent
         onClicked: menuButton.clicked()
-        onPressed: menuButton.opacity = 0.5
-        onReleased: menuButton.opacity = 1
+        onPressed: menuButton.opacity = 0
+        onReleased: menuButton.opacity = 0.5
         hoverEnabled: true
     }
 

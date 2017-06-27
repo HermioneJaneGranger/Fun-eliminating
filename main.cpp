@@ -24,7 +24,8 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
 
     GameScene gameScene(5);
-    gameScene.control(0,0);
+//    gameScene.control(0,0);
+    gameScene.initPassScore();
 
     engine.rootContext()->setContextProperty("gameSceneMessage",&gameScene);
     vplay.initialize(&engine);

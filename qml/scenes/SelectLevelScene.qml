@@ -12,6 +12,7 @@ SceneBase {
     signal shopSceneClicked
     signal moreSceneClicked
     signal bagSceneClicked
+    signal exitClicked
 
     Image {
         id: selectLevelSceneImage1
@@ -189,8 +190,23 @@ SceneBase {
                     }
                 }
             }
+
             Repeater {
             }
+        }
+    }
+    Image{
+        id:closes
+        anchors.rightMargin: 3
+        anchors.topMargin: 5
+        source:"../../assets/selectLevel/bc.png"
+        anchors.top:parent.top
+        anchors.right: parent.right
+        MouseArea {
+            anchors.fill:  parent
+            onPressed: closes.opacity = 0.5
+            onReleased: closes.opacity = 1
+            onClicked: exitClicked()
         }
     }
     Row {
@@ -223,8 +239,8 @@ SceneBase {
         anchors.left: parent.left
         anchors.leftMargin: 10
         anchors.top: parent.top
-        anchors.topMargin: 30
-        x: 0
+        anchors.topMargin: 5
+
         Rectangle {
             x: -2
             opacity: 0.9
@@ -256,8 +272,8 @@ SceneBase {
         anchors.left: parent.left
         anchors.leftMargin: 10
         anchors.top: parent.top
-        anchors.topMargin: 30
-        x: 0
+        anchors.topMargin: 5
+
         Selectbutton {
             imageSource: "../../assets/amazing/tx.png"
             onSelectButtonClicked: shopSceneClicked()

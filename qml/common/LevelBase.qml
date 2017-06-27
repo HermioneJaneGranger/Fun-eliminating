@@ -9,18 +9,20 @@ Item {
     property int level
     property bool mouseEnabled
     property bool wait: false
+    GameSceneMessage{
+        id: gameScene
+        property GameSceneMessage message: {
+            gameSceneMessage.refresh(5)
+            return gameSceneMessage
+        }
+    }
 
     Grid
     {
         id:grid
         anchors.fill: parent
         rows:12
-        property GameSceneMessage message: {
-            gameSceneMessage.refresh(5)
-//            console.log("refresh")
-            return gameSceneMessage
 
-        }
         Repeater {
             id: square
             model:96
@@ -31,7 +33,7 @@ Item {
             Image {
                 id:image
 
-                property GameSceneBlock block:/*gameScene*/grid.message.blocks(index)
+                property GameSceneBlock block:/*gameScene*/gameScene.message.blocks(index)
 
                 property int type: block.type
                 property int pressX
@@ -88,126 +90,6 @@ Item {
                         wait=true
                     }
                 }
-                //                Item {//消除时候启动，设可见度，逐渐消失动画结束后结束
-                //                    id: particleItem
-                //                    width: parent.width
-                //                    height: parent.height
-                //                    x: parent.width/2
-                //                    y: parent.height/2
-
-                //                    ParticleVPlay {// 消除时候启动
-                //                        id: bingoEffect
-                //                        fileName: "../particles/BingoEffect.json"
-                //                    }
-                //                    opacity: 0
-                //                    visible: opacity > 0
-                //                    enabled: opacity > 0
-                //                }
-                // 消除时候启动
-                //                NumberAnimation {
-                //                    id: fadeOutAnimation
-                //                    target: image
-                //                    property: "opacity"
-                //                    duration: 500
-                //                    from: 1.0
-                //                    to: 0
-                //                    onStopped: {//消除后结束
-                //                        bingoEffect.stop()
-                //                    }
-                //                }
-                //                // 新方块出现时启动
-                //                NumberAnimation {
-                //                    id: fadeInAnimation
-                //                    target: image
-                //                    property: "opacity"
-                //                    duration: 1000
-                //                    from: 0
-                //                    to: 1
-                //                }
-
-                //                // 方块掉落
-                //                NumberAnimation {
-                //                    id: fallDownAnimation
-                //                    target: image
-                //                    property: "y"
-                //                    onStopped: {
-                //                        fallDownFinished(image)
-                //                    }
-                //                }
-
-                //                // timer to wait with fall-down until other blocks fade out
-                //                Timer {//下落动画开始时触发
-                //                    id: fallDownTimer
-                //                    interval: fadeOutAnimation.duration//每列消除的时间段
-                //                    repeat: false
-                //                    running: false
-                //                    onTriggered: {
-                //                        fallDownAnimation.start()
-                //                    }
-                //                }
-
-                //                // timer to wait a bit before signal swap finished
-                //                Timer {
-                //                    id: signalSwapFinished
-                //                    interval: 50
-                //                    onTriggered: swapFinished(block.previousRow, block.previousColumn, block.row, block.column)
-                //                }
-
-                //                // animation to move a block after swipe
-                //                NumberAnimation {
-                //                    id: swapAnimation
-                //                    target: image
-                //                    duration: 150
-                //                    onStopped: {
-                //                        signalSwapFinished.start() // trigger swapFinished
-                //                    }
-                //                }
-
-                //                function remove() {
-                //                    particleItem.opacity = 1
-                //                    sparkleParticle.start()
-                //                    fadeOutAnimation.start()
-                //                }
-
-                // trigger fall down of block
-                //                function fallDown(howMany) {
-                //                    fallDownAnimation.complete()
-
-                //                    fallDownAnimation.duration = 100 * howMany
-                //                    fallDownAnimation.to = block.y + howMany * image.height
-
-                //                    fallDownTimer.start()
-                //                }
-
-                //                // function to move block one step left/right/up or down
-                //                function swap(targetRow, targetCol) {
-                //                    swapAnimation.complete()
-
-                //                    block.previousRow = block.row
-                //                    block.previousColumn = block.column
-
-                //                    if(targetRow !== block.row) {
-                //                        swapAnimation.property = "y"
-                //                        swapAnimation.to = block.y +
-                //                                (targetRow > block.row ? block.height : -block.height)
-                //                        block.row = targetRow
-                //                    }
-                //                    else if(targetCol !== block.column) {
-                //                        swapAnimation.property = "x"
-                //                        swapAnimation.to = block.x +
-                //                                (targetCol > block.column ? block.width : -block.width)
-                //                        block.column = targetCol
-                //                    }
-                //                    else
-                //                        return
-
-                //                    swapAnimation.start()
-                //                }
-
-                ////                function fadeIn() {
-                ////                    fadeInAnimation.start()
-                ////                }
-
 
             }
         }
