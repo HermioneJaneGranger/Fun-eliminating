@@ -10,6 +10,8 @@ class GameScene: public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QQmlListProperty<Block> blockArray READ blockArray NOTIFY blockChanged)
+    Q_PROPERTY(int score READ score WRITE setScore NOTIFY scoreChanged)
+    Q_PROPERTY(QList<int> passScore READ passScore NOTIFY passScoreChanged)
     Q_CLASSINFO("DefaultProperty", "block")
 public:
     GameScene(QObject *parent = 0):QObject(parent){}
@@ -27,10 +29,22 @@ public:
     void moveBlocks();
 
 
+    void setScore(int score);
+
+    Q_INVOKABLE int score() const;
+
+    QList<int> passScore() const;
+    void setPassScore(const QList<int> &passScore);
+    void initPassScore();
+
 signals:
     void blockChanged();
+    void scoreChanged();
+    void passScoreChanged();
 
 private:
+    QList<int> m_passScore;
+    int m_score = 2000;
     QList<Block *> m_blocks;
     static void appendBlock(QQmlListProperty<Block> *list, Block *msg);
     static int countBlock(QQmlListProperty<Block> *list);

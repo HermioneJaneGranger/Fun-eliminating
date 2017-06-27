@@ -26,6 +26,7 @@ GameWindow {
     SelectLevelScene{
         id: selectLevelScene
         opacity: 1
+        onExitClicked: openMessageBoxWithQuitQuestion()
         onLevelsClicked: {
             gameScene.opacity = 1
             gameScene.mouseEnable = true
