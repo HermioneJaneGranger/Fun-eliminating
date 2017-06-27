@@ -269,6 +269,7 @@ SceneBase {
         Selectbutton {
             imageSource: "../../assets/amazing/zs.png"
             onSelectButtonClicked: shopSceneClicked()
+
         }
     }
 }

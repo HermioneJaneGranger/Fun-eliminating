@@ -24,15 +24,19 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
 
     GameScene gameScene(5);
+    gameScene.control(0,0);
+    std::cout << gameScene.blocks(0)->type() << std::endl;
+    std::cout << gameScene.blocks(1)->type() << std::endl;
+    gameScene.swap(0,0,0,1);
+    std::cout << gameScene.blocks(0)->type() << std::endl;
+    std::cout << gameScene.blocks(1)->type() << std::endl;
 
     engine.rootContext()->setContextProperty("gameSceneMessage",&gameScene);
-
     vplay.initialize(&engine);
 
     // use this during development
     // for PUBLISHING, use the entry point below
     vplay.setMainQmlFileName(QStringLiteral("qml/Main.qml"));
-//  engine.
 
     // use this instead of the above call to avoid deployment of the qml files and compile them into the binary with qt's resource system qrc
     // this is the preferred deployment option for publishing games to the app stores, because then your qml files and js files are protected

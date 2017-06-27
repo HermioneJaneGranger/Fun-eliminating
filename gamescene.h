@@ -19,8 +19,12 @@ public:
 
     Q_INVOKABLE void refresh(int number);
 
-    Q_INVOKABLE Block *blocks(int number)
-    const;
+    Q_INVOKABLE Block *blocks(int number) const;
+    Q_INVOKABLE void swap(int start_x,int start_y,int end_x, int end_y);
+    Q_INVOKABLE void control(int begin_x, int begin_y);
+    int sameOfNumber(QList<int> &block, int x, int y, int type,int x_Or_y);
+    void clearBlocks(QList<int> &block);
+    void moveBlocks();
 
 
 signals:
