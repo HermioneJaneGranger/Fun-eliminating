@@ -96,7 +96,7 @@ void GameScene::control(int begin_x, int begin_y)
     for(int x =begin_x;x != 12;x++) {
         for(int y = begin_y;y != 8;y++) {
             int type = block[x * 8 + y];
-            int number_x = sameOfNumber(b[0],x,y,type,0);
+            int number_x = sameOfNumber(b[0],x,y, type,0);
             int number_y = sameOfNumber(b[1],x,y,type,1);
 //            std::cout << x << "  "<< y << "  "  << type << "  "<<  number_x << "  " << number_y << std::endl;
             if(number_x >=3 && number_y >= 3) {

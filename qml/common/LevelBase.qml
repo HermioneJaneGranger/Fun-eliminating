@@ -21,7 +21,7 @@ Item {
         rows:12
         property GameSceneMessage message: {
             gameSceneMessage.refresh(5)
-            console.log("refresh")
+//            console.log("refresh")
             return gameSceneMessage
 
         }
