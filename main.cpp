@@ -25,11 +25,6 @@ int main(int argc, char *argv[])
 
     GameScene gameScene(5);
     gameScene.control(0,0);
-    std::cout << gameScene.blocks(0)->type() << std::endl;
-    std::cout << gameScene.blocks(1)->type() << std::endl;
-    gameScene.swap(0,0,0,1);
-    std::cout << gameScene.blocks(0)->type() << std::endl;
-    std::cout << gameScene.blocks(1)->type() << std::endl;
 
     engine.rootContext()->setContextProperty("gameSceneMessage",&gameScene);
     vplay.initialize(&engine);

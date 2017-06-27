@@ -98,18 +98,20 @@ void GameScene::control(int begin_x, int begin_y)
             int type = block[x * 8 + y];
             int number_x = sameOfNumber(b[0],x,y,type,0);
             int number_y = sameOfNumber(b[1],x,y,type,1);
+//            std::cout << x << "  "<< y << "  "  << type << "  "<<  number_x << "  " << number_y << std::endl;
             if(number_x >=3 && number_y >= 3) {
                 clearBlocks(b[0]);
                 clearBlocks(b[1]);
-                std::cout << "clear all ---" << number_x << number_y<<std::endl;
+
+//                std::cout << "clear all ---" << number_x << number_y<<std::endl;
             }
             else if(number_x >= 3 && number_y < 3) {
                 clearBlocks(b[0]);
-                std::cout << "clear x ---" << number_x << number_y <<std::endl;
+//                std::cout << "clear x ---" << number_x << number_y <<std::endl;
             }
             else if(number_y >= 3 && number_x < 3) {
                 clearBlocks(b[1]);
-                std::cout << "clear y --- " << number_x<< number_y <<std::endl;
+//                std::cout << "clear y --- " << number_x<< number_y <<std::endl;
             }
             block.clear();
             for(int i = 0;i != 96;i++) {
@@ -121,15 +123,16 @@ void GameScene::control(int begin_x, int begin_y)
 
     for(int x = 0;x != 12;x++){
         for(int y = 0;y != 8;y++){
-            std::cout << m_blocks[x * 8 + y]->type() << "  ";
+            std::cout << m_blocks[x * 8 + y]->type() << "      ";
         }
         std::cout << std::endl;
     }
+    moveBlocks();
 }
 
 int GameScene::sameOfNumber(QList<int> &block,int x,int y,int type,int x_Or_y)
 {
-    if(x >= 8 || x < 0 || y >= 12 || y < 0)
+    if(x >= 12 || x < 0 || y >= 8 || y < 0)
         return 0;
     int b = block[x * 8 + y];
     if(b == -1)
@@ -164,23 +167,38 @@ void GameScene::clearBlocks(QList<int> &block)
     }
 }
 
-//void GameScene::moveBlocks()
-//{
-//    for(int y = 0;y < 8; y++){
-//        for(int x = 11; x>0;x--){
-//            if(m_block[x*8+y]->setType(-1)){
-//                auto moveBlock = null;
-//                for(int movex = x - 1; movex >= 0; movex--) {
-//                    moveBlock = m_block[movex*8+y];
+void GameScene::moveBlocks()
+{
+    for(int y = 0;y < 8; y++){
+        int nullBlockNumber = 0;
+        for(int x = 11; x >= 0;x--){
+            if(m_blocks[x * 8 + y]->type() == -1){
+                nullBlockNumber++;
+            }
+            else if(nullBlockNumber != 0 && m_blocks[x * 8 + y]->type() !=  -1) {
+                m_blocks[(x + nullBlockNumber) * 8 + y]->setType(m_blocks[x * 8 + y]->type());
+                m_blocks[x * 8 + y]->setType(-2);
+            }
+        }
+        for(int x = 0;x != nullBlockNumber;x++) {
+            srand((unsigned)time(NULL));
+            QList<int> r;
+            for(int i = 0;i != nullBlockNumber; i++) {
+                int t = rand() % 5;
+                r.push_back(t);
+                std::cout << t << std::endl;
+            }
+            std::cout << std::endl;
+            m_blocks[x * 8 + y]->setType(r[nullBlockNumber - x - 1]);
+        }
+    }
+    std:: cout << std::endl;
+    for (int x = 0;x != 12;x++) {
+        for(int y = 0;y != 8;y++) {
+            std::cout << m_blocks[x * 8 + y]->type() << "  ";
+        }
+        std::cout << std::endl;
+    }
+}
 
-//                    if(moveBlock != null) {
-//                        m_block[movex*8+y] = null;
-//                        m_block[x*8+y] = moveBlock;
-//                        moveBlock->
-//                                moveBlock.fallDown(row - moveRow);
-//                    }
-//                }
-//            }
-//        }
-//    }
-//}
+
