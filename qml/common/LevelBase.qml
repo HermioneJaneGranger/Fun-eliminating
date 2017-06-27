@@ -8,19 +8,66 @@ Item {
     anchors.fill: parent
     property int level
     property bool mouseEnabled
-    property bool wait: false
+    signal refreshGrid
+    property bool initGame
+    property var image1
+    property var image2
+    property bool transferControl: true
+    //    property var imageRemove
+
+    GameSceneMessage{
+        id: gameScene
+        property GameSceneMessage message: {
+            gameScene.initScene(gameSceneMessage)
+            if(transferControl)
+                gameScene.control(0,0)
+            return gameSceneMessage
+        }
+
+        onTypeChanged: {
+            console.log("typeChanged")
+            gameSceneMessage.initScene(gameScene)
+            grid.square.sibling.allArea.swap(begin_x,begin_y, end_x, end_y, image1, image2)
+            refreshGrid()
+        }
+        onTypeChanged_down: {
+            console.log("falldown")
+//            swap(begin_x,begin_y, end_x, end_y, image1, image2)
+        }
+        onTypeDestroy: {
+
+            console.log("destroy")
+//            remove(x,y)
+        }
+        onFallDownAllBlock: {
+            console.log("alldown")
+            gameSceneMessage.initScene(gameScene)
+            refreshGrid()
+        }
+        onClearAllBlocks: {
+            console.log("allClear")
+            gameSceneMessage.initScene(gameScene)
+            refreshGrid()
+        }
+
+        onTypeNew: {
+            console.log("new")
+//            newBlock(x,y)
+        }
+        onCannotClear: {
+            transferControl = false
+        }
+
+//        gameScene.control: (0,0)
+    }
 
     Grid
     {
         id:grid
         anchors.fill: parent
         rows:12
-        property GameSceneMessage message: {
-            gameSceneMessage.refresh(5)
-            //            console.log("refresh")
-            return gameSceneMessage
 
-        }
+
         Repeater {
             id: square
             model:96
@@ -33,8 +80,6 @@ Item {
                 MouseArea{
                     id:allArea
                     anchors.fill: parent
-                    //                    containsMouse: true
-                    //                    containsPress: true
                     property var prePosition
                     property var distance
                     property int preX
@@ -44,13 +89,14 @@ Item {
                     property var preImage
                     property var curImage
                     onPressed: {
+                        //                        initLoading = false
                         prePosition={x:mouse.x, y:mouse.y}
                         console.log(mouse.x+"  dsd")
                         preY=number/8
                         preX=index-preY*8
+//                        gameScene.control(0,0);
                     }
                     onReleased: {
-//                        gameSceneMessage.swap(preX, preY, curX, curY)
                         distance={x:mouse.x-prePosition.x, y:mouse.y-prePosition.y}
                         var l = !containsMouse && preX === 0 && distance.x > 0
                         var l2 = !containsMouse && preX===7&&distance.x<0
@@ -73,15 +119,13 @@ Item {
                         preY = tempp
                         console.log("prex "+preX+"  "+preY)
                         console.log("prex "+curX+"  "+curY)
-                        preImage =square.itemAt(number).imageEnding
+                        preImage =square.itemAt(8*preX+preY).imageEnding
                         curImage = square.itemAt(8*curX+curY).imageEnding
-//                        Connections{
-//                            target:
-//                            onTypeChanged
-//                        }
+                        image1 = preImage
+                        image2 = preImage
 
-                        gameSceneMessage.swap(preX, preY, curX, curY)
-                        swap( preY, preX,curY, curX, preImage, curImage)
+                        gameScene.swap(preX, preY, curX, curY)/*.connect()*/
+
 
 
                     }
@@ -89,6 +133,7 @@ Item {
                 }
                 function swap(targetY, targetX,  preY, preX, tar1, tar2)
                 {
+                    console.log("hhhhhhhhhh")
                     swapAnimation.complete()
 
                     if(targetX !== preX&&targetY === preY)
@@ -134,13 +179,18 @@ Item {
                 Image {
                     id:image
 
-                    property GameSceneBlock block:/*gameScene*/grid.message.blocks(index)
+                    property GameSceneBlock block:/*gameScene*/gameScene.block(index)
                     property int type: block.type
                     property int pressX
                     property int pressY
                     property int releaseX
                     property int releaseY
                     signal singleBlockChanged
+
+                    //                    function lll(i)
+                    //                    {
+                    //                        block = gameSceneMessage.block(i)/*.type*/
+                    //                    }
 
                     source: {
                         if(type === 0) {
@@ -158,6 +208,8 @@ Item {
                         else if(type === 4) {
                             return "../../assets/gaming/5.png"
                         }
+                        else
+                            return ""
                     }
                 }
                 NumberAnimation {//交换动画
@@ -180,6 +232,104 @@ Item {
                     interval: 50
                     //                                      onTriggered: swapFinished(pressX,pressY,releaseX, releaseY)
                 }
+                //
+                Item {//消除时候启动，设可见度，逐渐消失动画结束后结束
+                    id: particleItem
+                    width: parent.width
+                    height: parent.height
+                    x: parent.width/2
+                    y: parent.height/2
+                    ParticleVPlay {// 消除时候启动
+                        id: bingoEffect
+                        fileName: "../particles/BingoEffect.json"
+                    }
+                    opacity: 0
+                    visible: opacity > 0
+                    enabled: opacity > 0
+                }
+                function bingoEffectparticle()
+                {
+                    bingoEffect.start()
+                }
+
+                //                 消除时候启动
+                NumberAnimation {
+                    id: fadeOutAnimation
+                    //                                    target: image
+                    property: "opacity"
+                    duration: 500
+                    from: 1.0
+                    to: 0
+                    onStopped: {//消除后结束
+                        bingoEffect.stop()
+                    }
+                }
+                function fadeOut(x, y)
+                {
+                    var tar=square.itemAt(8*x+y).imageEnding
+                    fadeOutAnimation.target = tar
+                    fadeOutAnimation.start()
+                }
+
+                function remove(x,y) {
+                    particleItem.opacity = 1
+                    sparkleParticle.start()
+//                    fadeOutAnimation.start()
+                    fadeOut(x,y)
+                }
+
+                //                                 trigger fall down of block
+                function fallDown(howMany) {
+                    fallDownAnimation.complete()
+
+                    fallDownAnimation.duration = 100 * howMany
+                    fallDownAnimation.to = block.y + howMany * image.height
+
+                    fallDownTimer.start()
+                }
+
+                // function to move block one step left/right/up or down
+
+                function newBlock(x, y)
+                {
+                    var tar=square.itemAt(8*x+y).imageEnding
+                    fadeInAnimation.target=tar
+                    fadeInAnimation.start();
+                    fallDownAnimation.target=tar
+                    fallDownTimer.start();
+                }
+
+                // 新方块出现时启动
+                NumberAnimation {
+                    id: fadeInAnimation
+//                    target: image
+                    property: "opacity"
+                    duration: 1000
+                    from: 0
+                    to: 1
+                }
+
+                // 方块掉落
+                NumberAnimation {
+                    id: fallDownAnimation
+//                    target: image
+                    property: "y"
+                    onStopped: {
+//                        fallDownFinished(image)
+                    }
+                }
+
+                // timer to wait with fall-down until other blocks fade out
+                Timer {//下落动画开始时触发
+                    id: fallDownTimer
+                    interval: fadeOutAnimation.duration//每列消除的时间段
+                    repeat: false
+                    running: false
+                    onTriggered: {
+                        fallDownAnimation.start()
+                    }
+                }
+
             }
         }
     }
