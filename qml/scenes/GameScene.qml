@@ -60,6 +60,7 @@ SceneBase {
         width:256
         Rectangle{
             anchors.fill: parent
+
             border.color: "black"
             border.width: 1
             color: "white"

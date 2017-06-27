@@ -9,10 +9,6 @@ SceneBase {
         anchors.horizontalCenterOffset: 0
         source: "../../assets/amazing/z.png"
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.leftMargin: 30
-        anchors.rightMargin: 30
         anchors.top: parent.top
         anchors.topMargin: 30
     }

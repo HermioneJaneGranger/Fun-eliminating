@@ -8,7 +8,7 @@ SceneBase {
         id: background
         anchors.horizontalCenterOffset: 0
         source: "../../assets/amazing/h.png"
-        anchors.horizontalCenter: parent.horizontalCenter
+//        anchors.horizontalCenter: parent.horizontalCenter
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.leftMargin: 30

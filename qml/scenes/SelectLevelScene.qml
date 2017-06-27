@@ -260,15 +260,16 @@ SceneBase {
         x: 0
         Selectbutton {
             imageSource: "../../assets/amazing/tx.png"
-            onSelectButtonClicked: achivementSceneClicked()
+            onSelectButtonClicked: shopSceneClicked()
         }
         Selectbutton {
             imageSource: "../../assets/amazing/coin.png"
-            onSelectButtonClicked: achivementSceneClicked()
+            onSelectButtonClicked: shopSceneClicked()
         }
         Selectbutton {
             imageSource: "../../assets/amazing/zs.png"
-            onSelectButtonClicked: achivementSceneClicked()
+            onSelectButtonClicked: shopSceneClicked()
+
         }
     }
 }
