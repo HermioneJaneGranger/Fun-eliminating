@@ -24,7 +24,7 @@ public:
 
     QQmlListProperty<Block> blockArray();
 
-    Q_INVOKABLE void refresh(int levelNumber);
+    Q_INVOKABLE void refresh();
 
     Q_INVOKABLE Block *block(int number) const;
     Q_INVOKABLE void swap(int start_x,int start_y,int end_x, int end_y);
@@ -48,9 +48,6 @@ public:
     Q_INVOKABLE int passNumber(){
         return m_passScore.size();
     }
-
-    void setTarget(int levelNumber);
-    QList<int > target() const;
     Q_INVOKABLE void setBlocks(const QList<Block *> &blocks);
     Q_INVOKABLE QList<Block *> blocks() const;
     Q_INVOKABLE void changedType(int index,int type);
@@ -71,8 +68,9 @@ signals:
 private:
     QList<int> m_readScore;
     QList<int> m_passScore;
-    int m_score = 1500;
+    int m_score = 0;
     QList<int> m_target;
+    QList<int> m_number;
     QList<Block *> m_blocks;
     static void appendBlock(QQmlListProperty<Block> *list, Block *msg);
     static int countBlock(QQmlListProperty<Block> *list);

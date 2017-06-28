@@ -46,7 +46,7 @@ void GameScene::clearBlock(QQmlListProperty<Block>  *list)
     }
 }
 
-void GameScene::refresh(int levelNumber)
+void GameScene::refresh()
 {
     srand((unsigned)time(NULL));
     for(int i = 0;i != 12;i++) {
@@ -93,13 +93,7 @@ void GameScene::initScene(GameScene *x)
 {
     this->m_blocks.clear();
     this->m_blocks = x->blocks();
-    //    for(int x = 0;x != 12;x++) {
-    //        for(int y = 0;y != 8;y++) {
-    //            int type = m_blocks[x * 8 + y]->type();
-    //            std::cout << type << " ";
-    //        }
-    //        std::cout << std::endl;
-    //    }
+    this->m_score = x->score();
 }
 
 void GameScene::swap(int start_x, int start_y, int end_x, int end_y)
@@ -330,20 +324,20 @@ void GameScene::readScoreIn()
     ofs.close();
 }
 
-void GameScene::setTarget(int levelNumber)
-{
-        srand((unsigned)time(NULL));
-    for(int i = 0;i != 3;i++) {
-        int type = rand() % BLOCK_TYPE;
-//        m_target.push_back(type);
-//        m_target.push_back(levelNumber);
-    }
-}
+//void GameScene::setTarget(int levelNumber)
+//{
+//        srand((unsigned)time(NULL));
+//    for(int i = 0;i != 3;i++) {
+//        int type = rand() % BLOCK_TYPE;
+////        m_target.push_back(type);
+////        m_target.push_back(levelNumber);
+//    }
+//}
 
-QList<int > GameScene::target() const
-{
-    return m_target;
-}
+//QList<QList<int> > GameScene::target() const
+//{
+//    return m_target;
+//}
 
 
 void GameScene::setBlocks(const QList<Block *> &blocks)

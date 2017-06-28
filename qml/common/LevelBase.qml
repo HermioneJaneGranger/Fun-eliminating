@@ -9,62 +9,69 @@ Item {
     property int level
     property bool mouseEnabled
     signal refreshGrid
+    signal reduceStep
     property bool initGame
     property var image1
     property var image2
     property bool transferControl: true
 
     //    property var imageRemove
-    GameSceneMessage {
-        id: gameScene
-        property GameSceneMessage message: {
-            gameScene.initScene(gameSceneMessage)
-            if (transferControl)
-                gameScene.control(0, 0)
-            return gameSceneMessage
-        }
 
-        onTypeChanged: {
-            console.log("typeChanged")
-            gameSceneMessage.initScene(gameScene)
-            //            grid.square.sibling.allArea.swap(begin_x, begin_y, end_x, end_y,image1, image2)
-            refreshGrid()
-        }
-        onTypeChanged_down: {
-            console.log("falldown")
-            //            swap(begin_x,begin_y, end_x, end_y, image1, image2)
-        }
-        onTypeDestroy: {
-
-            console.log("destroy")
-            //            remove(x,y)
-        }
-        onFallDownAllBlock: {
-            console.log("alldown")
-            gameSceneMessage.initScene(gameScene)
-            refreshGrid()
-        }
-        onClearAllBlocks: {
-            console.log("allClear")
-            gameSceneMessage.initScene(gameScene)
-            refreshGrid()
-        }
-
-        onTypeNew: {
-            console.log("new")
-            //            newBlock(x,y)
-        }
-        onCannotClear: {
-            transferControl = false
-        }
-
-        //        gameScene.control: (0,0)
-    }
 
     Grid {
         id: grid
         anchors.fill: parent
         rows: 12
+
+        GameSceneMessage {
+            id: gameScene
+            property GameSceneMessage message: {
+                gameScene.initScene(gameSceneMessage)
+                if (transferControl)
+                    gameScene.control(0, 0)
+                return gameSceneMessage
+            }
+
+            onTypeChanged: {
+                console.log("typeChanged")
+                gameSceneMessage.initScene(gameScene)
+                reduceStep()
+//                square.allArea.swap(begin_x, begin_y, end_x, end_y)
+                refreshGrid()
+            }
+    //        function swap(x_1,y_1,x_2,y_2){
+    //        }
+
+            onTypeChanged_down: {
+                console.log("falldown")
+                //            swap(begin_x,begin_y, end_x, end_y, image1, image2)
+            }
+            onTypeDestroy: {
+
+                console.log("destroy")
+                //            remove(x,y)
+            }
+            onFallDownAllBlock: {
+                console.log("alldown")
+                gameSceneMessage.initScene(gameScene)
+                refreshGrid()
+            }
+            onClearAllBlocks: {
+                console.log("allClear")
+                gameSceneMessage.initScene(gameScene)
+                refreshGrid()
+            }
+
+            onTypeNew: {
+                console.log("new")
+                //            newBlock(x,y)
+            }
+            onCannotClear: {
+                transferControl = false
+            }
+
+            //        gameScene.control: (0,0)
+        }
 
         Repeater {
             id: square

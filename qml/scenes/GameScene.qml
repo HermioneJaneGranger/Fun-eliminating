@@ -9,6 +9,7 @@ SceneBase {
     property bool mouseEnable
     signal pauseClicked
     property int levelNumber
+    property int remainingSteps: 20
 
     anchors.centerIn: parent.Center
 
@@ -126,6 +127,15 @@ SceneBase {
         Loader{
             id:loader
         }
+        Loader{
+            id:text_loader
+        }
+        Loader{
+            id:remainStep_loader
+        }
+        Loader{
+
+        }
 
         Connections{
             target: selectLevelScene
@@ -134,16 +144,12 @@ SceneBase {
                 gameSceneMessage.refresh(5)
                 loader.sourceComponent = null
                 loader.sourceComponent = com
+                text_loader.sourceComponent = null;
+                text_loader.sourceComponent = text;
+                remainStep_loader.sourceComponent = null
+                remainStep_loader.sourceComponent = remainingStep
             }
         }
-
-//        Connections{
-//            target:com.games
-//            onRefreshGrid: {
-//                loader.sourceComponent = null
-//                loader.sourceComponent = com
-//            }
-//        }
 
         Component {
             id: com
@@ -153,24 +159,47 @@ SceneBase {
                 mouseEnabled: mouseEnable
                 width: 32*8
                 height: 32*12
+                onReduceStep: {
+                    remainingSteps--
+                }
+
                 onRefreshGrid: {
                     initGame = false
                     loader.sourceComponent = null
                     loader.sourceComponent = com
+                    text_loader.sourceComponent = null;
+                    text_loader.sourceComponent = text;
+                    remainStep_loader.sourceComponent = null
+                    remainStep_loader.sourceComponent = remainingStep
                 }
             }
+
         }
+        Component{
+            id:text
+            Text {
+                x:-15
+                y:390
+                property int score: gameSceneMessage.score
 
-    }
-    Text {
-        anchors.bottom: parent.bottom
-        anchors.left: parent.left
-        anchors.leftMargin: 10
-        anchors.bottomMargin: 10
-        property int score: gameSceneMessage.score
+                text: "score: " + score
+                color: "white"
+                font.pixelSize: 17
+            }
+        }
+        Component{
+            id:remainingStep
+            Text {
+                x:180
+                y:-50
+                text:qsTr("Step:") + "\n" + " " + remainingSteps
+                color: "white"
+                font.pixelSize: 17
+            }
+        }
+//        Component{
 
-        text: "score: " + score
-        color: "white"
-        font.pixelSize: 17
+//        }
     }
+
 }

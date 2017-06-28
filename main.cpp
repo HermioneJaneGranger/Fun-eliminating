@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
     GameScene gameScene(5);
 //    gameScene.control(0,0);
     gameScene.initPassScore();
-    gameScene.refresh(1);
+    gameScene.refresh();
 
 
     engine.rootContext()->setContextProperty("gameSceneMessage",&gameScene);
@@ -37,9 +37,9 @@ int main(int argc, char *argv[])
     vplay.setMainQmlFileName(QStringLiteral("qml/Main.qml"));
 
 
-    // use this instead of the above call to avoid deployment of the qml files and compile them into the binary with qt's resource system qrc
-    // this is the preferred deployment option for publishing games to the app stores, because then your qml files and js files are protected
-    // to avoid deployment of your qml files and images, also comment the DEPLOYMENTFOLDERS command in the .pro file
+        // use this instead of the above call to avoid deployment of the qml files and compile them into the binary with qt's resource system qrc
+        // this is the preferred deployment option for publishing games to the app stores, because then your qml files and js files are protected
+        // to avoid deployment of your qml files and images, also comment the DEPLOYMENTFOLDERS command in the .pro file
     // also see the .pro file for more details
     //  vplay.setMainQmlFileName(QStringLiteral("qrc:/qml/Main.qml"));
 
