@@ -15,16 +15,18 @@ class GameScene: public QObject
     Q_PROPERTY(int score READ score WRITE setScore NOTIFY scoreChanged)
     Q_PROPERTY(QList<int> passScore READ passScore NOTIFY passScoreChanged)
       Q_PROPERTY(QList<int> readScore READ readScore NOTIFY readScoreChanged)
+
     Q_CLASSINFO("DefaultProperty", "block")
 public:
     GameScene(QObject *parent = 0):QObject(parent){}
     GameScene(int i);
+    Q_INVOKABLE void initScene(GameScene *x);
 
     QQmlListProperty<Block> blockArray();
 
     Q_INVOKABLE void refresh(int levelNumber);
 
-    Q_INVOKABLE Block *blocks(int number) const;
+    Q_INVOKABLE Block *block(int number) const;
     Q_INVOKABLE void swap(int start_x,int start_y,int end_x, int end_y);
     Q_INVOKABLE void control(int begin_x, int begin_y);
     int sameOfNumber(QList<int> &block, int x, int y, int type,int x_Or_y);
@@ -49,11 +51,21 @@ public:
 
     void setTarget(int levelNumber);
     QList<int > target() const;
+    Q_INVOKABLE void setBlocks(const QList<Block *> &blocks);
+    Q_INVOKABLE QList<Block *> blocks() const;
+    Q_INVOKABLE void changedType(int index,int type);
 
 signals:
     void blockChanged();
     void scoreChanged();
     void passScoreChanged();
+    void typeChanged(int begin_x,int begin_y,int end_x,int end_y);
+    void typeChanged_down(int begin_x,int begin_y,int end_x,int end_y);
+    void typeDestroy(int x,int y);
+    void typeNew(int x,int y);
+    void clearAllBlocks();
+    void fallDownAllBlock();
+    void cannotClear();
     void readScoreChanged();
 
 private:

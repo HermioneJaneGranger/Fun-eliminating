@@ -138,6 +138,7 @@ GameWindow {
     GameScene {
         id: gameScene
         mouseEnable: true
+        opacity: 0
         levelNumber: selectLevelScene.levelChoose
         onPauseClicked: {
             opacity = 0.1

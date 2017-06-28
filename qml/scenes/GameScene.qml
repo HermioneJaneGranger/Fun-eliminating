@@ -114,6 +114,7 @@ SceneBase {
         anchors.horizontalCenter: parent.horizontalCenter
         height: 384
         width:256
+        property bool initLoad: true
         Rectangle{
             anchors.fill: parent
 
@@ -122,20 +123,41 @@ SceneBase {
             color: "white"
             opacity: 0.5
         }
-        Loader{id:loader}
+        Loader{
+            id:loader
+        }
 
         Connections{
             target: selectLevelScene
             onLevelsClicked:{
+//                initLoad: true
+                gameSceneMessage.refresh(5)
                 loader.sourceComponent = null
                 loader.sourceComponent = com
             }
         }
 
+//        Connections{
+//            target:com.games
+//            onRefreshGrid: {
+//                loader.sourceComponent = null
+//                loader.sourceComponent = com
+//            }
+//        }
+
         Component {
             id: com
             LevelBase{
+                initGame: true
+                id:games
                 mouseEnabled: mouseEnable
+                width: 32*8
+                height: 32*12
+                onRefreshGrid: {
+                    initGame = false
+                    loader.sourceComponent = null
+                    loader.sourceComponent = com
+                }
             }
         }
 
