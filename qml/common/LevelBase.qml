@@ -16,7 +16,7 @@ Item {
         anchors.fill: parent
         rows:12
         property GameSceneMessage message: {
-            gameSceneMessage.refresh(5)
+            gameSceneMessage.refresh()
 //            console.log("refresh")
             return gameSceneMessage
 

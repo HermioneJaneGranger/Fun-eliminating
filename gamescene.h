@@ -6,12 +6,15 @@
 
 #include "block.h"
 
+
+
 class GameScene: public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QQmlListProperty<Block> blockArray READ blockArray NOTIFY blockChanged)
     Q_PROPERTY(int score READ score WRITE setScore NOTIFY scoreChanged)
     Q_PROPERTY(QList<int> passScore READ passScore NOTIFY passScoreChanged)
+      Q_PROPERTY(QList<int> readScore READ readScore NOTIFY readScoreChanged)
     Q_CLASSINFO("DefaultProperty", "block")
 public:
     GameScene(QObject *parent = 0):QObject(parent){}
@@ -19,7 +22,7 @@ public:
 
     QQmlListProperty<Block> blockArray();
 
-    Q_INVOKABLE void refresh(int number);
+    Q_INVOKABLE void refresh(int levelNumber);
 
     Q_INVOKABLE Block *blocks(int number) const;
     Q_INVOKABLE void swap(int start_x,int start_y,int end_x, int end_y);
@@ -37,14 +40,27 @@ public:
     void setPassScore(const QList<int> &passScore);
     void initPassScore();
 
+    QList<int> readScore() const;
+    void setReadScore(const QList<int> &readScore);
+    void readScoreIn();
+    Q_INVOKABLE int passNumber(){
+        return m_passScore.size();
+    }
+
+    void setTarget(int levelNumber);
+    QList<int > target() const;
+
 signals:
     void blockChanged();
     void scoreChanged();
     void passScoreChanged();
+    void readScoreChanged();
 
 private:
+    QList<int> m_readScore;
     QList<int> m_passScore;
-    int m_score = 2000;
+    int m_score = 1500;
+    QList<int> m_target;
     QList<Block *> m_blocks;
     static void appendBlock(QQmlListProperty<Block> *list, Block *msg);
     static int countBlock(QQmlListProperty<Block> *list);

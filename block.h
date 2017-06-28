@@ -4,6 +4,8 @@
 #include <QObject>
 #include <time.h>
 
+#define BLOCK_TYPE 5
+
 class Block: public QObject
 {
     Q_OBJECT

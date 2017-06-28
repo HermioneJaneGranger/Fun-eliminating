@@ -46,15 +46,25 @@ void GameScene::clearBlock(QQmlListProperty<Block>  *list)
     }
 }
 
-void GameScene::refresh(int number)
+void GameScene::refresh(int levelNumber)
 {
     srand((unsigned)time(NULL));
     for(int i = 0;i != 12;i++) {
         for(int y = 0;y != 8;y++) {
-            int type = rand() % number;
+            int type = rand() % BLOCK_TYPE;
             m_blocks[i * 8 + y]->setType(type);
         }
     }
+    for(int m = 0;m != 3;m++) {
+        int type = rand() % BLOCK_TYPE;
+        std::cout<<type<<std::endl;
+    }
+//    std::cout << m_target[0][0] << std::endl;
+//    std::cout << m_target[0][1] << std::endl;
+//    std::cout << m_target[1][0] << std::endl;
+//    std::cout << m_target[1][1] << std::endl;
+//    std::cout << m_target[2][0] << std::endl;
+//    std::cout << m_target[2][1] << std::endl;
 }
 
 
@@ -188,7 +198,7 @@ void GameScene::moveBlocks()
             srand((unsigned)time(NULL));
             QList<int> r;
             for(int i = 0;i != nullBlockNumber; i++) {
-                int t = rand() % 5;
+                int t = rand() % BLOCK_TYPE;
                 r.push_back(t);
             }
             m_blocks[x * 8 + y]->setType(r[nullBlockNumber - x - 1]);
@@ -237,4 +247,49 @@ void GameScene::initPassScore()
                 m_passScore.push_back(number);
         }
 
+}
+
+QList<int> GameScene::readScore() const
+{
+    return m_readScore;
+}
+
+void GameScene::setReadScore(const QList<int> &readScore)
+{
+    m_readScore = readScore;
+}
+
+void GameScene::readScoreIn()
+{
+    std::ofstream ofs("../Fun-eliminating/assets/pass",std::ios::app);
+    if (ofs){
+        int sth = m_score;
+        if (m_score < 1000) sth = 1;
+        else if (1000 <= m_score && m_score < 2000) sth = 2;
+        else if (m_score <= 2000) sth = 3;
+        else {
+            sth = -1;
+        }
+        if(sth != -1) {
+            ofs << sth <<std::endl;
+            m_passScore.push_back(sth);
+        }
+    }
+
+    ofs.close();
+}
+
+void GameScene::setTarget(int levelNumber)
+{
+        srand((unsigned)time(NULL));
+    for(int i = 0;i != 3;i++) {
+        int type = rand() % BLOCK_TYPE;
+//        m_target.push_back(type);
+//        m_target.push_back(levelNumber);
+    }
+}
+
+QList<int > GameScene::target() const
+{
+    return m_target;
 }

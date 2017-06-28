@@ -26,6 +26,7 @@ int main(int argc, char *argv[])
     GameScene gameScene(5);
 //    gameScene.control(0,0);
     gameScene.initPassScore();
+    gameScene.refresh(1);
 
     engine.rootContext()->setContextProperty("gameSceneMessage",&gameScene);
     vplay.initialize(&engine);

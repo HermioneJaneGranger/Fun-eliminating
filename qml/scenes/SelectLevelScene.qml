@@ -8,6 +8,7 @@ SceneBase {
 
     signal levelsClicked
     property int levelChoose: 1
+    property int passNumber: gameSceneMessage.passNumber()
     signal achivementSceneClicked
     signal shopSceneClicked
     signal moreSceneClicked
@@ -45,7 +46,12 @@ SceneBase {
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.top: parent.top
                     anchors.topMargin: -3
-                    type: gameSceneMessage.passScore[levelChoose]
+                    type: {
+                        if (passNumber > (levelChoose))
+                            return gameSceneMessage.passScore[levelChoose]
+                        else
+                            return 0
+                    }
                 }
 
                 MouseArea {
@@ -67,7 +73,12 @@ SceneBase {
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.top: parent.top
                     anchors.topMargin: -3
-                    type: gameSceneMessage.passScore[levelChoose + 1]
+                    type: {
+                        if (passNumber > (levelChoose + 1))
+                            return gameSceneMessage.passScore[levelChoose + 1]
+                        else
+                            return 0
+                    }
                 }
                 MouseArea {
                     anchors.fill: parent
@@ -89,7 +100,12 @@ SceneBase {
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.top: parent.top
                     anchors.topMargin: -3
-                    type: gameSceneMessage.passScore[levelChoose + 2]
+                    type: {
+                        if (passNumber > (levelChoose + 2))
+                            return gameSceneMessage.passScore[levelChoose + 2]
+                        else
+                            return 0
+                    }
                 }
                 MouseArea {
                     anchors.fill: parent
@@ -110,7 +126,12 @@ SceneBase {
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.top: parent.top
                     anchors.topMargin: -3
-                    type: gameSceneMessage.passScore[levelChoose + 3]
+                    type: {
+                        if (passNumber > (levelChoose + 3))
+                            return gameSceneMessage.passScore[levelChoose + 3]
+                        else
+                            return 0
+                    }
                 }
                 MouseArea {
                     anchors.fill: parent
@@ -131,7 +152,12 @@ SceneBase {
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.top: parent.top
                     anchors.topMargin: -3
-                    type: gameSceneMessage.passScore[levelChoose + 4]
+                    type: {
+                        if (passNumber > (levelChoose + 4))
+                            return gameSceneMessage.passScore[levelChoose + 4]
+                        else
+                            return 0
+                    }
                 }
                 MouseArea {
                     anchors.fill: parent
@@ -153,7 +179,12 @@ SceneBase {
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.top: parent.top
                     anchors.topMargin: -3
-                    type: gameSceneMessage.passScore[levelChoose + 5]
+                    type: {
+                        if (passNumber > (levelChoose + 5))
+                            return gameSceneMessage.passScore[levelChoose + 5]
+                        else
+                            return 0
+                    }
                 }
                 MouseArea {
                     anchors.fill: parent
@@ -175,7 +206,12 @@ SceneBase {
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.top: parent.top
                     anchors.topMargin: -3
-                    type: gameSceneMessage.passScore[levelChoose + 6]
+                    type: {
+                        if (passNumber > (levelChoose + 6))
+                            return gameSceneMessage.passScore[levelChoose + 6]
+                        else
+                            return 0
+                    }
                 }
                 MouseArea {
                     anchors.fill: parent
@@ -197,7 +233,12 @@ SceneBase {
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.top: parent.top
                     anchors.topMargin: -3
-                    type: gameSceneMessage.passScore[levelChoose + 7]
+                    type: {
+                        if (passNumber > (levelChoose + 7))
+                            return gameSceneMessage.passScore[levelChoose + 7]
+                        else
+                            return 0
+                    }
                 }
                 MouseArea {
                     anchors.fill: parent
@@ -219,7 +260,12 @@ SceneBase {
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.top: parent.top
                     anchors.topMargin: -3
-                    type: gameSceneMessage.passScore[levelChoose + 8]
+                    type: {
+                        if (passNumber > (levelChoose + 8))
+                            return gameSceneMessage.passScore[levelChoose + 8]
+                        else
+                            return 0
+                    }
                 }
                 MouseArea {
                     anchors.fill: parent
@@ -241,7 +287,12 @@ SceneBase {
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.top: parent.top
                     anchors.topMargin: -3
-                    type: gameSceneMessage.passScore[levelChoose + 9]
+                    type: {
+                        if (passNumber > (levelChoose + 9))
+                            return gameSceneMessage.passScore[levelChoose + 9]
+                        else
+                            return 0
+                    }
                 }
                 MouseArea {
                     anchors.fill: parent

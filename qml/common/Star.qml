@@ -12,5 +12,6 @@ Image {
         } else if (type === 3) {
             return "../../assets/selectLevel/dj3.png"
         }
+        else return ""
     }
 }
