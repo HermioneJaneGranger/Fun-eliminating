@@ -2,9 +2,8 @@
 import QtQuick 2.0
 import "../common"
 
-
 SceneBase {
-    id:gameScene
+    id: gameScene
 
     property bool mouseEnable
     signal pauseClicked
@@ -24,7 +23,7 @@ SceneBase {
             anchors.right: parent.right
             anchors.topMargin: 3
             anchors.rightMargin: 3
-            MouseArea{
+            MouseArea {
                 anchors.fill: parent
                 onClicked: pauseClicked()
             }
@@ -43,12 +42,10 @@ SceneBase {
                 color: "white"
             }
 
-            Image{
-                id:tool_block
+            Image {
+                id: tool_block
                 source: "../../assets/tool/tool_block.png"
-
             }
-
         }
         Item {
             height: 40
@@ -57,10 +54,9 @@ SceneBase {
                 opacity: 0.5
                 color: "white"
             }
-            Image{
-                id:tool_line_x
+            Image {
+                id: tool_line_x
                 source: "../../assets/tool/tool_line_x.png"
-
             }
         }
         Item {
@@ -70,10 +66,9 @@ SceneBase {
                 opacity: 0.5
                 color: "white"
             }
-            Image{
-                id:tool_line_y
+            Image {
+                id: tool_line_y
                 source: "../../assets/tool/tool_line_y.png"
-
             }
         }
         Item {
@@ -83,39 +78,36 @@ SceneBase {
                 opacity: 0.5
                 color: "white"
             }
-            Image{
-                id:tool_area
+            Image {
+                id: tool_area
                 source: "../../assets/tool/tool_area.png"
-
             }
         }
     }
-    Row{
+    Row {
         anchors.top: parent.top
         anchors.left: parent.left
         spacing: 10
-        Image{
-            id:tool_step
+        Image {
+            id: tool_step
             opacity: 0.8
             source: "../../assets/tool/tool_step.png"
-
         }
-        Image{
-            id:tool_condition
+        Image {
+            id: tool_condition
             opacity: 0.8
             source: "../../assets/tool/tool_condition.png"
         }
     }
-
 
     Item {
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 40
         anchors.horizontalCenter: parent.horizontalCenter
         height: 384
-        width:256
+        width: 256
         property bool initLoad: true
-        Rectangle{
+        Rectangle {
             anchors.fill: parent
 
             border.color: "black"
@@ -123,36 +115,36 @@ SceneBase {
             color: "white"
             opacity: 0.5
         }
-        Loader{
-            id:loader
+        Loader {
+            id: loader
         }
 
-        Connections{
+        Connections {
             target: selectLevelScene
-            onLevelsClicked:{
-//                initLoad: true
-                gameSceneMessage.refresh(5)
+            onLevelsClicked: {
+                //                initLoad: true
+                gameSceneMessage.refresh(levelNumber)
                 loader.sourceComponent = null
                 loader.sourceComponent = com
             }
         }
 
-//        Connections{
-//            target:com.games
-//            onRefreshGrid: {
-//                loader.sourceComponent = null
-//                loader.sourceComponent = com
-//            }
-//        }
 
+        //        Connections{
+        //            target:com.games
+        //            onRefreshGrid: {
+        //                loader.sourceComponent = null
+        //                loader.sourceComponent = com
+        //            }
+        //        }
         Component {
             id: com
-            LevelBase{
+            LevelBase {
                 initGame: true
-                id:games
+                id: games
                 mouseEnabled: mouseEnable
-                width: 32*8
-                height: 32*12
+                width: 32 * 8
+                height: 32 * 12
                 onRefreshGrid: {
                     initGame = false
                     loader.sourceComponent = null
@@ -160,7 +152,6 @@ SceneBase {
                 }
             }
         }
-
     }
     Text {
         anchors.bottom: parent.bottom

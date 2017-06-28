@@ -4,6 +4,7 @@ import gameSceneMessage 1.0
 import VPlay 2.0
 
 Item {
+
     id: gameMessage
     anchors.fill: parent
     property int level
@@ -25,33 +26,35 @@ Item {
         }
 
         onTypeChanged: {
-            console.log("typeChanged")
+            //            console.log("typeChanged")
             gameSceneMessage.initScene(gameScene)
             //            grid.square.sibling.allArea.swap(begin_x, begin_y, end_x, end_y,image1, image2)
             refreshGrid()
         }
         onTypeChanged_down: {
-            console.log("falldown")
+
+            //            console.log("falldown")
             //            swap(begin_x,begin_y, end_x, end_y, image1, image2)
         }
         onTypeDestroy: {
 
-            console.log("destroy")
+
+            //            console.log("destroy")
             //            remove(x,y)
         }
         onFallDownAllBlock: {
-            console.log("alldown")
+            //            console.log("alldown")
             gameSceneMessage.initScene(gameScene)
             refreshGrid()
         }
         onClearAllBlocks: {
-            console.log("allClear")
+            //            console.log("allClear")
             gameSceneMessage.initScene(gameScene)
             refreshGrid()
         }
 
         onTypeNew: {
-            console.log("new")
+//            console.log("new")
             //            newBlock(x,y)
         }
         onCannotClear: {

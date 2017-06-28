@@ -49,11 +49,15 @@ public:
         return m_passScore.size();
     }
 
-    void setTarget(int levelNumber);
+    void setTarget();
     QList<int > target() const;
     Q_INVOKABLE void setBlocks(const QList<Block *> &blocks);
     Q_INVOKABLE QList<Block *> blocks() const;
     Q_INVOKABLE void changedType(int index,int type);
+
+    QList<int> number() const;
+    void setNumber(int levelnumber);
+    void numberChanged(int type,int number);
 
 signals:
     void blockChanged();
@@ -73,6 +77,7 @@ private:
     QList<int> m_passScore;
     int m_score = 1500;
     QList<int> m_target;
+    QList<int> m_number;
     QList<Block *> m_blocks;
     static void appendBlock(QQmlListProperty<Block> *list, Block *msg);
     static int countBlock(QQmlListProperty<Block> *list);
