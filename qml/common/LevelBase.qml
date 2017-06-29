@@ -4,6 +4,7 @@ import gameSceneMessage 1.0
 import VPlay 2.0
 
 Item {
+
     id: gameMessage
     anchors.fill: parent
     property int level
@@ -14,69 +15,72 @@ Item {
     property var image1
     property var image2
     property bool transferControl: true
+    property int pressX: 0
+    property int pressY: 0
+    property int releaseX: 0
+    property int releaseY : 0
 
     //    property var imageRemove
 
+    GameSceneMessage {
+        id: gameScene
+        property GameSceneMessage message: {
+            gameScene.initScene(gameSceneMessage)
+            if (transferControl)
+                gameScene.control(pressX,pressY,releaseX,releaseY)
+            return gameSceneMessage
+        }
+
+        onTypeChanged: {
+            //            console.log("typeChanged")
+            gameSceneMessage.initScene(gameScene)
+            reduceStep()
+            //            grid.square.sibling.allArea.swap(begin_x, begin_y, end_x, end_y,image1, image2)
+            refreshGrid()
+        }
+        onTypeChanged_down: {
+
+            //            console.log("falldown")
+            //            swap(begin_x,begin_y, end_x, end_y, image1, image2)
+        }
+        onTypeDestroy: {
+
+
+            //            console.log("destroy")
+            //            remove(x,y)
+        }
+        onFallDownAllBlock: {
+            //            console.log("alldown")
+            gameSceneMessage.initScene(gameScene)
+            refreshGrid()
+        }
+        onClearAllBlocks: {
+            //            console.log("allClear")
+            gameSceneMessage.initScene(gameScene)
+//            refreshGrid()
+        }
+
+        onTypeNew: {
+//            console.log("new")
+            //            newBlock(x,y)
+        }
+        onCannotClear: {
+            transferControl = false
+        }
+
+        //        gameScene.control: (0,0)
+    }
 
     Grid {
         id: grid
         anchors.fill: parent
         rows: 12
 
-        GameSceneMessage {
-            id: gameScene
-            property GameSceneMessage message: {
-                gameScene.initScene(gameSceneMessage)
-                if (transferControl)
-                    gameScene.control(0, 0)
-                return gameSceneMessage
-            }
-
-            onTypeChanged: {
-                console.log("typeChanged")
-                gameSceneMessage.initScene(gameScene)
-                reduceStep()
-//                square.allArea.swap(begin_x, begin_y, end_x, end_y)
-                refreshGrid()
-            }
-    //        function swap(x_1,y_1,x_2,y_2){
-    //        }
-
-            onTypeChanged_down: {
-                console.log("falldown")
-                //            swap(begin_x,begin_y, end_x, end_y, image1, image2)
-            }
-            onTypeDestroy: {
-
-                console.log("destroy")
-                //            remove(x,y)
-            }
-            onFallDownAllBlock: {
-                console.log("alldown")
-                gameSceneMessage.initScene(gameScene)
-                refreshGrid()
-            }
-            onClearAllBlocks: {
-                console.log("allClear")
-                gameSceneMessage.initScene(gameScene)
-                refreshGrid()
-            }
-
-            onTypeNew: {
-                console.log("new")
-                //            newBlock(x,y)
-            }
-            onCannotClear: {
-                transferControl = false
-            }
-
-            //        gameScene.control: (0,0)
-        }
-
         Repeater {
             id: square
             model: 96
             Item {
+//                gameSceneMessage.setScore(40)
                 id: sibling
                 width: 32
                 height: 32
@@ -142,6 +146,10 @@ Item {
                         image2 = preImage
 
                         gameScene.swap(preX, preY, curX, curY) /*.connect()*/
+                        pressX = preX
+                        pressY = preY
+                        releaseX = curX
+                        releaseY = curY
                     }
                 }
                 function swap(targetY, targetX, preY, preX, tar1, tar2) {
@@ -187,10 +195,6 @@ Item {
                     property GameSceneBlock block: /*gameScene*/ gameScene.block(
                                                                      index)
                     property int type: block.type
-                    property int pressX
-                    property int pressY
-                    property int releaseX
-                    property int releaseY
                     signal singleBlockChanged
 
                     //                    function lll(i)

@@ -4,6 +4,7 @@
 #include <fstream>
 #include <sstream>
 #include <string>
+#include <algorithm>
 
 QQmlListProperty<Block> GameScene::blockArray()
 {
@@ -46,7 +47,7 @@ void GameScene::clearBlock(QQmlListProperty<Block>  *list)
     }
 }
 
-void GameScene::refresh()
+void GameScene::refresh(int levelNumber)
 {
     srand((unsigned)time(NULL));
     for(int i = 0;i != 12;i++) {
@@ -55,16 +56,12 @@ void GameScene::refresh()
             m_blocks[i * 8 + y]->setType(type);
         }
     }
-    for(int m = 0;m != 3;m++) {
-        int type = rand() % BLOCK_TYPE;
-        std::cout<<type<<std::endl;
+    setTarget();
+    setNumber(levelNumber);
+    for(int i = 0;i != m_target.size();i++)
+    {
+        std::cout << "fresh" << m_target[i] << "   " << m_number[i] << std::endl;
     }
-//    std::cout << m_target[0][0] << std::endl;
-//    std::cout << m_target[0][1] << std::endl;
-//    std::cout << m_target[1][0] << std::endl;
-//    std::cout << m_target[1][1] << std::endl;
-//    std::cout << m_target[2][0] << std::endl;
-//    std::cout << m_target[2][1] << std::endl;
 }
 
 
@@ -80,7 +77,6 @@ GameScene::GameScene(int i)
         for(int y = 0;y != 8;y++) {
             int type = rand() % i;
             Block *b = new Block(x,y,type);
-            //            std::cout << type << " ";
             m_blocks.push_back(b);
         }
         std::cout << std::endl;
@@ -94,12 +90,14 @@ void GameScene::initScene(GameScene *x)
     this->m_blocks.clear();
     this->m_blocks = x->blocks();
     this->m_score = x->score();
+    this->m_target.clear();
+    this->m_target = x->m_target;
+    this->m_number.clear();
+    this->m_number = x->m_number;
 }
 
 void GameScene::swap(int start_x, int start_y, int end_x, int end_y)
 {
-    std::cout << start_x << "  " << start_y << "  " << end_x << "  " << end_y << std::endl;
-    std::cout << "swap" << std::endl;
 
     int type_1 = m_blocks[start_x * 8 + start_y]->type();
     int type_2 = m_blocks[end_x * 8 + end_y]->type();
@@ -118,19 +116,17 @@ void GameScene::swap(int start_x, int start_y, int end_x, int end_y)
     int number_x2 = sameOfNumber(b,end_x,end_y,type_1,0);
     b = block;
     int number_y2 = sameOfNumber(b,end_x,end_y,type_1,1);
-    std::cout << number_x1 << "  " << number_x2 << "  " << number_y1 << "  " << number_y2 << std::endl;
     if(number_x1 < 3 && number_x2 < 3 && number_y1 < 3 && number_y2 < 3) {
         m_blocks[start_x * 8 + start_y]->setType(type_1);
         m_blocks[end_x * 8 + end_y]->setType(type_2);
     }
     else {
-        std::cout << "signal" << std::endl;
         emit typeChanged(start_x,start_y,end_x,end_y);
     }
 }
 
 
-void GameScene::control(int begin_x, int begin_y)
+void GameScene::control(int x_one, int y_one,int x_two,int y_two)
 {
     bool clearNumber = true;
     QList<int> block;
@@ -139,30 +135,72 @@ void GameScene::control(int begin_x, int begin_y)
     }
     QList<int> b[2];
     b[0] = b[1] = block;
-    for(int x =begin_x;x != 12;x++) {
-        for(int y = begin_y;y != 8;y++) {
+    for(int i = 0;i != 2;i++) {
+        int type;
+        int number_x,number_y;
+        if(i == 0)  {
+            type = block[x_one * 8 + y_one];
+            number_x = sameOfNumber(b[0],x_one,y_one, type,0);
+            number_y = sameOfNumber(b[1],x_one,y_one,type,1);
+            std::cout << "_______" << x_one << y_one << number_x << number_y << std::endl;
+        }
+        else {
+            std::cout << x_one << y_one << number_x << number_y << std::endl;
+            type = block[x_two * 8 + y_two];
+            number_x = sameOfNumber(b[0],x_two,y_two, type,0);
+            number_y = sameOfNumber(b[1],x_two,y_two,type,1);
+        }
+        if(number_x >=3 && number_y >= 3) {
+            clearNumber = false;
+            numberChanged(type,number_x + number_y - 1);
+            clearBlocks(b[0]);
+            clearBlocks(b[1]);
+            setScore(number_x + number_y - 1);
+            std::cout << "clear all ---" << number_x << number_y << type <<std::endl;
+        }
+        else if(number_x >= 3 && number_y < 3) {
+            numberChanged(type,number_x);
+            clearNumber = false;
+            clearBlocks(b[0]);
+            setScore(number_x);
+            std::cout << "clear x ---" << number_x << number_y <<std::endl;
+        }
+        else if(number_y >= 3 && number_x < 3) {
+            numberChanged(type,number_y);
+            clearNumber = false;
+            clearBlocks(b[1]);
+            setScore(number_y);
+            std::cout << "clear y --- " << number_y << number_x<<std::endl;
+        }
+
+    }
+    for(int x =0;x != 12;x++) {
+        for(int y = 0;y != 8;y++) {
             int type = block[x * 8 + y];
             int number_x = sameOfNumber(b[0],x,y, type,0);
             int number_y = sameOfNumber(b[1],x,y,type,1);
 
             if(number_x >=3 && number_y >= 3) {
                 clearNumber = false;
+                numberChanged(type,number_x + number_y - 1);
                 clearBlocks(b[0]);
                 clearBlocks(b[1]);
                 setScore(number_x + number_y - 1);
-                std::cout << "clear all ---" << number_x << number_y<<std::endl;
+                std::cout << "clear all ---" << number_x << number_y << type <<std::endl;
             }
             else if(number_x >= 3 && number_y < 3) {
+                numberChanged(type,number_x);
                 clearNumber = false;
                 clearBlocks(b[0]);
                 setScore(number_x);
                 std::cout << "clear x ---" << number_x << number_y <<std::endl;
             }
             else if(number_y >= 3 && number_x < 3) {
+                numberChanged(type,number_y);
                 clearNumber = false;
                 clearBlocks(b[1]);
                 setScore(number_y);
-                std::cout << "clear y --- " << number_x<< number_y <<std::endl;
+                std::cout << "clear y --- " << number_y << number_x<<std::endl;
             }
             block.clear();
             for(int i = 0;i != 96;i++) {
@@ -171,17 +209,17 @@ void GameScene::control(int begin_x, int begin_y)
             b[0] = b[1] = block;
         }
     }
-    if(clearNumber) emit cannotClear();
+    if(clearNumber) {
+        for (int i = 0;i != m_target.size();i++)
+        {
+            std::cout << m_target[i] << "  number  " << m_number[i] << std::endl;
+        }
+        emit cannotClear();
+
+    }
     else {
         emit clearAllBlocks();
 
-        for(int x = 0;x != 12;x++){
-            for(int y = 0;y != 8;y++){
-                std::cout << m_blocks[x * 8 + y]->type() << "      ";
-            }
-            std::cout << std::endl;
-        }
-        std::cout << "score" << m_score << std::endl;
         moveBlocks();
         emit fallDownAllBlock();
     }
@@ -248,13 +286,6 @@ void GameScene::moveBlocks()
             emit typeNew(x,y);
         }
     }
-    std:: cout << std::endl;
-    for (int x = 0;x != 12;x++) {
-        for(int y = 0;y != 8;y++) {
-            std::cout << m_blocks[x * 8 + y]->type() << "  ";
-        }
-        std::cout << std::endl;
-    }
 }
 
 void GameScene::setScore(int score)
@@ -281,16 +312,16 @@ void GameScene::setPassScore(const QList<int> &passScore)
 void GameScene::initPassScore()
 {
 
-        std::string line;
-        std::ifstream ifs("../Fun-eliminating/assets/pass");
+    std::string line;
+    std::ifstream ifs("../Fun-eliminating/assets/pass");
 
-        while (getline(ifs,line)){
-            std::istringstream record(line);
-            int number;
-            record >> number;
-            if(number != 0)
-                m_passScore.push_back(number);
-        }
+    while (getline(ifs,line)){
+        std::istringstream record(line);
+        int number;
+        record >> number;
+        if(number != 0)
+            m_passScore.push_back(number);
+    }
 
 }
 
@@ -324,20 +355,25 @@ void GameScene::readScoreIn()
     ofs.close();
 }
 
-//void GameScene::setTarget(int levelNumber)
-//{
-//        srand((unsigned)time(NULL));
-//    for(int i = 0;i != 3;i++) {
-//        int type = rand() % BLOCK_TYPE;
-////        m_target.push_back(type);
-////        m_target.push_back(levelNumber);
-//    }
-//}
+void GameScene::setTarget()
+{
+    m_target.clear();
+    srand((unsigned)time(NULL));
+    int arr[BLOCK_TYPE];
+    for(int i = 0;i != BLOCK_TYPE;i++) {
+        arr[i] = i;
+    }
+    std::random_shuffle(arr,arr+BLOCK_TYPE-1);
+    for(int i = 0;i != 3;i++) {
+        m_target.push_back(arr[i]);
+    }
 
-//QList<QList<int> > GameScene::target() const
-//{
-//    return m_target;
-//}
+}
+
+int GameScene::target(int i) const
+{
+    return m_target[i];
+}
 
 
 void GameScene::setBlocks(const QList<Block *> &blocks)
@@ -354,4 +390,30 @@ void GameScene::changedType(int index, int type)
 {
     m_blocks[index]->setType(type);
 
+}
+
+int GameScene::number(int i) const
+{
+    return m_number[i];
+}
+
+void GameScene::setNumber(int levelnumber)
+{
+    m_number.clear();
+    srand((unsigned)time(NULL));
+    int a;
+    for(int i = 0;i != 3;i++) {
+        a = levelnumber * 15;
+        m_number.push_back(a);
+    }
+}
+
+void GameScene::numberChanged(int type,int number)
+{
+    for (int i  = 0;i != m_target.size();i++) {
+        if(type == m_target[i] && m_number[i] > 0){
+            m_number[i] -= number;
+        }
+
+    }
 }

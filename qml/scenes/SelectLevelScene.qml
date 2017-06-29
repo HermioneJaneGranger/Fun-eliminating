@@ -14,7 +14,6 @@ SceneBase {
     signal moreSceneClicked
     signal bagSceneClicked
     signal exitClicked
-
     Image {
         id: selectLevelSceneImage1
         source: "../../assets/selectLevel/scene1.png"

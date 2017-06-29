@@ -26,7 +26,6 @@ int main(int argc, char *argv[])
     GameScene gameScene(5);
 //    gameScene.control(0,0);
     gameScene.initPassScore();
-    gameScene.refresh();
 
 
     engine.rootContext()->setContextProperty("gameSceneMessage",&gameScene);

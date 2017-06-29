@@ -4,6 +4,7 @@ import "../common"
 SceneBase {
     id: gamepassscene
     anchors.centerIn: parent.Center
+    property int score
     Image {
         id: background
         anchors.horizontalCenterOffset: 0
@@ -43,7 +44,7 @@ SceneBase {
         anchors.topMargin: 100
         visible:
         {
-            if (gameSceneMessage.score > 1200 && gameSceneMessage.score < 2000)
+            if (score > 250 && score < 500)
                 return true
             else
                 return false
@@ -62,7 +63,7 @@ SceneBase {
         anchors.topMargin: 100
         visible:
         {
-            if (gameSceneMessage.score > 2000)
+            if (score > 500)
                 return true
             else
                 return false
@@ -71,7 +72,7 @@ SceneBase {
     }
     Text {
         id: text
-        text: "Score：" /*+ getscore（）*/
+        text: "Score：" + score
         font.pixelSize: 21
         anchors.left: parent.left
         anchors.leftMargin: 59

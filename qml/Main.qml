@@ -154,6 +154,19 @@ GameWindow {
             //            gamestore.opacity = 1
             //            settings.opacity = 0
         }
+        onGamePass: {
+            gamePass.opacity = 1
+            gamePass.score = gameSceneMessage.score()
+        }
+        onGameLose: {
+            gameLose.opacity = 1
+        }
+    }
+    GamePass {
+        id:gamePass
+    }
+    GameLose {
+        id:gameLose
     }
 }
 
