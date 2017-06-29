@@ -1,0 +1,109 @@
+#include <stdlib.h>
+
+#include <stdio.h>
+
+
+typedef int ElementType;
+
+const int MAX_STACK_SIZE = 20;
+
+struct BinNode{
+	
+ElementType data;
+	
+struct BinNode *lchild;
+	
+struct BinNode *rchild;
+
+};
+
+struct Stack
+{
+	
+BinNode stack[MAX_STACK_SIZE];
+	
+int top;
+
+};
+
+
+void InitStack(struct Stack* pStack)
+
+{
+	pStack->top = 0;
+}
+
+
+void CreateBinTree(BinNode **root, ElementType data[], int n)
+{
+	static int i = 0;
+
+	ElementType val = data[i];
+
+	if(val == TermFlag)
+	{
+		*root = NULL;
+		i++;
+	}
+	else
+	{
+		*root = (struct BinNode*)malloc(sizeof(struct BinNode));
+		(*root)->data = val;
+		i++;
+		CreateBinTree(&(*root)->lchild, data, n);
+		CreateBinTree(&(*root)->rchild, data, n);
+	}
+}
+void Push(struct Stack* pStack, BinNode t)
+{//
+	if(pStack->top > MAX_STACK_SIZE)
+		exit(0); 
+	else
+		pStack->stack[pStack->top++] = t;
+}
+
+BinNode Pop(struct Stack* pStack)
+{
+	if(pStack->top == 0)
+		return NULL;
+	else
+		return pStack->stack[--pStack->top];
+}
+
+void midorder(struct BinNode *t, ElementType e)
+{
+    	struct BinNode *p;
+	struct Stack q;
+	InitStack(q);
+	p = root;
+	for(;;)
+        {
+            if(p)
+            {
+                Push(&q, p);
+                p = p->lchild;
+            }
+            else
+            {
+                Pop(&q);
+                p = p->rchild;
+            }
+	}
+}
+
+void lastorder(struct BinNode *t, ElementType e)
+{
+	struct ThrBTreeNode *p, *q;
+	struct ThrBTreeNode **s;
+	p = t;
+	q = NULL;
+        for(;;)
+	{
+		while (p)
+		{
+                    p = p->lchild;
+
+		}
+	}
+}
+

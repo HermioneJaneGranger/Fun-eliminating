@@ -4,7 +4,8 @@ import gameSceneMessage 1.0
 import VPlay 2.0
 
 Item {
-    id:gameMessage
+
+    id: gameMessage
     anchors.fill: parent
     property int level
     property bool mouseEnabled
@@ -13,10 +14,10 @@ Item {
     property int removeX:-1
     property int removeY:-1
 
-    property int pressX
-    property int pressY
-    property int releaseX
-    property int releaseY
+    property int pressX:0
+    property int pressY:0
+    property int releaseX:0
+    property int releaseY:0
     property int downX
     property int downY
     property bool transferControl: true
@@ -95,30 +96,29 @@ Item {
             console.log("allClear")
             gameSceneMessage.initScene(gameScene)
             transferControl = false
-            downEnabled: true
             step_one.start()
             //timer xialuo
         }
         onTypeChanged_down: {
             console.log("falldown")
-//                    gameSceneMessage.initScene(gameScene)
-//            downEnabled = true
+            //                    gameSceneMessage.initScene(gameScene)
+            //            downEnabled = true
             step_two.start()
         }
         onTypeNew: {
             console.log("new")
             newEnabeled = true
-//            gameSceneMessage.initScene(gameScene)
-//                    afterswaptimer.start()
+            //            gameSceneMessage.initScene(gameScene)
+            //                    afterswaptimer.start()
             //            newBlock(x,y)
             step_two.start()
         }
         onTypeDestroy: {
             console.log("destroy  " + x + y+"-----------")
-//                    gameSceneMessage.initScene(gameScene)
+            //                    gameSceneMessage.initScene(gameScene)
             //                console.log("removeX,removeY"+removeX+"  "+removeY)
-//                    afterswaptimer.start()
-           step_two.start()
+            //                    afterswaptimer.start()
+            step_two.start()
             //                        grid.remove(x,y,removeImage)
         }
 
@@ -130,7 +130,8 @@ Item {
         {
             Component.onCompleted: {
                 if(transferControl) {
-                    gameScene.control(0,0)
+                    gameScene.control(pressX, pressY, releaseX,releaseY)
+//                                        gameScene.control(0,0)
                     transferControl = false
                 }
                 if(downEnabled) {
@@ -142,103 +143,6 @@ Item {
             id:grid
             anchors.fill: parent
             rows:12
-//            Timer{
-//                id:afterswaptimer
-//                interval: 150
-//                onTriggered: {
-//                    console.log("timer--------------------------")
-//                    lod.sourceComponent = null
-//                    lod.sourceComponent = com
-//                }
-
-//            }
-//            Timer{
-//                id:step_two
-//                interval: 350
-//                onTriggered: {
-//                    console.log("timer--------------------------")
-//                    lod.sourceComponent = null
-//                    lod.sourceComponent = com
-//                }
-
-//            }
-
-//            Timer{
-//                id:step_one
-//                interval: 150
-//                onTriggered: {
-//                    downEnabled = true
-//                    lod.sourceComponent = null
-//                    lod.sourceComponent = com
-//                    console.log("enable         *************************")
-//                }
-
-//            }
-
-
-
-//            GameSceneMessage{
-//                signal destroy_x_y(int x,int y)
-//                id: gameScene
-//                property GameSceneMessage message: {
-//                    gameScene.initScene(gameSceneMessage)
-
-//                    return gameSceneMessage
-//                }
-//                onCannotClear: {
-//                    transferControl = false
-//                }
-
-//            }
-
-//            Component.onCompleted: {
-//                gameScene.control(0,0)
-//                if(downEnabled) {
-//                    downEnabled = false
-//                    gameScene.moveBlocks()
-//                }
-//            }
-
-//            Connections{
-//                target: gameScene
-//                onTypeChanged: {
-//                    gameSceneMessage.initScene(gameScene)
-//                    swapEnabled = true
-//                    console.log("                        ooooooooooooooooo")
-//                    afterswaptimer.start()
-////                    lod.sourceComponent = null
-////                    lod.sourceComponent = com
-//                }
-//                onClearAllBlocks: {
-//                    console.log("allClear")
-//                    gameSceneMessage.initScene(gameScene)
-//                    step_one.start()
-//                    //timer xialuo
-//                }
-//                onTypeChanged_down: {
-//                    console.log("falldown")
-////                    gameSceneMessage.initScene(gameScene)
-//                    downEnabled = true
-//                    step_two.start()
-//                }
-//                onTypeNew: {
-//                    console.log("new")
-//                    newEnabeled = true
-//                    gameSceneMessage.initScene(gameScene)
-////                    afterswaptimer.start()
-//                    //            newBlock(x,y)
-//                    step_two.start()
-//                }
-//                onTypeDestroy: {
-//                    console.log("destroy  " + x + y+"-----------")
-////                    gameSceneMessage.initScene(gameScene)
-//                    //                console.log("removeX,removeY"+removeX+"  "+removeY)
-////                    afterswaptimer.start()
-//                   step_two.start()
-//                    //                        grid.remove(x,y,removeImage)
-//                }
-
-//            }
 
 
             Repeater {
@@ -324,7 +228,7 @@ Item {
                         onStopped: {
                             //                                refreshTypeChanged = true
                             console.log("stoped")
-//                            swapFinishedTimer.start() // trigger swapFinished
+                            //                            swapFinishedTimer.start() // trigger swapFinished
                         }
                     }
                     NumberAnimation {//交换动画
@@ -376,6 +280,7 @@ Item {
                             swapAnimation2.property="x"
                             swapAnimation2.from = tar2.x
                             swapAnimation2.to = tar2.x+(targetY> preY ? -32: 32)
+
 
                         }
                         else
@@ -460,8 +365,6 @@ Item {
 
 
                         }
-
-
                     }
 
                     Image {
@@ -470,8 +373,8 @@ Item {
                         property GameSceneBlock block:gameScene.block(index)
                         property int type: block.type
                         signal singleBlockChanged
-//                        Text{
-//                            text:index}
+                        //                        Text{
+                        //                            text:index}
                         source: {
                             if(type === 0) {
                                 return "../../assets/gaming/1.png"
@@ -494,7 +397,6 @@ Item {
                             }
                         }
                     }
-
                 }
             }
         }

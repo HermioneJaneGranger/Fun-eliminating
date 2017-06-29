@@ -4,10 +4,12 @@ import "../common"
 SceneBase {
     id: gamepasscene
     anchors.centerIn: parent.Center
+    signal playAgain
+    signal exitTheLevel
     Image {
         id: background
         anchors.horizontalCenterOffset: 0
-        source: "../../assets/gamepass/bj.png"
+        source: "../../assets/gamePass/bj.png"
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
         anchors.topMargin: 70
@@ -42,7 +44,7 @@ SceneBase {
     }
     Image {
         id: an1
-        source: "../../assets/gamepass/an.png"
+        source: "../../assets/gamePass/an.png"
         anchors.left: parent.left
         anchors.leftMargin: 47
         anchors.top: parent.top
@@ -58,10 +60,17 @@ SceneBase {
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 14.5
         }
+        MouseArea{
+            anchors.fill: parent
+            onClicked: {
+                playAgain()
+                console.log("play this level again")
+            }
+        }
     }
     Image {
         id: an2
-        source: "../../assets/gamepass/an.png"
+        source: "../../assets/gamePass/an.png"
         anchors.left: parent.left
         anchors.leftMargin: 180
         anchors.top: parent.top
@@ -76,6 +85,14 @@ SceneBase {
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 14.5
+        }
+        MouseArea{
+            onClicked:
+            {
+                exitTheLevel()
+                console.log("level this level")
+            }
+
         }
     }
 }

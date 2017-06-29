@@ -8,12 +8,12 @@ SceneBase {
 
     signal levelsClicked
     property int levelChoose: 1
+    property int passNumber: gameSceneMessage.passNumber()
     signal achivementSceneClicked
     signal shopSceneClicked
     signal moreSceneClicked
     signal bagSceneClicked
     signal exitClicked
-
     Image {
         id: selectLevelSceneImage1
         source: "../../assets/selectLevel/scene1.png"
@@ -41,10 +41,22 @@ SceneBase {
                 width: 58
                 height: 47
                 source: "../../assets/selectLevel/level.png"
+                Star {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.top: parent.top
+                    anchors.topMargin: -3
+                    type: {
+                        if (passNumber > (levelChoose))
+                            return gameSceneMessage.passScore[levelChoose]
+                        else
+                            return 0
+                    }
+                }
+
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        levelChoose = 1
+                        levelChoose: 1
                         levelsClicked()
                     }
                 }
@@ -56,6 +68,17 @@ SceneBase {
                 y: 1553
                 width: 58
                 height: 47
+                Star {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.top: parent.top
+                    anchors.topMargin: -3
+                    type: {
+                        if (passNumber > (levelChoose + 1))
+                            return gameSceneMessage.passScore[levelChoose + 1]
+                        else
+                            return 0
+                    }
+                }
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
@@ -72,6 +95,17 @@ SceneBase {
                 width: 58
                 height: 47
                 source: "../../assets/selectLevel/level.png"
+                Star {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.top: parent.top
+                    anchors.topMargin: -3
+                    type: {
+                        if (passNumber > (levelChoose + 2))
+                            return gameSceneMessage.passScore[levelChoose + 2]
+                        else
+                            return 0
+                    }
+                }
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
@@ -87,6 +121,17 @@ SceneBase {
                 width: 58
                 height: 47
                 source: "../../assets/selectLevel/level.png"
+                Star {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.top: parent.top
+                    anchors.topMargin: -3
+                    type: {
+                        if (passNumber > (levelChoose + 3))
+                            return gameSceneMessage.passScore[levelChoose + 3]
+                        else
+                            return 0
+                    }
+                }
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
@@ -102,6 +147,17 @@ SceneBase {
                 width: 58
                 height: 47
                 source: "../../assets/selectLevel/level.png"
+                Star {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.top: parent.top
+                    anchors.topMargin: -3
+                    type: {
+                        if (passNumber > (levelChoose + 4))
+                            return gameSceneMessage.passScore[levelChoose + 4]
+                        else
+                            return 0
+                    }
+                }
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
@@ -118,6 +174,17 @@ SceneBase {
                 width: 58
                 height: 47
                 source: "../../assets/selectLevel/level.png"
+                Star {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.top: parent.top
+                    anchors.topMargin: -3
+                    type: {
+                        if (passNumber > (levelChoose + 5))
+                            return gameSceneMessage.passScore[levelChoose + 5]
+                        else
+                            return 0
+                    }
+                }
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
@@ -134,6 +201,17 @@ SceneBase {
                 width: 58
                 height: 47
                 source: "../../assets/selectLevel/level.png"
+                Star {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.top: parent.top
+                    anchors.topMargin: -3
+                    type: {
+                        if (passNumber > (levelChoose + 6))
+                            return gameSceneMessage.passScore[levelChoose + 6]
+                        else
+                            return 0
+                    }
+                }
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
@@ -150,6 +228,17 @@ SceneBase {
                 width: 58
                 height: 47
                 source: "../../assets/selectLevel/level.png"
+                Star {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.top: parent.top
+                    anchors.topMargin: -3
+                    type: {
+                        if (passNumber > (levelChoose + 7))
+                            return gameSceneMessage.passScore[levelChoose + 7]
+                        else
+                            return 0
+                    }
+                }
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
@@ -166,6 +255,17 @@ SceneBase {
                 width: 58
                 height: 47
                 source: "../../assets/selectLevel/level.png"
+                Star {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.top: parent.top
+                    anchors.topMargin: -3
+                    type: {
+                        if (passNumber > (levelChoose + 8))
+                            return gameSceneMessage.passScore[levelChoose + 8]
+                        else
+                            return 0
+                    }
+                }
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
@@ -182,6 +282,17 @@ SceneBase {
                 width: 58
                 height: 47
                 source: "../../assets/selectLevel/level.png"
+                Star {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.top: parent.top
+                    anchors.topMargin: -3
+                    type: {
+                        if (passNumber > (levelChoose + 9))
+                            return gameSceneMessage.passScore[levelChoose + 9]
+                        else
+                            return 0
+                    }
+                }
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
@@ -195,15 +306,15 @@ SceneBase {
             }
         }
     }
-    Image{
-        id:closes
+    Image {
+        id: closes
         anchors.rightMargin: 3
         anchors.topMargin: 5
-        source:"../../assets/selectLevel/bc.png"
-        anchors.top:parent.top
+        source: "../../assets/selectLevel/bc.png"
+        anchors.top: parent.top
         anchors.right: parent.right
         MouseArea {
-            anchors.fill:  parent
+            anchors.fill: parent
             onPressed: closes.opacity = 0.5
             onReleased: closes.opacity = 1
             onClicked: exitClicked()
@@ -285,7 +396,6 @@ SceneBase {
         Selectbutton {
             imageSource: "../../assets/amazing/zs.png"
             onSelectButtonClicked: shopSceneClicked()
-
         }
     }
 }

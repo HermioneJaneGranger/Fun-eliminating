@@ -26,13 +26,8 @@ int main(int argc, char *argv[])
     GameScene gameScene(5);
 //    gameScene.control(0,0);
     gameScene.initPassScore();
-//    QObject* t = root->findChild<QObject*>("gameScene");
-//        if (t)
-//        {
-//            //c++ 直接调用qml函数
-//            QMetaObject::invokeMethod(t, "swap");
+    gameScene.refresh(1);
 
-//        }
 
     engine.rootContext()->setContextProperty("gameSceneMessage",&gameScene);
     vplay.initialize(&engine);

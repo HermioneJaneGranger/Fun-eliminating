@@ -23,11 +23,13 @@ GameWindow {
     screenWidth: 640
     screenHeight: 960
 
+    property int currentLevel
     SelectLevelScene{
         id: selectLevelScene
         opacity: 1
         onExitClicked: openMessageBoxWithQuitQuestion()
         onLevelsClicked: {
+            currentLevel = selectLevelScene.levelChoose
             gameScene.opacity = 1
             gameScene.mouseEnable = true
             activeScene = gameScene
@@ -153,6 +155,13 @@ GameWindow {
             //            gamelose.opacity = 0
             //            gamestore.opacity = 1
             //            settings.opacity = 0
+        }
+    }
+    GameLose{
+        id:gamePass
+        opacity: 0
+        onPlayAgain: {
+            selectLevelScene.levelChoose = currentLevel
         }
     }
 }

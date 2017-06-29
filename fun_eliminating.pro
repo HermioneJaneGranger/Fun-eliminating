@@ -64,5 +64,6 @@ DISTFILES += \
     qml/common/Selectbutton.qml \
     qml/common/SceneBase.qml \
     qml/common/MenuButton.qml \
-    qml/common/LevelBase.qml
+    qml/common/LevelBase.qml \
+    qml/common/Star.qml
     qml/scenes/GameLoading.qml
