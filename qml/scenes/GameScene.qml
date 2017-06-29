@@ -131,6 +131,7 @@ SceneBase {
             target: selectLevelScene
             onLevelsClicked:{
 //                initLoad: true
+//                levelNumber = selectLevelScene.levelChoose
                 gameSceneMessage.refresh(5)
                 loader.sourceComponent = null
                 loader.sourceComponent = com
