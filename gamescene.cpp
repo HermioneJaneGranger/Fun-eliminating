@@ -218,10 +218,6 @@ void GameScene::control(int x_one, int y_one,int x_two,int y_two)
             }
         }
         if(clearNumber) {
-            for (int i = 0;i != m_target.size();i++)
-            {
-                std::cout << m_target[i] << "  number  " << m_number[i] << std::endl;
-            }
             emit cannotClear();
 
         }
@@ -260,7 +256,6 @@ void GameScene::clearBlocks(QList<int> &block)
             auto blocks = m_blocks[i];
             if(blocks->type() != -1) {
                 m_blocks[i]->setType(-1);
-                emit typeDestroy(i / 8,i % 8);
                 std::cout << "clear  " << i / 8 << "  " << i % 8 << std::endl;
             }
         }
@@ -277,9 +272,11 @@ void GameScene::moveBlocks()
                 nullBlockNumber++;
             }
             else if(nullBlockNumber != 0 && m_blocks[x * 8 + y]->type() !=  -1) {
-                m_blocks[(x + nullBlockNumber) * 8 + y]->setType(m_blocks[x * 8 + y]->type());
-                m_blocks[x * 8 + y]->setType(-2);
-                emit typeChanged_down(x + nullBlockNumber,y,x,y);
+                for(int move = 1;move != nullBlockNumber + 1;move++) {
+                    m_blocks[(x + move) * 8 + y]->setType(m_blocks[(x + move - 1) * 8 + y]->type());
+                    m_blocks[(x + move - 1) * 8 + y]->setType(-2);
+                    emit typeChanged_down(x + move,y,x + move - 1,y);
+                }
             }
         }
         for(int x = 0;x != nullBlockNumber;x++) {
@@ -291,8 +288,10 @@ void GameScene::moveBlocks()
             m_blocks[x * 8 + y]->setType(r[nullBlockNumber - x - 1]);
             emit typeNew(x,y);
         }
-//        emit fallDownAllBlock();
+
     }
+    setRemind();
+    emit fallDownAllBlock();
 }
 
 void GameScene::setScore(int score)
@@ -426,4 +425,132 @@ void GameScene::numberChanged(int type,int number)
 QList<int> GameScene::passScores() const
 {
     return m_passScore;
+}
+
+void GameScene::clearBlock(int x, int y)
+{
+    int type  = m_blocks[x * 8 + y]->type();
+    m_blocks[x * 8 + y]->setType(-1);
+    numberChanged(type,1);
+    emit clearAllBlocks();
+}
+
+void GameScene::clearLineX(int x)
+{
+    for(int i = 0;i != 8;i++) {
+        int type  = m_blocks[x * 8 + i]->type();
+        m_blocks[x * 8 + i]->setType(-1);
+        numberChanged(type,1);
+    }
+    emit clearAllBlocks();
+}
+
+void GameScene::clearLineY(int y)
+{
+    for(int i = 0;i != 12;i++) {
+        int type  = m_blocks[i * 8 + y]->type();
+        m_blocks[i * 8 + y]->setType(-1);
+        numberChanged(type,1);
+    }
+    emit clearAllBlocks();
+}
+
+void GameScene::clearType(int type)
+{
+    for(int x = 0;x != 12;x++) {
+        for (int y = 0;y != 8;y++) {
+            int t = m_blocks[x * 8 + y]->type();
+            if(t == type) {
+                m_blocks[x * 8 + y]->setType(-1);
+                numberChanged(type,1);
+            }
+        }
+    }
+    emit clearAllBlocks();
+}
+
+
+int GameScene::reminds(int i)
+{
+    return m_remind[i];
+}
+
+void GameScene::setRemind()
+{
+    m_remind.clear();
+    bool write = false;
+    for(int x = 0; x != 12;x++) {
+        for (int y = 0;y != 8;y++) {
+                if(swapOrNot(x,y,x + 1,y) && !write) {
+                    m_remind.push_back(x);
+                    m_remind.push_back(y);
+                    m_remind.push_back(x + 1);
+                    m_remind.push_back(y);
+                    write = true;
+                }
+                else if(swapOrNot(x,y,x,y + 1) && !write) {
+                    m_remind.push_back(x);
+                    m_remind.push_back(y);
+                    m_remind.push_back(x);
+                    m_remind.push_back(y + 1);
+                    write = true;
+                }
+                else if(swapOrNot(x,y,x,y -1) && !write) {
+                    m_remind.push_back(x);
+                    m_remind.push_back(y);
+                    m_remind.push_back(x);
+                    m_remind.push_back(y -1);
+                    write = true;
+                }
+                else if(swapOrNot(x,y,x - 1,y) && !write) {
+                    m_remind.push_back(x);
+                    m_remind.push_back(y);
+                    m_remind.push_back(x - 1);
+                    m_remind.push_back(y);
+                    write = true;
+                }
+        }
+    }
+    std::cout <<"??????????????????" << m_remind[0] << m_remind[1] << m_remind[2] << m_remind[3] << std::endl;
+}
+
+bool GameScene::swapOrNot(int start_x, int start_y, int end_x, int end_y)
+{
+    if(start_x < 0 || start_x > 11 ||
+            start_y < 0 || start_y > 11 ||
+            end_x < 0 || end_x > 7 ||
+            end_y < 0 || end_y > 7)
+        return false;
+    int type_1 = m_blocks[start_x * 8 + start_y]->type();
+    int type_2 = m_blocks[end_x * 8 + end_y]->type();
+    m_blocks[start_x * 8 + start_y]->setType(type_2);
+    m_blocks[end_x * 8 + end_y]->setType(type_1);
+
+    QList<int> block;
+    for(int i = 0;i != 96;i++) {
+        block.push_back(m_blocks[i]->type());
+    }
+    QList<int> b = block;
+    int number_x1 = sameOfNumber(b,start_x,start_y,type_2,0);
+    b = block;
+    int number_y1 = sameOfNumber(b,start_x,start_y,type_2,1);
+    b = block;
+    int number_x2 = sameOfNumber(b,end_x,end_y,type_1,0);
+    b = block;
+    int number_y2 = sameOfNumber(b,end_x,end_y,type_1,1);
+    if(number_x1 < 3 && number_x2 < 3 && number_y1 < 3 && number_y2 < 3) {
+        m_blocks[start_x * 8 + start_y]->setType(type_1);
+        m_blocks[end_x * 8 + end_y]->setType(type_2);
+        return false;
+    }
+    else {
+        m_blocks[start_x * 8 + start_y]->setType(type_1);
+        m_blocks[end_x * 8 + end_y]->setType(type_2);
+        return true;
+    }
+}
+
+QList<int> GameScene::remind() const
+{
+    return m_remind;
 }

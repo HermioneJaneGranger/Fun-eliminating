@@ -10,6 +10,7 @@ Rectangle {
     border.color: "black"
 
     signal commonButtonClicked(int pressX,int pressY,int releaseX,int releaseY)
+    signal move(int mouse_x,int mouse_y,int x,int y)
 
     MouseArea {
         anchors.fill: parent
@@ -21,6 +22,7 @@ Rectangle {
             pressX = mouse.x
             pressY = mouse.y
             menuButton.opacity = 0
+            move(mouse.x,mouse.y,x,y)
         }
         onReleased: {
             releaseX = mouse.x

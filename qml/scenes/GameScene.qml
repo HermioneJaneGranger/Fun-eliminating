@@ -1,6 +1,7 @@
 //GameScene
 import QtQuick 2.0
 import "../common"
+import gameSceneMessage 1.0
 
 SceneBase {
     id: gameScene
@@ -9,13 +10,18 @@ SceneBase {
     signal pauseClicked
     signal gamepass(int star)
     signal gamelose
-    signal toolBlock
-    signal toolLinex
-    signal toolLineY
-    signal toolType
+    signal toolBlock(int x,int y)
+    signal toolLinex(int x)
+    signal toolLiney(int y)
+    signal toolType(int type)
     property int levelNumber
     property int remainingSteps: 20
     property bool pass: true
+    property int tool_1: 1
+    property int tool_2: 1
+    property int tool_3: 1
+    property int tool_4: 1
+
 
     anchors.centerIn: parent.Center
 
@@ -45,12 +51,43 @@ SceneBase {
         Item {
             height: 40
             width: 48
-            MenuButton {
+            Rectangle{
+                id:rec_1
+                anchors.fill: parent
                 opacity: 0.5
-                color: "white"
-                onCommonButtonClicked: {
-                    console.log(gameScene.width,gameScene.height + "   gameScene")
-                    console.log(loader.width,loader.height + "   gameScene")
+                border.width: 1
+                border.color: "black"
+            }
+
+            MouseArea{
+                anchors.fill: parent
+                property var pressX
+                property var pressY
+                property var releaseX
+                property var releaseY
+                property int changeX
+                property int changeY
+                property bool moveImage: false
+                onPressed: {
+                    pressX = mouse.x
+                    pressY = mouse.y
+                    moveImage = true
+                    rec_1.opacity = 0.3
+                }
+                onReleased: {
+                    rec_1.opacity = 0.5
+                    moveImage = false
+                    releaseX = mouse.x
+                    releaseY = mouse.y
+                    changeX = (releaseX + 110) / 32 - 1
+                    changeY = (releaseY + 384) / 32
+                    console.log("clicked--------------" + pressX + "  " + pressY)
+                    console.log("clicked--------------" + releaseX + "  " + releaseY)
+                    console.log("move-----------------" + changeX,changeY)
+                    if(changeX < 8 && changeX >= 0 && changeY >= 0 && changeY < 12 && tool_1 > 0) {
+                        tool_1--
+                        toolBlock(changeY,changeX)
+                    }
                 }
             }
 
@@ -62,9 +99,43 @@ SceneBase {
         Item {
             height: 40
             width: 48
-            MenuButton {
+            Rectangle{
+                id:rec_2
+                anchors.fill: parent
                 opacity: 0.5
-                color: "white"
+                border.width: 1
+                border.color: "black"
+            }
+            MouseArea{
+                anchors.fill: parent
+                property var pressX
+                property var pressY
+                property var releaseX
+                property var releaseY
+                property int changeX
+                property int changeY
+                property bool moveImage: false
+                onPressed: {
+                    pressX = mouse.x
+                    pressY = mouse.y
+                    moveImage = true
+                    rec_2.opacity = 0.3
+                }
+                onReleased: {
+                    rec_2.opacity = 0.5
+                    moveImage = false
+                    releaseX = mouse.x
+                    releaseY = mouse.y
+                    changeX = (releaseX + 142) / 32
+                    changeY = (releaseY + 384) / 32
+                    console.log("clicked--------------" + pressX + "  " + pressY)
+                    console.log("clicked--------------" + releaseX + "  " + releaseY)
+                    console.log("move-----------------" + changeX,changeY)
+                    if(changeX < 8 && changeX >= 0 && changeY >= 0 && changeY < 12 && tool_2 > 0) {
+                        tool_2--
+                        toolLinex(changeY)
+                    }
+                }
             }
             Image {
                 id: tool_line_x
@@ -74,14 +145,45 @@ SceneBase {
         Item {
             height: 40
             width: 48
-            MenuButton {
+            Rectangle{
+                id:rec_3
+                anchors.fill: parent
                 opacity: 0.5
-                color: "white"
-                onCommonButtonClicked: {
+                border.width: 1
+                border.color: "black"
+            }
+            MouseArea{
+                anchors.fill: parent
+                property var pressX
+                property var pressY
+                property var releaseX
+                property var releaseY
+                property int changeX
+                property int changeY
+                property bool moveImage: false
+                onPressed: {
+                    rec_3.opacity = 0.3
+                    pressX = mouse.x
+                    pressY = mouse.y
+                    moveImage = true
+                }
+                onReleased: {
+                    rec_3.opacity = 0.5
+                    moveImage = false
+                    releaseX = mouse.x
+                    releaseY = mouse.y
+                    changeX = (releaseX + 174) / 32
+                    changeY = (releaseY + 384) / 32
                     console.log("clicked--------------" + pressX + "  " + pressY)
                     console.log("clicked--------------" + releaseX + "  " + releaseY)
+                    console.log("move-----------------" + changeX,changeY)
+                    if(changeX < 8 && changeX >= 0 && changeY >= 0 && changeY < 12 && tool_3 > 0) {
+                        tool_3--
+                        toolLiney(changeX)
+                    }
                 }
             }
+
             Image {
                 id: tool_line_y
                 source: "../../assets/tool/tool_line_y.png"
@@ -90,9 +192,49 @@ SceneBase {
         Item {
             height: 40
             width: 48
-            MenuButton {
+            Rectangle{
+                id:rec_4
+                anchors.fill: parent
                 opacity: 0.5
-                color: "white"
+                border.width: 1
+                border.color: "black"
+            }
+            MouseArea{
+                anchors.fill: parent
+                property var pressX
+                property var pressY
+                property var releaseX
+                property var releaseY
+                property int changeX
+                property int changeY
+                property bool moveImage: false
+                property GameSceneBlock block
+                property int clearType
+                onPressed: {
+                    rec_4.opacity = 0.3
+                    pressX = mouse.x
+                    pressY = mouse.y
+                    moveImage = true
+                }
+                onReleased: {
+                    rec_4.opacity = 0.5
+                    moveImage = false
+                    releaseX = mouse.x
+                    releaseY = mouse.y
+                    changeX = (releaseX + 206) / 32
+                    changeY = (releaseY + 384) / 32
+                    console.log("clicked--------------" + pressX + "  " + pressY)
+                    console.log("clicked--------------" + releaseX + "  " + releaseY)
+                    console.log("move-----------------" + changeX,changeY)
+
+                    if(changeX < 8 && changeX >= 0 && changeY >= 0 && changeY < 12 && tool_4 > 0)
+                    {
+                        tool_4--
+                        block = gameSceneMessage.block(changeY * 8 + changeX)
+                        clearType = block.type
+                        toolType(clearType)
+                    }
+                }
             }
             Image {
                 id: tool_area
@@ -195,6 +337,46 @@ SceneBase {
                         text_loader.sourceComponent = compo
                     }
                 }
+
+            }
+
+        }
+        Component {
+            id:compo
+            Item {
+                Text {
+                    x: 113
+                    y:382
+                    text: tool_1
+                    font.bold: true
+                    color: "yellow"
+                    font.pixelSize: 17
+                }
+                Text {
+                    x: 161
+                    y:382
+                    text: tool_2
+                    font.bold: true
+                    color: "yellow"
+                    font.pixelSize: 17
+                }
+                Text {
+                    x: 209
+                    y:382
+                    text: tool_3
+                    font.bold: true
+                    color: "yellow"
+                    font.pixelSize: 17
+                }
+                Text {
+                    x: 257
+                    y:382
+                    text: tool_4
+                    font.bold: true
+                    color: "yellow"
+                    font.pixelSize: 17
+                }
+
                 Text {
                     x:180
                     y:-50
@@ -203,12 +385,6 @@ SceneBase {
                     color: "white"
                     font.pixelSize: 17
                 }
-            }
-
-        }
-        Component {
-            id:compo
-            Item {
                 Text {
                     x:-15
                     y:390

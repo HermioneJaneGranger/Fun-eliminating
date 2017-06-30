@@ -142,6 +142,7 @@ GameWindow {
 
     GamePass {
         id:gamePass
+        opacity: 0
         onNextLevel: {
             opacity = 0
             activeScene=gameScene
@@ -152,7 +153,7 @@ GameWindow {
             selectLevelScene.opacity=1
             activeScene=selectLevelScene
             gameLose.opacity=0
-            opacity=0
+            gamePass.opacity=0
             gameScene.opacity=0
             pauseMenuScene.opacity=0
         }

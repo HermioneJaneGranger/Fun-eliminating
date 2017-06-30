@@ -35,6 +35,20 @@ Item {
         sourceComponent: com
     }
     Timer{
+        id:r
+        interval: 8000
+        onTriggered: {
+            console.log("timer--------------------------" + gameSceneCenter.reminds(0)
+                        + gameSceneCenter.reminds(1) +gameSceneCenter.reminds(2)+gameSceneCenter.reminds(3))
+            i.getX_1 = gameSceneCenter.reminds(1) * 32
+            i.getY_1 = gameSceneCenter.reminds(0) * 32
+            i.getX_2 = gameSceneCenter.reminds(3) * 32
+            i.getY_2 = gameSceneCenter.reminds(2) * 32
+            i.opacity = 0.5
+        }
+
+    }
+    Timer{
         id:afterswaptimer
         interval: 50
         onTriggered: {
@@ -57,12 +71,24 @@ Item {
 
     Timer{
         id:step_one
-        interval: 350
+        interval: 200
         onTriggered: {
             downEnabled = true
             lod.sourceComponent = null
             lod.sourceComponent = com
-            console.log("enable         *************************")
+            console.log("enable_clear         *************************")
+        }
+
+    }
+
+    Timer{
+        id:step_three
+        interval: 200
+        onTriggered: {
+//            downEnabled = true
+            lod.sourceComponent = null
+            lod.sourceComponent = com
+            console.log("enable _fallDown        *************************")
         }
 
     }
@@ -84,16 +110,32 @@ Item {
 
     }
 
-//    Connections{
-//        target: gameScene
-//    }
+    Connections{
+        target: gameScene
+        onToolBlock: {
+            gameSceneCenter.clearBlock(x,y)
+            console.log("tool==============" + x + y )
+        }
+        onToolLinex: {
+            gameSceneCenter.clearLineX(x)
+            console.log("tool==============" + x )
+        }
+        onToolLiney: {
+            gameSceneCenter.clearLineY(y)
+            console.log("tool==============" + y )
+        }
+        onToolType: {
+            gameSceneCenter.clearType(type)
+            console.log("tool==============" + type )
+        }
+    }
 
     Connections{
         target: gameSceneCenter
         onTypeChanged: {
             reduceStep()
-            gameSceneMessage.initScene(gameSceneCenter)
             refreshGrid()
+            gameSceneMessage.initScene(gameSceneCenter)
             swapEnabled = true
             transferControl = true
             console.log("                        ooooooooooooooooo")
@@ -104,7 +146,6 @@ Item {
             gameSceneMessage.initScene(gameSceneCenter)
             refreshGrid()
 
-            transferControl = false
             step_one.start()
             //timer xialuo
         }
@@ -112,27 +153,67 @@ Item {
             console.log("falldown")
             //                    gameSceneMessage.initScene(gameScene)
             //            downEnabled = true
-            step_two.start()
+
+            gameSceneMessage.initScene(gameSceneCenter)
+            refreshGrid()
+            step_three.start()
         }
         onTypeNew: {
             console.log("new")
-            newEnabeled = true
             //            gameSceneMessage.initScene(gameScene)
             //                    afterswaptimer.start()
             //            newBlock(x,y)
-            step_two.start()
+            gameSceneMessage.initScene(gameSceneCenter)
+            refreshGrid()
+            step_three.start()
         }
-        onTypeDestroy: {
-            console.log("destroy  " + x + y+"-----------")
-            //                    gameSceneMessage.initScene(gameScene)
-            //                console.log("removeX,removeY"+removeX+"  "+removeY)
-            //                    afterswaptimer.start()
-            step_two.start()
-            //                        grid.remove(x,y,removeImage)
+//        onTypeDestroy: {
+//            //                    gameSceneMessage.initScene(gameScene)
+//            //                console.log("removeX,removeY"+removeX+"  "+removeY)
+//            //                    afterswaptimer.start()
+//            step_two.one()
+//            //                        grid.remove(x,y,removeImage)
+//        }
+        onFallDownAllBlock:{
+            console.log("fill down all ====================")
+            transferControl = true
+            downEnabled = false
+            refreshGrid()
+            gameSceneMessage.initScene(gameSceneCenter)
+            r.start()
         }
-
     }
 
+    Loader {
+        id:remind
+    }
+//    Component{
+//        id:rem
+        Item{
+            opacity:0
+            id:i
+            property int getX_1:0
+            property int getY_1:0
+            property int getX_2:0
+            property int getY_2:0
+            Rectangle {
+                x:i.getX_1
+                y:i.getY_1
+                width: 32
+                height: 32
+                border.color: "yellow"
+                border.width: 2
+            }
+            Rectangle {
+                x:i.getX_2
+                y:i.getY_2
+                width: 32
+                height: 32
+                border.color: "yellow"
+                border.width: 2
+            }
+        }
+//    }
 
     Component{
         id:com
@@ -146,7 +227,6 @@ Item {
                 }
                 if(downEnabled) {
                     downEnabled = false
-                    transferControl = true
                     gameSceneCenter.moveBlocks()
                 }
             }
@@ -328,6 +408,7 @@ Item {
                         property int curY
 
                         onPressed: {
+                            i.opacity = 0
                             prePosition={x:mouse.x, y:mouse.y}
                             console.log(mouse.x+"  dsd")
                             preY=number/8

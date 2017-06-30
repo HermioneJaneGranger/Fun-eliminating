@@ -9,6 +9,7 @@ class GameScene: public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QQmlListProperty<Block> blockArray READ blockArray NOTIFY blockChanged)
+    Q_PROPERTY(QList<int> remind READ remind)
     Q_PROPERTY(int score READ score WRITE setScore NOTIFY scoreChanged)
     Q_PROPERTY(QList<int> passScore READ passScores NOTIFY passScoreChanged)
 
@@ -56,6 +57,18 @@ public:
 
     QList<int> passScores() const;
 
+    Q_INVOKABLE void clearBlock(int x,int y);
+    Q_INVOKABLE void clearLineX(int x);
+    Q_INVOKABLE void clearLineY(int y);
+    Q_INVOKABLE void clearType(int type);
+
+    void setRemind();
+    Q_INVOKABLE int reminds(int i);
+    bool swapOrNot(int start_x, int start_y, int end_x, int end_y);
+
+
+    QList<int> remind() const;
+
 signals:
     void blockChanged();
     void scoreChanged();
@@ -75,6 +88,7 @@ private:
     QList<int> m_target;
     QList<int> m_number;
     QList<Block *> m_blocks;
+    QList<int> m_remind;
     static void appendBlock(QQmlListProperty<Block> *list, Block *msg);
     static int countBlock(QQmlListProperty<Block> *list);
     static Block *atBlock(QQmlListProperty<Block> *list, int i);
