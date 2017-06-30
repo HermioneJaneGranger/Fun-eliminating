@@ -2,9 +2,12 @@ import QtQuick 2.0
 import "../common"
 
 SceneBase {
-    id: gamepassscene
+    id: gamepass
     anchors.centerIn: parent.Center
-    property int score
+    property int star
+    property int gameScore
+    signal nextLevel
+    signal exitTheLevel
     Image {
         id: background
         anchors.horizontalCenterOffset: 0
@@ -44,7 +47,7 @@ SceneBase {
         anchors.topMargin: 100
         visible:
         {
-            if (score > 250 && score < 500)
+            if (star > 1)
                 return true
             else
                 return false
@@ -63,7 +66,7 @@ SceneBase {
         anchors.topMargin: 100
         visible:
         {
-            if (score > 500)
+            if (star > 2)
                 return true
             else
                 return false
@@ -72,7 +75,7 @@ SceneBase {
     }
     Text {
         id: text
-        text: "Score：" + score
+        text: "Score：" + gameScore
         font.pixelSize: 21
         anchors.left: parent.left
         anchors.leftMargin: 59
@@ -139,6 +142,12 @@ SceneBase {
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 14.5
         }
+        MouseArea{
+            anchors.fill: parent
+            onClicked: {
+                nextLevel()
+            }
+        }
     }
     Image {
         id: an2
@@ -157,6 +166,12 @@ SceneBase {
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 14.5
+        }
+        MouseArea{
+            anchors.fill: parent
+            onClicked: {
+                exitTheLevel()
+            }
         }
     }
 }

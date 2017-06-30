@@ -8,11 +8,11 @@ SceneBase {
 
     signal levelsClicked
     property int levelChoose: 1
-    property int passNumber: gameSceneMessage.passNumber()
-    signal achivementSceneClicked
-    signal shopSceneClicked
-    signal moreSceneClicked
-    signal bagSceneClicked
+    property int passNumber/*: gameSceneMessage.passNumber()*/
+    //    signal achivementSceneClicked
+    //    signal shopSceneClicked
+    //    signal moreSceneClicked
+    //    signal bagSceneClicked
     signal exitClicked
     Image {
         id: selectLevelSceneImage1
@@ -35,7 +35,7 @@ SceneBase {
             drag.minimumY: -1050
 
             Image {
-                id: levels0
+                id: levels1
                 x: 168
                 y: 1677
                 width: 58
@@ -46,28 +46,69 @@ SceneBase {
                     anchors.top: parent.top
                     anchors.topMargin: -3
                     type: {
-                        if (passNumber > (levelChoose))
-                            return gameSceneMessage.passScore[levelChoose]
+                        if (passNumber >= (levelChoose)) {
+                            console.log("passNumber_____________________" + passNumber + levelChoose)
+                            return gameSceneMessage.passScore[levelChoose - 1]
+                        }
                         else
                             return 0
                     }
+                }
+                Image {
+                    opacity: passNumber == (levelChoose - 1) ? 1 : 0
+                    source: "../../assets/tool/tool_block.png"
                 }
 
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
                         levelChoose: 1
-                        levelsClicked()
+                        if (passNumber >= levelChoose - 1) levelsClicked()
+                        else levelChoose = 1
                     }
                 }
             }
             Image {
-                id: levels1
+                id: levels2
                 source: "../../assets/selectLevel/level.png"
                 x: 79
                 y: 1553
                 width: 58
                 height: 47
+                Star {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.top: parent.top
+                    anchors.topMargin: -3
+                    type: {
+                        if (passNumber > (levelChoose)) {
+                            console.log("passNumber_____________________" + passNumber + levelChoose)
+                            return gameSceneMessage.passScore[levelChoose]
+                        }
+                        else
+                            return 0
+                    }
+                }
+                Image {
+                    opacity: passNumber == (levelChoose) ? 1 : 0
+                    source: "../../assets/tool/tool_block.png"
+                }
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        levelChoose = 2
+                        if (passNumber >= levelChoose - 1) levelsClicked()
+                        else levelChoose = 1
+                    }
+                }
+            }
+
+            Image {
+                id: levels3
+                x: 199
+                y: 1457
+                width: 58
+                height: 47
+                source: "../../assets/selectLevel/level.png"
                 Star {
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.top: parent.top
@@ -79,19 +120,23 @@ SceneBase {
                             return 0
                     }
                 }
+                Image {
+                    opacity: passNumber == (levelChoose + 1) ? 1 : 0
+                    source: "../../assets/tool/tool_block.png"
+                }
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        levelChoose = 2
-                        levelsClicked()
+                        levelChoose = 3
+                        if (passNumber >= levelChoose - 1) levelsClicked()
+                        else levelChoose = 1
                     }
                 }
             }
-
             Image {
-                id: levels2
-                x: 199
-                y: 1457
+                id: levels4
+                x: 107
+                y: 1273
                 width: 58
                 height: 47
                 source: "../../assets/selectLevel/level.png"
@@ -106,18 +151,23 @@ SceneBase {
                             return 0
                     }
                 }
+                Image {
+                    opacity: passNumber == (levelChoose + 2) ? 1 : 0
+                    source: "../../assets/tool/tool_block.png"
+                }
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        levelChoose = 3
-                        levelsClicked()
+                        levelChoose = 4
+                        if (passNumber >= levelChoose - 1) levelsClicked()
+                        else levelChoose = 1
                     }
                 }
             }
             Image {
-                id: levels3
-                x: 107
-                y: 1273
+                id: levels5
+                x: 223
+                y: 1148
                 width: 58
                 height: 47
                 source: "../../assets/selectLevel/level.png"
@@ -132,18 +182,25 @@ SceneBase {
                             return 0
                     }
                 }
+                Image {
+                    opacity: passNumber == (levelChoose + 3) ? 1 : 0
+                    source: "../../assets/tool/tool_block.png"
+                }
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        levelChoose = 4
-                        levelsClicked()
+                        levelChoose = 5
+                        if (passNumber >= levelChoose - 1) levelsClicked()
+                        else levelChoose = 1
                     }
                 }
             }
+
+
             Image {
-                id: levels4
-                x: 223
-                y: 1148
+                id: levels6
+                x: 79
+                y: 986
                 width: 58
                 height: 47
                 source: "../../assets/selectLevel/level.png"
@@ -152,23 +209,28 @@ SceneBase {
                     anchors.top: parent.top
                     anchors.topMargin: -3
                     type: {
-                        if (passNumber > (levelChoose + 4))
+                        if (passNumber > (levelChoose +4 ))
                             return gameSceneMessage.passScore[levelChoose + 4]
                         else
                             return 0
                     }
                 }
+                Image {
+                    opacity: passNumber == (levelChoose + 4) ? 1 : 0
+                    source: "../../assets/tool/tool_block.png"
+                }
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        levelChoose = 5
-                        levelsClicked()
+                        levelChoose = 6
+                        if (passNumber >= levelChoose - 1) levelsClicked()
+                        else levelChoose = 1
                     }
                 }
             }
 
             Image {
-                id: levels5
+                id: levels7
                 x: 149
                 y: 786
                 width: 58
@@ -185,17 +247,22 @@ SceneBase {
                             return 0
                     }
                 }
+                Image {
+                    opacity: passNumber == (levelChoose + 5) ? 1 : 0
+                    source: "../../assets/tool/tool_block.png"
+                }
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        levelChoose = 6
-                        levelsClicked()
+                        levelChoose = 7
+                        if (passNumber >= levelChoose - 1) levelsClicked()
+                        else levelChoose = 1
                     }
                 }
             }
 
             Image {
-                id: levels6
+                id: levels8
                 x: 118
                 y: 636
                 width: 58
@@ -212,65 +279,16 @@ SceneBase {
                             return 0
                     }
                 }
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        levelChoose = 7
-                        levelsClicked()
-                    }
-                }
-            }
-
-            Image {
-                id: levels7
-                x: 60
-                y: 388
-                width: 58
-                height: 47
-                source: "../../assets/selectLevel/level.png"
-                Star {
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.top: parent.top
-                    anchors.topMargin: -3
-                    type: {
-                        if (passNumber > (levelChoose + 7))
-                            return gameSceneMessage.passScore[levelChoose + 7]
-                        else
-                            return 0
-                    }
+                Image {
+                    opacity: passNumber == (levelChoose + 6) ? 1 : 0
+                    source: "../../assets/tool/tool_block.png"
                 }
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
                         levelChoose = 8
-                        levelsClicked()
-                    }
-                }
-            }
-
-            Image {
-                id: levels8
-                x: 79
-                y: 986
-                width: 58
-                height: 47
-                source: "../../assets/selectLevel/level.png"
-                Star {
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.top: parent.top
-                    anchors.topMargin: -3
-                    type: {
-                        if (passNumber > (levelChoose + 8))
-                            return gameSceneMessage.passScore[levelChoose + 8]
-                        else
-                            return 0
-                    }
-                }
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        levelChoose = 9
-                        levelsClicked()
+                        if (passNumber >= levelChoose - 1) levelsClicked()
+                        else levelChoose = 1
                     }
                 }
             }
@@ -287,20 +305,57 @@ SceneBase {
                     anchors.top: parent.top
                     anchors.topMargin: -3
                     type: {
-                        if (passNumber > (levelChoose + 9))
-                            return gameSceneMessage.passScore[levelChoose + 9]
+                        if (passNumber > (levelChoose + 7))
+                            return gameSceneMessage.passScore[levelChoose + 7]
                         else
                             return 0
                     }
+                }
+                Image {
+                    opacity: passNumber == (levelChoose + 7) ? 1 : 0
+                    source: "../../assets/tool/tool_block.png"
+                }
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        levelChoose = 9
+                        if (passNumber >= levelChoose - 1) levelsClicked()
+                        else levelChoose = 1
+                    }
+                }
+            }
+            Image {
+                id: levels10
+                x: 60
+                y: 388
+                width: 58
+                height: 47
+                source: "../../assets/selectLevel/level.png"
+                Star {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.top: parent.top
+                    anchors.topMargin: -3
+                    type: {
+                        if (passNumber > (levelChoose + 8))
+                            return gameSceneMessage.passScore[levelChoose + 8]
+                        else
+                            return 0
+                    }
+                }
+                Image {
+                    opacity: passNumber == (levelChoose + 8) ? 1 : 0
+                    source: "../../assets/tool/tool_block.png"
                 }
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
                         levelChoose = 10
-                        levelsClicked()
+                        if (passNumber >= levelChoose - 1) levelsClicked()
+                        else levelChoose = 1
                     }
                 }
             }
+
 
             Repeater {
             }

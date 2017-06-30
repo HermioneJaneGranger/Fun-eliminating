@@ -1,20 +1,16 @@
-#ifndef GAMSCENE_H
+ #ifndef GAMSCENE_H
 #define GAMSCENE_H
 
 #include <QQmlListProperty>
 #include <vector>
-
 #include "block.h"
-
-
 
 class GameScene: public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QQmlListProperty<Block> blockArray READ blockArray NOTIFY blockChanged)
     Q_PROPERTY(int score READ score WRITE setScore NOTIFY scoreChanged)
-    Q_PROPERTY(QList<int> passScore READ passScore NOTIFY passScoreChanged)
-      Q_PROPERTY(QList<int> readScore READ readScore NOTIFY readScoreChanged)
+    Q_PROPERTY(QList<int> passScore READ passScores NOTIFY passScoreChanged)
 
     Q_CLASSINFO("DefaultProperty", "block")
 public:
@@ -31,20 +27,18 @@ public:
     Q_INVOKABLE void control(int x_one, int y_one, int x_two, int y_two);
     int sameOfNumber(QList<int> &block, int x, int y, int type,int x_Or_y);
     void clearBlocks(QList<int> &block);
-    void moveBlocks();
+    Q_INVOKABLE void moveBlocks();
 
 
     Q_INVOKABLE void setScore(int score);
 
     Q_INVOKABLE int score() const;
 
-    QList<int> passScore() const;
-    void setPassScore(const QList<int> &passScore);
+    int passScore(int i) const;
+    Q_INVOKABLE void setPassScore(int x, int level);
     void initPassScore();
 
-    QList<int> readScore() const;
-    void setReadScore(const QList<int> &readScore);
-    void readScoreIn();
+    Q_INVOKABLE void readScoreIn();
     Q_INVOKABLE int passNumber(){
         return m_passScore.size();
     }
@@ -60,6 +54,8 @@ public:
     void setNumber(int levelnumber);
     void numberChanged(int type,int number);
 
+    QList<int> passScores() const;
+
 signals:
     void blockChanged();
     void scoreChanged();
@@ -74,7 +70,6 @@ signals:
     void readScoreChanged();
 
 private:
-    QList<int> m_readScore;
     QList<int> m_passScore;
     int m_score = 0;
     QList<int> m_target;

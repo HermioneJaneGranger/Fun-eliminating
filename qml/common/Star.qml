@@ -5,11 +5,11 @@ Image {
     property int type
 
     source: {
-        if (type === 1) {
+        if (type == 1) {
             return "../../assets/selectLevel/dj1.png"
-        } else if (type === 2) {
+        } else if (type == 2) {
             return "../../assets/selectLevel/dj2.png"
-        } else if (type === 3) {
+        } else if (type == 3) {
             return "../../assets/selectLevel/dj3.png"
         }
         else return ""

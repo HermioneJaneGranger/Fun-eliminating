@@ -7,10 +7,15 @@ SceneBase {
 
     property bool mouseEnable
     signal pauseClicked
-    signal gamePass
-    signal gameLose
+    signal gamepass(int star)
+    signal gamelose
+    signal toolBlock
+    signal toolLinex
+    signal toolLineY
+    signal toolType
     property int levelNumber
     property int remainingSteps: 20
+    property bool pass: true
 
     anchors.centerIn: parent.Center
 
@@ -43,6 +48,10 @@ SceneBase {
             MenuButton {
                 opacity: 0.5
                 color: "white"
+                onCommonButtonClicked: {
+                    console.log(gameScene.width,gameScene.height + "   gameScene")
+                    console.log(loader.width,loader.height + "   gameScene")
+                }
             }
 
             Image {
@@ -68,6 +77,10 @@ SceneBase {
             MenuButton {
                 opacity: 0.5
                 color: "white"
+                onCommonButtonClicked: {
+                    console.log("clicked--------------" + pressX + "  " + pressY)
+                    console.log("clicked--------------" + releaseX + "  " + releaseY)
+                }
             }
             Image {
                 id: tool_line_y
@@ -124,19 +137,43 @@ SceneBase {
         Loader{
             id:text_loader
         }
-        Loader{
-            id:remainStep_loader
-        }
-        Loader{
-
-        }
 
         Connections {
             target: selectLevelScene
             onLevelsClicked: {
                 gameSceneMessage.refresh(levelNumber)
+                remainingSteps = 20
+
                 loader.sourceComponent = null
                 loader.sourceComponent = com
+                text_loader.sourceComponent = null
+                text_loader.sourceComponent = compo
+            }
+        }
+
+        Connections {
+            target: gameLose
+            onPlayAgain: {
+                gameSceneMessage.refresh(levelNumber)
+                remainingSteps = 20
+
+                loader.sourceComponent = null
+                loader.sourceComponent = com
+                text_loader.sourceComponent = null
+                text_loader.sourceComponent = compo
+            }
+        }
+
+        Connections {
+            target:gamePass
+            onNextLevel: {
+                gameSceneMessage.refresh(levelNumber + 1)
+                remainingSteps = 20
+
+                loader.sourceComponent = null
+                loader.sourceComponent = com
+                text_loader.sourceComponent = null
+                text_loader.sourceComponent = compo
             }
         }
 
@@ -151,37 +188,42 @@ SceneBase {
                     height: 32*12
                     onReduceStep: {
                         remainingSteps--
-                        if(remainingSteps == 0 && row.pass == false) gameLose()
                     }
                     onRefreshGrid: {
                         initGame = false
-                        loader.sourceComponent = null
-                        loader.sourceComponent = com
+                        text_loader.sourceComponent = null
+                        text_loader.sourceComponent = compo
                     }
                 }
                 Text {
                     x:180
                     y:-50
                     text:qsTr("Step:") + "\n" + " " + remainingSteps
+                    font.bold: true
                     color: "white"
                     font.pixelSize: 17
                 }
+            }
+
+        }
+        Component {
+            id:compo
+            Item {
                 Text {
                     x:-15
                     y:390
                     property int score: gameSceneMessage.score
-
+                    font.bold: true
                     text: "score: " + score
                     color: "white"
                     font.pixelSize: 17
                 }
-//                Item {
-//                    x: -20
-//                    y:-40
-//                    id:tar
+                //                Item {
+                //                    x: -20
+                //                    y:-40
+                //                    id:tar
                 Row {
                     id:row
-                    property bool pass: true
                     spacing: 20
                     x: 0
                     y:-45
@@ -213,7 +255,7 @@ SceneBase {
                                 y: 15
                                 text: {
                                     if (number > 0) {
-                                        row.pass = false
+                                        pass = false
                                         return number
                                     }
                                     else {
@@ -226,15 +268,24 @@ SceneBase {
                             }
                         }
                     }
-//                    Component.onCompleted: {
-//                        if(pass) {
-////                            gameSceneMessage.setScore(40 *  )
-//                            gamePass()
-//                        }
-//                    }
+                    Component.onCompleted: {
+                        if(pass) {
+                            var sco = gameSceneMessage.score
+                            var star
+                            if(sco > 0 && sco <= 80)
+                                star = 1
+                            else if(sco <= 200)
+                                star = 2
+                            else star = 3
+                            console.log("star--------" + star + levelNumber)
+                            gameSceneMessage.setPassScore(star,levelNumber)
+                            gamepass(star)
+                        }
+                        else if (remainingSteps == 0) gamelose()
+                        else pass = true
+                    }
                 }
             }
-
         }
     }
 }
